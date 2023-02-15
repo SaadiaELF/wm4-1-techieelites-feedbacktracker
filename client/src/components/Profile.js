@@ -10,21 +10,35 @@ import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import avatar from "../img/hacker.png";
 
-const ColorButton = styled(Button)(({ theme }) => ({
+const RedButton = styled(Button)(({ theme }) => ({
+	margin: 5,
 	color: theme.palette.getContrastText("#EE4344"),
 	textTransform: "none",
 	backgroundColor: "#EE4344",
 	"&:hover": {
-		color: theme.palette.getContrastText("#F2EFF0"),
-		backgroundColor: "#F2EFF0",
+		color: theme.palette.getContrastText("#cf3a3a"),
+		backgroundColor: "#cf3a3a",
+	},
+}));
+
+const WhiteButton = styled(Button)(({ theme }) => ({
+	margin: 5,
+	color: theme.palette.getContrastText("#FFFFFF"),
+	textTransform: "none",
+	backgroundColor: "#FFFFFF",
+	"&:hover": {
+		color: theme.palette.getContrastText("#dbd9d9"),
+		backgroundColor: "#dbd9d9",
 	},
 }));
 
 const Profile = () => {
 	const [editable, setEditable] = React.useState(false);
-
+	const [bio, setBio] = React.useState(
+		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
+	);
 	return (
-		<Stack sx={{ alignItems: "center", top: 20, position: "relative" }}>
+		<Stack sx={{ alignItems: "center", top: 30, position: "relative" }}>
 			<Avatar
 				sx={{
 					width: 150,
@@ -41,7 +55,7 @@ const Profile = () => {
 					flexDirection: "column",
 					m: 1,
 					backgroundColor: "#F2EFF0",
-					height: 200,
+					height: 230,
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
@@ -61,13 +75,13 @@ const Profile = () => {
 							id="standard-multiline-static"
 							multiline
 							rows={2}
-							defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec
-					consequat ipsum."
+							size="small"
+							defaultValue={bio}
+							fullWidth
 						/>
 					) : (
 						<Typography variant="body2" color="text.secondary" align="center">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec
-							consequat ipsum.
+							{bio}
 						</Typography>
 					)}
 					<Typography variant="body1" align="center">
@@ -75,9 +89,37 @@ const Profile = () => {
 					</Typography>
 				</CardContent>
 				<CardActions sx={{ justifyContent: "flex-end" }}>
-					<ColorButton size="small" variant="contained">
-						Edit Profile
-					</ColorButton>
+					{editable ? (
+						<Stack
+							sx={{
+								display: "flex",
+								flexDirection: "row",
+								justifyContent: "end",
+							}}
+						>
+							<WhiteButton
+								size="small"
+								variant="contained"
+								onClick={() => setEditable(false)}
+							>
+								Cancel
+							</WhiteButton>
+							<RedButton
+								size="small"
+								variant="contained"
+							>
+								Save
+							</RedButton>
+						</Stack>
+					) : (
+						<RedButton
+							size="small"
+							variant="contained"
+							onClick={() => setEditable(true)}
+						>
+							Edit Profile
+						</RedButton>
+					)}
 				</CardActions>
 			</Card>
 		</Stack>
