@@ -32,11 +32,18 @@ const WhiteButton = styled(Button)(({ theme }) => ({
 	},
 }));
 
+
+
 const Profile = () => {
 	const [editable, setEditable] = React.useState(false);
 	const [bio, setBio] = React.useState(
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
 	);
+	
+	const handleBioChange = (e) => {
+		setBio(e.target.value);
+	};
+
 	return (
 		<Stack sx={{ alignItems: "center", top: 30, position: "relative" }}>
 			<Avatar
@@ -78,6 +85,7 @@ const Profile = () => {
 							size="small"
 							defaultValue={bio}
 							fullWidth
+							onChange={handleBioChange}
 						/>
 					) : (
 						<Typography variant="body2" color="text.secondary" align="center">
@@ -107,6 +115,7 @@ const Profile = () => {
 							<RedButton
 								size="small"
 								variant="contained"
+								onClick={() => setEditable(false)}
 							>
 								Save
 							</RedButton>
