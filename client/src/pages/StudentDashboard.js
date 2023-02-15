@@ -1,18 +1,12 @@
 import * as React from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
+import WelcomeMsg from "../components/WelcomeMsg";
+import Profile from "../components/Profile";
 
 const StudentDashboard = ({ theme }) => (
 	<ThemeProvider theme={theme}>
-		<Typography
-			variant="h4"
-			sx={{
-				fontSize: { xs: 16, md: 32 },
-			}}
-			align="center"
-		>
-			Welcome student name!👋
-		</Typography>
+		<WelcomeMsg message="Welcome student name!👋" />
+		<Profile />
 	</ThemeProvider>
 );
 
