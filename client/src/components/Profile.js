@@ -8,7 +8,9 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
-import avatar from "../img/hacker.png";
+import avatarImg from "../img/hacker.png";
+import { Uploader } from "uploader";
+import { UploadButton } from "react-uploader";
 
 const RedButton = styled(Button)(({ theme }) => ({
 	margin: 5,
@@ -31,15 +33,16 @@ const WhiteButton = styled(Button)(({ theme }) => ({
 		backgroundColor: "#dbd9d9",
 	},
 }));
-
-
+const uploader = Uploader({ apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn" });
 
 const Profile = () => {
 	const [editable, setEditable] = React.useState(false);
 	const [bio, setBio] = React.useState(
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
 	);
-	
+	const [img, setImg] = React.useState("");
+	const [avatar, setAvatar] = React.useState(avatarImg);
+
 	const handleBioChange = (e) => {
 		setBio(e.target.value);
 	};
@@ -66,7 +69,7 @@ const Profile = () => {
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
-					top: 80,
+					top: 100,
 				}}
 			>
 				<CardContent
@@ -77,16 +80,40 @@ const Profile = () => {
 					}}
 				>
 					{editable ? (
-						<TextField
-							sx={{ backgroundColor: "#FFFFFF" }}
-							id="standard-multiline-static"
-							multiline
-							rows={2}
-							size="small"
-							defaultValue={bio}
-							fullWidth
-							onChange={handleBioChange}
-						/>
+						<Stack>
+							<UploadButton
+								uploader={uploader}
+								options={{
+									maxFileCount: 1,
+									maxFileSizeBytes: 5000000,
+									mimeTypes: ["image/jpeg", "image/png"],
+								}}
+								onComplete={(files) => {
+									if (files.length >= 1) {
+										setAvatar(files.map((x) => x.fileUrl).join("\n"));
+									} else {
+										setAvatar(avatarImg)
+									}
+								}}
+							>
+								{({ onClick }) => (
+									<RedButton size="small" variant="contained" onClick={onClick}>
+										Upload a profile picture...
+									</RedButton>
+								)}
+							</UploadButton>
+
+							<TextField
+								sx={{ backgroundColor: "#FFFFFF" }}
+								id="standard-multiline-static"
+								multiline
+								rows={2}
+								size="small"
+								defaultValue={bio}
+								fullWidth
+								onChange={handleBioChange}
+							/>
+						</Stack>
 					) : (
 						<Typography variant="body2" color="text.secondary" align="center">
 							{bio}
