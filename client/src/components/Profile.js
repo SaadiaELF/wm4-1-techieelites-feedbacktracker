@@ -2,46 +2,22 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
+import RedButton from "./RedButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import avatarImg from "../img/hacker.png";
 import { Uploader } from "uploader";
 import { UploadButton } from "react-uploader";
-
-const RedButton = styled(Button)(({ theme }) => ({
-	margin: 5,
-	color: theme.palette.getContrastText("#EE4344"),
-	textTransform: "none",
-	backgroundColor: "#EE4344",
-	"&:hover": {
-		color: theme.palette.getContrastText("#cf3a3a"),
-		backgroundColor: "#cf3a3a",
-	},
-}));
-
-const WhiteButton = styled(Button)(({ theme }) => ({
-	margin: 5,
-	color: theme.palette.getContrastText("#FFFFFF"),
-	textTransform: "none",
-	backgroundColor: "#FFFFFF",
-	"&:hover": {
-		color: theme.palette.getContrastText("#dbd9d9"),
-		backgroundColor: "#dbd9d9",
-	},
-}));
-const uploader = Uploader({ apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn" });
 
 const Profile = () => {
 	const [editable, setEditable] = React.useState(false);
 	const [bio, setBio] = React.useState(
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
 	);
-	const [img, setImg] = React.useState("");
 	const [avatar, setAvatar] = React.useState(avatarImg);
+	const uploader = Uploader({ apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn" });
 
 	const handleBioChange = (e) => {
 		setBio(e.target.value);
@@ -92,7 +68,7 @@ const Profile = () => {
 									if (files.length >= 1) {
 										setAvatar(files.map((x) => x.fileUrl).join("\n"));
 									} else {
-										setAvatar(avatarImg)
+										setAvatar(avatarImg);
 									}
 								}}
 							>
