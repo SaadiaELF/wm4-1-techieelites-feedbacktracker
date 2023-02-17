@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import RedButton from "./RedButton";
+import WhiteButton from "./WhiteButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -17,6 +18,7 @@ const Profile = () => {
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
 	);
 	const [avatar, setAvatar] = React.useState(avatarImg);
+	// Calling the uploader function from library , the apikey should be stored on on tne .env file
 	const uploader = Uploader({ apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn" });
 
 	const handleBioChange = (e) => {
@@ -55,6 +57,7 @@ const Profile = () => {
 						justifyContent: "center",
 					}}
 				>
+					{/* Showing the upload button and making the bio editable only when we click on edit profile  */}
 					{editable ? (
 						<Stack>
 							<UploadButton
@@ -100,6 +103,7 @@ const Profile = () => {
 					</Typography>
 				</CardContent>
 				<CardActions sx={{ justifyContent: "flex-end" }}>
+					{/* showing the cancel and save buttons only when we click on edit profile */}
 					{editable ? (
 						<Stack
 							sx={{
