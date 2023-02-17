@@ -1,4 +1,3 @@
-//import * as React from "react";
 import React, { useState } from "react"
 
 import TextField from "@mui/material/TextField";
@@ -38,8 +37,8 @@ const handlePasswordVisibility = () => {
 					<Paper elevation={2} sx={{ padding: 5 }}>
 						<form onSubmit={handleSubmit}>
 							<Grid container spacing={2} direction="column">
-								<Typography variant="h3">Hi, Welcome back! 👋</Typography>
-								<Typography variant="h5">
+								<Typography variant="h4" sx={{fontSize: {xs:16,md:32}}}>Hi, Welcome back! 👋</Typography>
+								<Typography variant="h6" sx={{fontSize: {xs:12,md:24}}}>
 									Hello again, you have been missed
 								</Typography>
 
