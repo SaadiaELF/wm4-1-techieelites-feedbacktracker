@@ -6,8 +6,8 @@ const Navbar = () => {
 
   return (
     <nav>
-        <div className="logo">
-            <img src={logo} alt="logo"></img>
+        <div>
+            <img src={logo} alt="logo" className="logo"></img>
         </div>
         <StyledBurger open={open} onClick={() => setOpen(!open)}>
             <div />
