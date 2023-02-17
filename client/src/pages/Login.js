@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, Paper, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Stack } from "@mui/material";
 
 
 
@@ -25,85 +25,68 @@ const handlePasswordVisibility = () => {
 }
 
 	return (
-		<div>
-			<Container maxWidth="sm">
-				<Grid
-					container
-					spacing={2}
-					direction="column"
-					justifyContent={"center"}
-					style={{ minHeight: "100vh" }}
-				>
-					<Paper elevation={2} sx={{ padding: 5 }}>
-						<form onSubmit={handleSubmit}>
-							<Grid container spacing={2} direction="column">
-								<Typography variant="h4" sx={{fontSize: {xs:16,md:32}}}>Hi, Welcome back! 👋</Typography>
-								<Typography variant="h6" sx={{fontSize: {xs:12,md:24}}}>
-									Hello again, you have been missed
-								</Typography>
+		<Stack sx={{ maxWidth: 360, padding: "1rem" }} spacing={2}>
+			<Stack >
+				<Typography variant="h4" sx={{ fontSize: 32 }}>
+					Hi, Welcome back! 👋
+				</Typography>
+				<Typography variant="h6" sx={{ fontSize: 20 }}>
+					Hello again, you have been missed
+				</Typography>
+			</Stack>
+			<form onSubmit={handleSubmit}>
+				<Stack spacing={2}>
+					<TextField
+						variant="outlined"
+						label="Email"
+						type="email"
+						fullWidth
+						id="email"
+						name="email"
+						placeholder="example@gmail.com"
+						required
+						onChange={(e) => setValues({ ...values, email: e.target.value })}
+					></TextField>
 
-								<Grid item>
-									<TextField
-										variant="outlined"
-										label="Email"
-										type="email"
-										fullWidth
-										id="email"
-										name="email"
-										placeholder="example@gmail.com"
-										required
-										onChange={(e) =>
-											setValues({ ...values, email: e.target.value })
-										}
-									></TextField>
-								</Grid>
-								<Grid item>
-									<TextField
-										variant="outlined"
-										label="Password"
-										type={values.showPassword ? "text" : "password"}
-										fullWidth
-										id="password"
-										name="password"
-										placeholder="********"
-										required
-										onChange={(e) =>
-											setValues({ ...values, password: e.target.value })
-										}
-										InputProps={{
-											endAdornment: (
-												<InputAdornment position="end">
-													<IconButton
-														onClick={handlePasswordVisibility}
-														aria-label="toggle password"
-														edge="end"
-													>
-														{values.showPassword ? (
-															<VisibilityOffIcon />
-														) : (
-															<VisibilityIcon />
-														)}
-													</IconButton>
-												</InputAdornment>
-											),
-										}}
-									></TextField>
-								</Grid>
-								<Grid item>
-									<Button
-										variant="contained"
-										fullWidth
-										style={{ backgroundColor: "#EE4344" }}
+					<TextField
+						variant="outlined"
+						label="Password"
+						type={values.showPassword ? "text" : "password"}
+						fullWidth
+						id="password"
+						name="password"
+						placeholder="********"
+						required
+						onChange={(e) => setValues({ ...values, password: e.target.value })}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton
+										onClick={handlePasswordVisibility}
+										aria-label="toggle password"
+										edge="end"
 									>
-										Login
-									</Button>
-								</Grid>
-							</Grid>
-						</form>
-					</Paper>
-				</Grid>
-			</Container>
-		</div>
+										{values.showPassword ? (
+											<VisibilityOffIcon />
+										) : (
+											<VisibilityIcon />
+										)}
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
+					></TextField>
+
+					<Button
+						variant="contained"
+						fullWidth
+						style={{ backgroundColor: "#EE4344" }}
+					>
+						Login
+					</Button>
+				</Stack>
+			</form>
+		</Stack>
 	);
 }
 
