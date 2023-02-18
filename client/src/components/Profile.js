@@ -7,6 +7,7 @@ import WhiteButton from "./WhiteButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import UploadIcon from "@mui/icons-material/Upload";
 import { Avatar } from "@mui/material";
 import avatarImg from "../img/hacker.png";
 import { Uploader } from "uploader";
@@ -26,7 +27,10 @@ const Profile = () => {
 	};
 
 	return (
-		<Stack sx={{ alignItems: "center", top: 30, position: "relative" }}>
+		<Stack
+			spacing={2}
+			sx={{ alignItems: "center", top: 30, position: "relative" }}
+		>
 			<Avatar
 				sx={{
 					width: 150,
@@ -41,13 +45,12 @@ const Profile = () => {
 				sx={{
 					display: "flex",
 					flexDirection: "column",
-					m: 1,
 					backgroundColor: "#F2EFF0",
-					height: 230,
+					minHeight: 230,
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
-					top: 100,
+					top: 75,
 				}}
 			>
 				<CardContent
@@ -57,9 +60,16 @@ const Profile = () => {
 						justifyContent: "center",
 					}}
 				>
+					<Typography
+						sx={{ paddingBottom: "1rem" }}
+						variant="body1"
+						align="center"
+					>
+						Mentor Name
+					</Typography>
 					{/* Showing the upload button and making the bio editable only when we click on edit profile  */}
 					{editable ? (
-						<Stack>
+						<Stack spacing={2}>
 							<UploadButton
 								uploader={uploader}
 								options={{
@@ -76,15 +86,19 @@ const Profile = () => {
 								}}
 							>
 								{({ onClick }) => (
-									<RedButton size="small" variant="contained" onClick={onClick}>
-										Upload a profile picture...
+									<RedButton
+										sx={{ margin: "1rem 0 0" }}
+										size="small"
+										variant="contained"
+										onClick={onClick}
+									>
+										<UploadIcon />
+										Upload Picture
 									</RedButton>
 								)}
 							</UploadButton>
-
 							<TextField
 								sx={{ backgroundColor: "#FFFFFF" }}
-								id="standard-multiline-static"
 								multiline
 								rows={2}
 								size="small"
@@ -98,17 +112,15 @@ const Profile = () => {
 							{bio}
 						</Typography>
 					)}
-					<Typography variant="body1" align="center">
-						Mentor Name
-					</Typography>
 				</CardContent>
-				<CardActions sx={{ justifyContent: "flex-end" }}>
+				<CardActions
+					sx={{ padding: "1rem", paddingTop: 0, justifyContent: "flex-end" }}
+				>
 					{/* showing the cancel and save buttons only when we click on edit profile */}
 					{editable ? (
 						<Stack
+							direction="row"
 							sx={{
-								display: "flex",
-								flexDirection: "row",
 								justifyContent: "end",
 							}}
 						>
