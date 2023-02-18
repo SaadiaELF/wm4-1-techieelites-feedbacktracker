@@ -6,7 +6,7 @@ import Profile from "../components/Profile";
 
 const StudentDashboard = ({ theme }) => (
 	<ThemeProvider theme={theme}>
-		<Stack sx={{padding:'1rem'}}>
+		<Stack sx={{ maxWidth: "380px", padding: "1rem", margin: "auto" }}>
 			<WelcomeMsg message="Welcome student name!👋" />
 			<Profile />
 		</Stack>
