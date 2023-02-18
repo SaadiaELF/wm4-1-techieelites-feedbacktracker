@@ -2,10 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 import logo from "./Images/logo.png";
 const Navbar = () => {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const signInOut = () => setLoggedIn(!loggedIn);
 
   return (
     <nav>
+      <div className="navbar-wrapper">
         <div>
             <img src={logo} alt="logo" className="logo"></img>
         </div>
@@ -21,10 +25,11 @@ const Navbar = () => {
             <li>
                 <a href="/syllabus" className="link">Syllabus</a>
             </li>
-            <li>
-                <a href="/login" className="link">Login</a>
+            <li >
+              <a href="/#" className="link" onClick={signInOut}>{loggedIn ? "Sign Out" : "Log In"}</a>
             </li>
         </Ul>
+        </div>
     </nav>
   );
 };
@@ -40,6 +45,7 @@ const StyledBurger = styled.div`
   top: 15px;
   right: 20px;
   z-index: 20;
+  padding-top: 10px;
   display: none;
   @media (max-width: 768px) {
     display: flex;
@@ -82,7 +88,7 @@ const Ul = styled.ul`
   }
   @media (max-width: 768px) {
     flex-flow: column nowrap;
-    background-color: lightgrey;
+    background-color: #F2EFF0;
     position: fixed;
     transform: ${({ open }) => open ? "translateX(0)" : "translateX(100%)"};
     top: 0;
