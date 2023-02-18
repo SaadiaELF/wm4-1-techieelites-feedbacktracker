@@ -1,26 +1,26 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { IconButton, InputAdornment, Stack, Typography, Button } from "@mui/material";
+import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import RedButton from "../components/RedButton";
 
 const Login = () => {
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
 		showPassword: false,
-	})
+	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		
-	}
-const handlePasswordVisibility = () => {
-	setValues({...values, showPassword:!values.showPassword })
-}
+	};
+	const handlePasswordVisibility = () => {
+		setValues({ ...values, showPassword: !values.showPassword });
+	};
 
 	return (
-		<div style={{marginInline: 'auto', maxWidth: '72rem'}}>
+		<div style={{ marginInline: "auto", maxWidth: "72rem" }}>
 			<Stack sx={{ maxWidth: 360, padding: "1rem" }} spacing={2}>
 				<Stack>
 					<Typography variant="h4" sx={{ fontSize: 32 }}>
@@ -75,18 +75,12 @@ const handlePasswordVisibility = () => {
 							}}
 						></TextField>
 
-						<Button
-							variant="contained"
-							fullWidth
-							style={{ backgroundColor: "#EE4344" }}
-						>
-							Login
-						</Button>
+						<RedButton fullWidth>Login</RedButton>
 					</Stack>
 				</form>
 			</Stack>
 		</div>
 	);
-}
+};
 
 export default Login;
