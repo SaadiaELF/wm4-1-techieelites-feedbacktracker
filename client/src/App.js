@@ -1,18 +1,30 @@
-/* eslint-disable linebreak-style */
 import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
-import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
+import StudentDashboard from "./pages/StudentDashboard";
+import { createTheme } from "@mui/material/styles";
 import "./App.css";
 
+const theme = createTheme({
+	components: {
+		MuiTypography: {
+			defaultProps: {
+				fontFamily: ["Raleway", "sans-serif"].join(","),
+			},
+		},
+	},
+});
+
 const App = () => (
-	<div>
+	<div className="App">
 		<div>
 			<Navbar />
 		</div>
 		<Routes>
-			<Route path="/" element={<Home />} />
+			<Route path="/" element={<Login />} />
 			<Route path="/about/this/site" element={<About />} />
+			<Route path="/student" element={<StudentDashboard theme={theme} />} />
 		</Routes>
 	</div>
 );
