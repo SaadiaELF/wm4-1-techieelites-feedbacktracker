@@ -3,12 +3,14 @@ import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
 import Profile from "../components/Profile";
+import Progress from "../components/Progress";
 
 const StudentDashboard = ({ theme }) => (
 	<ThemeProvider theme={theme}>
-		<Stack sx={{padding:'1rem'}}>
+		<Stack spacing={1} sx={{ padding: "1rem" }}>
 			<WelcomeMsg message="Welcome student name!👋" />
 			<Profile />
+			<Progress />
 		</Stack>
 	</ThemeProvider>
 );
