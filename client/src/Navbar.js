@@ -20,13 +20,13 @@ const Navbar = () => {
         </StyledBurger>
         <Ul open={open}>
             <li>
-                <a href="/about" className="link">About Us</a>
+              <a href="/about" className="link">About Us</a>
             </li>
             <li>
-                <a href="/syllabus" className="link">Syllabus</a>
+              <a href="/syllabus" className="link">Syllabus</a>
             </li>
             <li >
-              <a href="/#" className="link" onClick={signInOut}>{loggedIn ? "Sign Out" : "Log In"}</a>
+              <button className="link" id="logInOut" onClick={signInOut}>{loggedIn ? "Sign Out" : "Log In"}</button>
             </li>
         </Ul>
         </div>

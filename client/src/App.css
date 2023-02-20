@@ -33,3 +33,9 @@ nav
     font-size: x-large;
     font-weight: bold;
 }
+
+#logInOut
+{
+    background-color: rgb(237,67,67);
+    border: 0;
+}
