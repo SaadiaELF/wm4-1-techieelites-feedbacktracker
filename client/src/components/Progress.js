@@ -60,14 +60,51 @@ const Progress = () => {
 				"Lesson 4 - Ship it • Putting it all together",
 			],
 		},
-		// "JavaScript Core 1",
-		// "JavaScript Core 2",
-		// "JavaScript Core 3",
-		// "React",
-		// "Node.js",
-		// "Databases",
-		// "Final Projects",
+		{
+			module: "JavaScript Core 2",
+			lessons: [
+				"Lesson 1 - Objects",
+				"Lesson 2 - TDD, arrays of Objects",
+				"Lesson 3 - JS in the Browser (DOM, and AJAX)",
+				"Lesson 4 - More JS in the Browser",
+			],
+		},
+		{
+			module: "JavaScript Core 3",
+			lessons: [
+				"Lesson 1 - Debugging",
+				"Lesson 2 - Fetch, AJAX, APIS",
+				"Lesson 3 - Scope & this",
+			],
+		},
+		{
+			module: "React",
+			lessons: [
+				"Lesson 1 - React 101",
+				"Lesson 2 - Reacting to Changes",
+				"Lesson 3 - Fetching Data",
+				"Lesson 4 - Routing (optional)",
+				"Lesson 4 - Class Components (optional)",
+			],
+		},
+		{
+			module: "Node.js",
+			lessons: [
+				"Lesson 1 - Node, Express workshop",
+				"Lesson 2 - Templating",
+				"Lesson 3 - Node Best Practices",
+			],
+		},
+		{
+			module: "SQL",
+			lessons: [
+				"Lesson 1 - Introduction to SQL",
+				"Lesson 2 - More SQL and integration with NodeJS",
+				"Lesson 3 - More integration with NodeJS",
+			],
+		},
 	];
+
 	const softSkills = [
 		"Time management",
 		"Public speaking",
