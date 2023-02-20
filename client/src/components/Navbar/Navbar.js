@@ -97,9 +97,15 @@ const Navbar = () => {
 						</a>
 					</li>
 					<li>
-						<button className="link" id="logInOut" onClick={signInOut}>
-							{loggedIn ? "Sign Out" : "Log In"}
-						</button>
+						{loggedIn ? (
+							<button className="link" id="logInOut" onClick={signInOut}>
+								Sign Out
+							</button>
+						) : (
+							<button className="link" id="logInOut">
+								Login
+							</button>
+						)}
 					</li>
 				</Ul>
 			</div>
