@@ -7,7 +7,14 @@ import FeedbackModal from "../components/FeedbackModal";
 
 const StudentDashboard = ({ theme }) => (
 	<ThemeProvider theme={theme}>
-		<Stack sx={{ maxWidth: "380px", padding: "1rem", margin: "auto" }}>
+		<Stack
+			sx={{
+				maxWidth: "380px",
+				padding: "1rem",
+				margin: "auto",
+			}}
+			spacing={2}
+		>
 			<WelcomeMsg message="Welcome student name!👋" />
 			<Profile />
 			<FeedbackModal />

@@ -31,8 +31,6 @@ const Profile = () => {
 			spacing={2}
 			sx={{
 				alignItems: "center",
-				top: 30,
-				position: "relative",
 			}}
 		>
 			<Avatar
