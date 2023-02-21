@@ -1,9 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import { createTheme } from "@mui/material/styles";
-
 import About from "./pages/About";
-import Home from "./pages/Home";
+import Login from "./pages/Login";
 import StudentDashboard from "./pages/StudentDashboard";
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
 	components: {
@@ -16,11 +15,13 @@ const theme = createTheme({
 });
 
 const App = () => (
-	<Routes>
-		<Route path="/" element={<Home />} />
-		<Route path="/about/this/site" element={<About />} />
-		<Route path="/student" element={<StudentDashboard theme={theme} />} />
-	</Routes>
+	<div className="App">
+		<Routes>
+			<Route path="/" element={<Login />} />
+			<Route path="/about/this/site" element={<About />} />
+			<Route path="/student" element={<StudentDashboard theme={theme} />} />
+		</Routes>
+	</div>
 );
 
 export default App;
