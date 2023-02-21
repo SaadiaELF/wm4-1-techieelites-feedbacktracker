@@ -1,0 +1,28 @@
+nav {
+    background-color: #F2EFF0;
+    width: 100%;
+}
+
+.navbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: auto;
+    max-width: 72rem;
+}
+
+.logo {
+    padding-left: 10px;
+    padding-top: 20px;
+    width: 10rem;
+    margin-bottom: 18px;
+}
+
+.link {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#logInOut {
+    background-color: transparent;
+    border: 0;
+}
