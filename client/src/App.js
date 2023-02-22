@@ -4,6 +4,7 @@ import { createTheme } from "@mui/material/styles";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import StudentDashboard from "./pages/StudentDashboard";
+import Login from "./pages/Login";
 
 const theme = createTheme({
 	components: {
@@ -17,7 +18,7 @@ const theme = createTheme({
 
 const App = () => (
 	<Routes>
-		<Route path="/" element={<Home />} />
+		<Route path="/" element={<Login />} />
 		<Route path="/about/this/site" element={<About />} />
 		<Route path="/student" element={<StudentDashboard theme={theme} />} />
 	</Routes>
