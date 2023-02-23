@@ -51,15 +51,14 @@ router.get("/users/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
 		const users = await db.query(
-			"SELECT student_id AS id, full_name, role FROM students UNION ALL SELECT mentor_id, full_name, role FROM mentors"
+			"SELECT * FROM users WHERE user_id = $1", [userId],
 		);
-		if (!users) {
-			res.status(404).json({ message: "No users found" });
-		}
+		res.json(users.rows[0]);
 	} catch (err) {
 		console.error(err);
 	}
 });
+
 
 //post
 
