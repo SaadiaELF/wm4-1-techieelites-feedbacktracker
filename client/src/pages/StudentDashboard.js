@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
 import Profile from "../components/Profile";
 import FeedbackModal from "../components/FeedbackModal";
+import Progress from "../components/Progress";
 
 const StudentDashboard = ({ theme }) => (
 	<ThemeProvider theme={theme}>
@@ -17,6 +18,7 @@ const StudentDashboard = ({ theme }) => (
 		>
 			<WelcomeMsg message="Welcome student name!👋" />
 			<Profile />
+      <Progress />
 			<FeedbackModal />
 		</Stack>
 	</ThemeProvider>
