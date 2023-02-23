@@ -133,8 +133,8 @@ const Progress = () => {
 			spacing={2}
 			sx={{
 				alignItems: "center",
-				top: 30,
 				position: "relative",
+				top: 75,
 			}}
 		>
 			<Card
@@ -144,8 +144,6 @@ const Progress = () => {
 					backgroundColor: "#F2EFF0",
 					minHeight: 230,
 					width: "100%",
-					position: "relative",
-					top: 75,
 				}}
 			>
 				<CardContent>
