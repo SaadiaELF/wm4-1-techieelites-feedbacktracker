@@ -73,6 +73,21 @@ router.get("/users/admin/:id", async (req, res) => {
 		console.error(err);
 	}
 });
+router.get("/users/mentor/:id", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.id);
+		const users = await db.query(
+			"SELECT * FROM users WHERE role = $1 AND user_id = $2",
+			["mentor", userId]
+		);
+		if (users.rows.length < 1) {
+			res.status(404).json({ message: "User not found" });
+		}
+		res.json(users.rows[0]);
+	} catch (err) {
+		console.error(err);
+	}
+});
 
 //post
 
