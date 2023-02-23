@@ -21,8 +21,16 @@ const Login = () => {
 
 	return (
 		<div style={{ marginInline: "auto", maxWidth: "72rem" }}>
-			<Stack sx={{ maxWidth: 360, padding: "1rem" }} spacing={2}>
-				<Stack>
+			<Stack
+				sx={{
+					display: "flex",
+					maxWidth: 360,
+					padding: "1rem",
+					margin: { xs: "1rem auto", md: "1rem 1rem 1rem auto" },
+				}}
+				spacing={5}
+			>
+				<Stack spacing={1}>
 					<Typography variant="h4" sx={{ fontSize: 32 }}>
 						Hi, Welcome back! 👋
 					</Typography>
@@ -31,7 +39,7 @@ const Login = () => {
 					</Typography>
 				</Stack>
 				<form onSubmit={handleSubmit}>
-					<Stack spacing={2}>
+					<Stack spacing={3}>
 						<TextField
 							variant="outlined"
 							label="Email"
@@ -75,7 +83,9 @@ const Login = () => {
 							}}
 						></TextField>
 
-						<RedButton fullWidth>Login</RedButton>
+						<RedButton size="medium" fullWidth>
+							Login
+						</RedButton>
 					</Stack>
 				</form>
 			</Stack>
