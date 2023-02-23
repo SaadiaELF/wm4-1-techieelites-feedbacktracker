@@ -15,7 +15,7 @@ const Navbar = () => {
 		position: fixed;
 		top: 15px;
 		right: 20px;
-		z-index: 20;
+		z-index: 3;
 		padding-top: 10px;
 		display: none;
 		@media (max-width: 768px) {
@@ -49,6 +49,7 @@ const Navbar = () => {
 		display: flex;
 		flex-flow: row nowrap;
 		text-align: center;
+		z-index: 2;
 		li {
 			padding: 1rem;
 
