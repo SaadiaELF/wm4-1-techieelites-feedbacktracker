@@ -7,7 +7,7 @@ import Progress from "../components/Progress";
 
 const StudentDashboard = ({ theme }) => (
 	<ThemeProvider theme={theme}>
-		<Stack spacing={1} sx={{ padding: "1rem" }}>
+		<Stack spacing={2} sx={{ padding: "1rem" }}>
 			<WelcomeMsg message="Welcome student name!👋" />
 			<Profile />
 			<Progress />
