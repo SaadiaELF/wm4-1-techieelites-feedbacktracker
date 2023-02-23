@@ -23,14 +23,11 @@ const FeedbackModal = () => {
 	return (
 		<Box
 			sx={{
-				display: "flex",
-				alignSelf: "end",
-				justifySelf: "flex-end",
 				position: "relative",
 				top: 75,
 			}}
 		>
-			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen}>
+			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
 				Add Feedback
 			</RedButton>
 			<Dialog open={open} onClose={handleClose} fullWidth>
