@@ -53,12 +53,26 @@ router.get("/users/:id", async (req, res) => {
 		const users = await db.query(
 			"SELECT * FROM users WHERE user_id = $1", [userId],
 		);
+		if (users.rows.length < 1) {
+			res.status(404).json({ message: "User not found" });
+		}
 		res.json(users.rows[0]);
 	} catch (err) {
 		console.error(err);
 	}
 });
-
+router.get("/users/admin/:id", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.id);
+		const users = await db.query("SELECT * FROM users WHERE role = $1 AND user_id = $2", ["admin", userId]);
+		if(users.rows.length < 1) {
+			res.status(404).json({ message: "User not found" });
+		}
+		res.json(users.rows[0]);
+	} catch (err) {
+		console.error(err);
+	}
+});
 
 //post
 
