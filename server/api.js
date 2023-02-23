@@ -13,17 +13,34 @@ router.get("/", (_, res) => {
 router.get("/users", async (req, res) => {
 	try {
 		let users = await db.query("SELECT * FROM users");
-		
-		const role = req.query.role;	
-		if (role === "admin") {
-			users = await db.query("SELECT * FROM users WHERE role = 'admin'");
-		}
-		if (role === "mentor") {
-			users = await db.query("SELECT * FROM users WHERE role = 'mentor'");
-		}	
-		if (role === "student") {
-			users = await db.query("SELECT * FROM users INNER JOIN students ON (users.user_id = students.student_id) ");
-		}
+		res.json(users.rows);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
+router.get("/users/admin", async (req, res) => {
+	try {
+		let users = await db.query("SELECT * FROM users WHERE role = 'admin'");		
+		res.json(users.rows);
+	} catch (err) {
+		console.error(err);
+	}
+});
+router.get("/users/mentor", async (req, res) => {
+	try {
+		let users = await db.query("SELECT * FROM users WHERE role = 'mentor'");
+		res.json(users.rows);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
+router.get("/users/student", async (req, res) => {
+	try {
+		let users = await db.query(
+			"SELECT * FROM users u INNER JOIN students s ON (u.user_id = s.student_id)"
+		);
 		res.json(users.rows);
 	} catch (err) {
 		console.error(err);
