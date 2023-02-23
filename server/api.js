@@ -88,6 +88,21 @@ router.get("/users/mentor/:id", async (req, res) => {
 		console.error(err);
 	}
 });
+router.get("/users/student/:id", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.id);
+		const users = await db.query(
+			"SELECT u.*, s.module, s.lesson, s.skill, us.full_name AS mentor_name FROM users u INNER JOIN students s ON (u.user_id = s.student_id) INNER JOIN users us ON (us.user_id = s.mentor_id) WHERE u.role = $1 AND u.user_id = $2",
+			["student", userId]
+		);
+		if (users.rows.length < 1) {
+			res.status(404).json({ message: "User not found" });
+		}
+		res.json(users.rows[0]);
+	} catch (err) {
+		console.error(err);
+	}
+});
 
 //post
 
