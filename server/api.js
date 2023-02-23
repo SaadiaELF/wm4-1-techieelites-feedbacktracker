@@ -12,13 +12,7 @@ router.get("/", (_, res) => {
 
 router.get("/users", async (req, res) => {
 	try {
-		
-		const users = await db.query(
-			"SELECT * FROM users"
-		);
-		if (!users) {
-			return res.status(404).json({ message: "No users found" });
-		}
+		const users = await db.query("SELECT * FROM users");
 		res.json(users.rows);
 	} catch (err) {
 		console.error(err);
