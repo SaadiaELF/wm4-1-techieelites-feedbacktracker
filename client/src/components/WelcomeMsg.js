@@ -5,7 +5,7 @@ const WelcomeMsg = ({ message }) => (
 	<Typography
 		variant="h4"
 		sx={{
-			fontSize: { xs: 20, md: 30 },
+			fontSize: { xs: 20, md: 32 },
 			fontWeight:500
 		}}
 	>

@@ -29,9 +29,7 @@ const Profile = () => {
 	return (
 		<Stack
 			spacing={2}
-			sx={{
-				alignItems: "center",
-			}}
+			sx={{ alignItems: "center", top: 30, position: "relative" }}
 		>
 			<Avatar
 				sx={{
