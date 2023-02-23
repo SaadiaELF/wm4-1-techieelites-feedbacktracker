@@ -39,7 +39,7 @@ router.get("/users/mentor", async (req, res) => {
 router.get("/users/student", async (req, res) => {
 	try {
 		let users = await db.query(
-			"SELECT * FROM users u INNER JOIN students s ON (u.user_id = s.student_id)"
+			"SELECT u.*, s.module, s.lesson, s.skill, s.mentor_id FROM users u INNER JOIN students s ON (u.user_id = s.student_id)"
 		);
 		res.json(users.rows);
 	} catch (err) {
