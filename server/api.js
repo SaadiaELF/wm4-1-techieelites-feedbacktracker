@@ -12,7 +12,18 @@ router.get("/", (_, res) => {
 
 router.get("/users", async (req, res) => {
 	try {
-		const users = await db.query("SELECT * FROM users");
+		let users = await db.query("SELECT * FROM users");
+		
+		const role = req.query.role;	
+		if (role === "admin") {
+			users = await db.query("SELECT * FROM users WHERE role = 'admin'");
+		}
+		if (role === "mentor") {
+			users = await db.query("SELECT * FROM users WHERE role = 'mentor'");
+		}	
+		if (role === "student") {
+			users = await db.query("SELECT * FROM users INNER JOIN students ON (users.user_id = students.student_id) ");
+		}
 		res.json(users.rows);
 	} catch (err) {
 		console.error(err);
