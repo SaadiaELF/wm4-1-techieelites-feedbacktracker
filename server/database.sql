@@ -20,8 +20,15 @@ CREATE TABLE users (
 
 CREATE TABLE admins (admin_id INT REFERENCES users(id));
 
-CREATE TABLE mentors (mentor_id INT REFERENCES users(id));
-
+CREATE TABLE mentors (
+    mentor_id integer NOT NULL DEFAULT 'nextval('mentors_mentor_id_seq'::regclass)',
+    CONSTRAINT mentors_pkey PRIMARY KEY (mentor_id),
+    CONSTRAINT user_id FOREIGN KEY (mentor_id)
+        REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+)
 CREATE TABLE students (
     student_id integer NOT NULL DEFAULT 'nextval('students_student_id_seq'::regclass)',
     module character varying(120) COLLATE pg_catalog."default",
@@ -30,12 +37,12 @@ CREATE TABLE students (
     skill character varying COLLATE pg_catalog."default",
     CONSTRAINT students_pkey PRIMARY KEY (student_id),
     CONSTRAINT mentor_id FOREIGN KEY (mentor_id)
-        REFERENCES public.mentors (mentor_id) MATCH SIMPLE
+        REFERENCES mentors (mentor_id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT user_id FOREIGN KEY (student_id)
-        REFERENCES public.users (user_id) MATCH SIMPLE
+        REFERENCES users (user_id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
         NOT VALID
