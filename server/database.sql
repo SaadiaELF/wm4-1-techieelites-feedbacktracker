@@ -8,14 +8,15 @@ DROP TABLE IF EXISTS students;
 
 
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    full_name VARCHAR(30) NOT NULL,
-    email VARCHAR(120) NOT NULL,
-    password VARCHAR(120) NOT NULL,
-    role VARCHAR(30) NOT NULL,
-    bio VARCHAR(120),
-    img_url VARCHAR(120)
-);
+    user_id integer NOT NULL DEFAULT 'nextval('users_user_id_seq'::regclass)',
+    full_name character varying(120) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(120) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(120) COLLATE pg_catalog."default" NOT NULL,
+    role character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    img_url character varying(120) COLLATE pg_catalog."default",
+    bio character varying COLLATE pg_catalog."default",
+    CONSTRAINT users_pkey PRIMARY KEY (user_id)
+)
 
 CREATE TABLE admins (admin_id INT REFERENCES users(id));
 
