@@ -1,70 +1,46 @@
-DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE admin
-(
-    admin_id integer NOT NULL,
-    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    password character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    role character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'admin'::character varying,
-    bio character varying(200) COLLATE pg_catalog."default",
-    img_url character varying(100) COLLATE pg_catalog."default",
-    full_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT admin_pkey PRIMARY KEY (admin_id)
-);
-
-
-
+DROP TABLE IF EXISTS admins;
 
 DROP TABLE IF EXISTS mentors;
 
-CREATE TABLE mentors
-(
-    mentor_id integer NOT NULL,
-    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    password character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    role character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'mentor'::character varying,
-    bio character varying(200) COLLATE pg_catalog."default",
-    img_url character varying(100) COLLATE pg_catalog."default",
-    full_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT mentor_pkey PRIMARY KEY (mentor_id)
-);
-
-
-
-
 DROP TABLE IF EXISTS students;
 
-CREATE TABLE students
-(
-    student_id integer NOT NULL,
-    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    password character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    role character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'student'::character varying,
-    module character varying(30) COLLATE pg_catalog."default",
-    lesson character varying(50) COLLATE pg_catalog."default",
-    skill character varying(30) COLLATE pg_catalog."default",
-    bio character varying(200) COLLATE pg_catalog."default",
-    img_url character varying(100) COLLATE pg_catalog."default",
-    mentor_id integer,
-    full_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT student_pkey PRIMARY KEY (student_id),
-    CONSTRAINT mentor FOREIGN KEY (mentor_id)
-        REFERENCES public.mentors (mentor_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(30) NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    password VARCHAR(120) NOT NULL,
+    role VARCHAR(30) NOT NULL,
+    bio VARCHAR(120),
+    img_url VARCHAR(120)
 );
 
+CREATE TABLE admins (admin_id INT REFERENCES users(id));
 
+CREATE TABLE mentors (mentor_id INT REFERENCES users(id));
 
-
-DROP TABLE IF EXISTS "user";
-
-CREATE TABLE "user"
-(
-    id integer NOT NULL,
-    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    password character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    role character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT user_pkey PRIMARY KEY (id)
+CREATE TABLE students (
+    student_id INT REFERENCES users(id) customer_id INT REFERENCES customers(id),
+    mentor_id INT REFERENCES mentors(id),
+    module VARCHAR(120),
+    lesson VARCHAR(120),
+    skill VARCHAR(120)
 );
+
+INSERT INTO users (full_name, email, password, role, bio, img_url)
+VALUES
+    ();
+
+INSERT INTO admins(admin_id)
+VALUES
+    ();
+
+INSERT INTO mentors(mentor_id)
+VALUES
+    ();
+
+INSERT INTO students(student_id, module, lesson, skill)
+VALUES
+    ();
