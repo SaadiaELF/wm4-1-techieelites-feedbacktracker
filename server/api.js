@@ -149,7 +149,7 @@ router.post("/users", async (req, res) => {
 		} else if (newUserRole === "admin") {
 			await db.query("INSERT INTO admins (admin_id) VALUES ($1)", [id]);
 		}
-		res.json(newUser.rows[0]);
+		res.json({message: "User created successfully"});
 	} catch (err) {
 		console.error(err);
 	}
@@ -158,10 +158,14 @@ router.post("/users", async (req, res) => {
 router.put("/users/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
+		
 		const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
 			userId,
 		]);
 		const userData = user.rows[0];
+		if (!userData){
+			res.status(404).json({ message: "User not found"})
+		}
 		const {
 			full_name = userData.full_name,
 			email = userData.email,
@@ -189,6 +193,9 @@ router.put("/users/student/:id", async (req, res) => {
 			[userId]
 		);
 		const userData = user.rows[0];
+		if (!userData) {
+			res.status(404).json({ message: "User not found" });
+		}
 		const {
 			module = userData.module,
 			lesson = userData.lesson,
@@ -208,8 +215,14 @@ router.put("/users/student/:id", async (req, res) => {
 router.delete("/users/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
-		await db.query("DELETE FROM users WHERE user_id = $1", [userId]);
+
+		const userData = await db.query("DELETE FROM users WHERE user_id = $1", [userId]);
+		if (!userData.rowCount) {
+			res.status(404).json({ message: "User not found" });
+		} else {
+	
 		res.json({ message: "User deleted" });
+		}
 	} catch (err) {
 		console.error(err);
 	}
