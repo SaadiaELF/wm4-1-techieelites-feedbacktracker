@@ -94,7 +94,7 @@ router.get("/users/student/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
 		const users = await db.query(
-			"SELECT u.*, s.module, s.lesson, s.skill, us.full_name AS mentor_name FROM users u INNER JOIN students s ON (u.user_id = s.student_id) INNER JOIN users us ON (us.user_id = s.mentor_id) WHERE u.role = $1 AND u.user_id = $2",
+			"SELECT u.*, s.module, s.lesson, s.skill, us.full_name AS mentor_name FROM users u INNER JOIN students s ON (u.user_id = s.student_id) LEFT JOIN users us ON (us.user_id = s.mentor_id) WHERE u.role = $1 AND u.user_id = $2",
 			["student", userId]
 		);
 		if (users.rows.length < 1) {
@@ -115,9 +115,17 @@ router.post("/users", async (req, res) => {
 			useLetters: false,
 		});
 		const { full_name, email, password, role, img_url = null, bio = null } = req.body;
-		const user = await db.query("INSERT INTO users (user_id, full_name, email, password, role, img_url, bio) VALUES ($1, $2, $3, $4, $5, $6, $7)", [id, full_name, email, password, role, img_url, bio]);
+		 await db.query("INSERT INTO users (user_id, full_name, email, password, role, img_url, bio) VALUES ($1, $2, $3, $4, $5, $6, $7)", [id, full_name, email, password, role, img_url, bio]);
 		const newUser = await db.query("SELECT * FROM users WHERE user_id = $1", [id]);
-		//if (){}
+		const newUserRole = newUser.rows[0].role;
+
+		if (newUserRole === 'student'){
+			
+			const { module = null, lesson = null, skill = null, mentor_id = null } = req.body;
+			await db.query("INSERT INTO students (student_id, module, lesson, skill, mentor_id) VALUES ($1, $2, $3, $4, $5)", [id, module, lesson, skill, mentor_id])
+			
+
+		}
 		res.json(newUser.rows[0]);
 	} catch (err) {
 		console.error(err);
