@@ -23,6 +23,8 @@ CREATE TABLE admins (
     CONSTRAINT admins_pkey PRIMARY KEY (admin_id),
     CONSTRAINT user_id FOREIGN KEY (admin_id)
         REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         NOT VALID
 )
 
@@ -45,8 +47,6 @@ CREATE TABLE students (
     CONSTRAINT students_pkey PRIMARY KEY (student_id),
     CONSTRAINT mentor_id FOREIGN KEY (mentor_id)
         REFERENCES mentors (mentor_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT user_id FOREIGN KEY (student_id)
         REFERENCES users (user_id) MATCH SIMPLE
