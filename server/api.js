@@ -120,12 +120,13 @@ router.post("/users", async (req, res) => {
 		const newUserRole = newUser.rows[0].role;
 
 		if (newUserRole === 'student'){
-			
 			const { module = null, lesson = null, skill = null, mentor_id = null } = req.body;
 			await db.query("INSERT INTO students (student_id, module, lesson, skill, mentor_id) VALUES ($1, $2, $3, $4, $5)", [id, module, lesson, skill, mentor_id])
-			
-
-		}
+			} else if (newUserRole === 'mentor'){
+				await db.query("INSERT INTO mentors (mentor_id) VALUES ($1)", [id]);
+			} else if (newUserRole === 'admin'){
+				await db.query("INSERT INTO admins (admin_id) VALUES ($1)", [id]);
+			}
 		res.json(newUser.rows[0]);
 	} catch (err) {
 		console.error(err);
