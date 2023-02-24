@@ -23,12 +23,23 @@ CREATE TABLE admins (admin_id INT REFERENCES users(id));
 CREATE TABLE mentors (mentor_id INT REFERENCES users(id));
 
 CREATE TABLE students (
-    student_id INT REFERENCES users(id) customer_id INT REFERENCES customers(id),
-    mentor_id INT REFERENCES mentors(id),
-    module VARCHAR(120),
-    lesson VARCHAR(120),
-    skill VARCHAR(120)
-);
+    student_id integer NOT NULL DEFAULT 'nextval('students_student_id_seq'::regclass)',
+    module character varying(120) COLLATE pg_catalog."default",
+    lesson character varying COLLATE pg_catalog."default",
+    mentor_id integer DEFAULT 'nextval('students_mentor_id_seq'::regclass)',
+    skill character varying COLLATE pg_catalog."default",
+    CONSTRAINT students_pkey PRIMARY KEY (student_id),
+    CONSTRAINT mentor_id FOREIGN KEY (mentor_id)
+        REFERENCES public.mentors (mentor_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID,
+    CONSTRAINT user_id FOREIGN KEY (student_id)
+        REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+)
 
 INSERT INTO users (full_name, email, password, role, bio, img_url)
 VALUES
