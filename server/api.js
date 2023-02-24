@@ -94,7 +94,7 @@ router.get("/users/student/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
 		const users = await db.query(
-			"SELECT u.*, s.module, s.lesson, s.skill, us.full_name AS mentor_name FROM users u INNER JOIN students s ON (u.user_id = s.student_id) LEFT JOIN users us ON (us.user_id = s.mentor_id) WHERE u.role = $1 AND u.user_id = $2",
+			"SELECT u.*, s.module, s.lesson, s.skill, CASE WHEN s.mentor_id IS NOT NULL THEN us.full_name END AS mentor_name FROM users u INNER JOIN students s ON (u.user_id = s.student_id) LEFT JOIN users us ON (us.user_id = s.mentor_id) WHERE u.role = $1 AND u.user_id = $2",
 			["student", userId]
 		);
 		if (users.rows.length < 1) {
