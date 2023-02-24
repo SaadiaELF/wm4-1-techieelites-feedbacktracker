@@ -2,6 +2,8 @@ import { response, Router } from "express";
 import db from "./db";
 
 import logger from "./utils/logger";
+const generateUniqueId = require("generate-unique-id");
+
 
 const router = Router();
 
@@ -108,10 +110,20 @@ router.get("/users/student/:id", async (req, res) => {
 
 router.post("/users", async (req, res) => {
 	try {
+		const id = generateUniqueId({
+			length: 6,
+			useLetters: false,
+		});
+		const { full_name, email, password, role, img_url = null, bio = null } = req.body;
+		const user = await db.query("INSERT INTO users (user_id, full_name, email, password, role, img_url, bio) VALUES ($1, $2, $3, $4, $5, $6, $7)", [id, full_name, email, password, role, img_url, bio]);
+		const newUser = await db.query("SELECT * FROM users WHERE user_id = $1", [id]);
+		//if (){}
+		res.json(newUser.rows[0]);
 	} catch (err) {
 		console.error(err);
 	}
 });
+
 
 router.put("/users/:id", async (req, res) => {
 	try {
