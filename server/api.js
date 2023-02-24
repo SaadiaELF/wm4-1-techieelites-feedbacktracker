@@ -181,6 +181,24 @@ router.put("/users/:id", async (req, res) => {
 	}
 });
 
+router.put("/users/student/:id", async (req, res) => {
+	try {
+const userId = parseInt(req.params.id);
+const user = await db.query("SELECT * FROM students WHERE student_id = $1", [userId]);
+const userData = user.rows[0];
+const {
+	module = userData.module,
+	lesson = userData.lesson,
+	skill = userData.skill,
+	mentor_id = userData.mentor_id,
+} = req.body;
+await db.query("UPDATE students SET module = $1, lesson = $2, skill = $3, mentor_id = $4 WHERE student_id = $5", [module, lesson, skill, mentor_id, userId])
+		res.json({ message: "User updated" });
+	} catch (error) {
+		console.error(error);
+	}
+})
+
 router.delete("/users/:id", async (req, res) => {
 	try {
 	} catch (err) {
