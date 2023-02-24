@@ -23,8 +23,6 @@ CREATE TABLE admins (
     CONSTRAINT admins_pkey PRIMARY KEY (admin_id),
     CONSTRAINT user_id FOREIGN KEY (admin_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
         NOT VALID
 )
 
