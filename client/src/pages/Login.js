@@ -70,6 +70,7 @@ const isEmailValid = (email) => {
 							error={errors.email}
 							onBlur={handleEmailBlur}
 							required
+							helperText={errors.email? "Please enter a valid email" : ""}
 							onChange={(e) => setValues({ ...values, email: e.target.value })}
 						></TextField>
 
@@ -84,6 +85,7 @@ const isEmailValid = (email) => {
 							value={values.password}
 							error={errors.password}
 							required
+							helperText={errors.password? "Please enter a valid password" : ""}
 							onBlur={handlePasswordBlur}
 							onChange={(e) =>
 								setValues({ ...values, password: e.target.value })
