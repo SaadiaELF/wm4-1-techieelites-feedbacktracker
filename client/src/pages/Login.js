@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -12,8 +12,27 @@ const Login = () => {
 		showPassword: false,
 	});
 
+	async function setToken() {
+		try {
+			const res = await fetch("/api/login", {
+				method: "POST",
+				body: JSON.stringify(values),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			document.cookie = `token=${data.token}`;
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	}
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setToken();
 	};
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
@@ -75,7 +94,9 @@ const Login = () => {
 							}}
 						></TextField>
 
-						<RedButton fullWidth>Login</RedButton>
+						<RedButton type="submit" fullWidth>
+							Login
+						</RedButton>
 					</Stack>
 				</form>
 			</Stack>
