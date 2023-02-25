@@ -4,7 +4,8 @@ import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RedButton from "../components/RedButton";
-import { useForm, Controller } from "react-hook-form";
+
+
 
 const Login = () => {
 	const [values, setValues] = useState({
@@ -12,22 +13,37 @@ const Login = () => {
 		password: "",
 		showPassword: false,
 	});
+	const [errors, setErrors] = useState({
+		email: false,
+		password: false,
+	});
 
-	 const { control, handleSubmit } = useForm({
-			defaultValues: {
-				email: "",
-				password: "",
-				
-			},
-		});
-		const onSubmit = (data) => console.log(data);
-
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-	// };
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(values);
+		
+	};
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
 	};
+const isEmailValid = (email) => {
+	/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email);
+}
+	const handleEmailBlur = () => {
+		if (!isEmailValid(values.email)) {
+			console.log(errors.email);
+		setErrors({...errors, email:!errors.email });
+		return;
+	}
+	setErrors({...errors, email:false });
+}
+	const handlePasswordBlur = () => {
+		if (!values.password || values.password.length < 6 || values.password.length > 20) {
+			setErrors({ ...errors, password: !errors.password });
+			return;
+		} 
+		setErrors({...errors, password: false });
+	}
 
 	return (
 		<div style={{ marginInline: "auto", maxWidth: "72rem" }}>
@@ -40,67 +56,58 @@ const Login = () => {
 						Hello again, you have been missed
 					</Typography>
 				</Stack>
-
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit}>
 					<Stack spacing={2}>
-						<Controller
+						<TextField
+							variant="outlined"
+							label="Email"
+							type="email"
+							fullWidth
+							id="email"
 							name="email"
-							control={control}
-							render={({ field }) => (
-								<TextField
-									variant="outlined"
-									label="Email"
-									type="email"
-									fullWidth
-									id="email"
-									name="email"
-									placeholder="example@gmail.com"
-									required
-									{...field}
-								/>
-							)}
-						/>
+							placeholder="example@gmail.com"
+							value={values.email}
+							error={errors.email}
+							onBlur={handleEmailBlur}
+							required
+							onChange={(e) => setValues({ ...values, email: e.target.value })}
+						></TextField>
 
-						<Controller
+						<TextField
+							variant="outlined"
+							label="Password"
+							type={values.showPassword ? "text" : "password"}
+							fullWidth
+							id="password"
 							name="password"
-							control={control}
-							render={({ field : {  onClick, ...field }}) => (
-								<TextField
-									variant="outlined"
-									label="Password"
-									type="password"
-									fullWidth
-									id="password"
-									name="password"
-									placeholder="********"
-									required
-									InputProps={{
-										endAdornment: (
-											<InputAdornment position="end">
-												<IconButton
-													onClick={handlePasswordVisibility}
-													aria-label="toggle password"
-													edge="end"
-												>
-													{values.showPassword ? (
-														<VisibilityOffIcon />
-													) : (
-														<VisibilityIcon />
-													)}
-												</IconButton>
-											</InputAdornment>
-										),
-									}}
-									{...field}
-								/>
-							)}
-						/>
+							placeholder="********"
+							value={values.password}
+							error={errors.password}
+							required
+							onBlur={handlePasswordBlur}
+							onChange={(e) =>
+								setValues({ ...values, password: e.target.value })
+							}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="end">
+										<IconButton
+											onClick={handlePasswordVisibility}
+											aria-label="toggle password"
+											edge="end"
+										>
+											{values.showPassword ? (
+												<VisibilityOffIcon />
+											) : (
+												<VisibilityIcon />
+											)}
+										</IconButton>
+									</InputAdornment>
+								),
+							}}
+						></TextField>
 
-						
-
-						<RedButton fullWidth type="submit">
-							Login
-						</RedButton>
+						<RedButton type="submit" fullWidth>Login</RedButton>
 					</Stack>
 				</form>
 			</Stack>
@@ -109,5 +116,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
