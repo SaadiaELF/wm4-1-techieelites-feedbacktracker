@@ -2,7 +2,8 @@ import { Router } from "express";
 import db from "./db";
 import logger from "./utils/logger";
 import jsonwebtoken from "jsonwebtoken";
-import generateUniqueId from "generate-unique-id";
+import auth from "./utils/auth";
+import "dotenv/config";
 
 const router = Router();
 
@@ -13,17 +14,16 @@ router.get("/", (_, res) => {
 
 router.post("/login", async (req, res) => {
 	try {
-		const JWT_SECRET = generateUniqueId({
-			length: 20,
-		});
-
+		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
 		if (email === user.rows[0].email && password === user.rows[0].password) {
 			return res.json({
-				token: jsonwebtoken.sign({ user: user.rows[0].email }, JWT_SECRET),
+				token: jsonwebtoken.sign({ user: user.rows[0].email }, JWT_SECRET, {
+					expiresIn: "1800s",
+				}),
 			});
 		}
 		return res
