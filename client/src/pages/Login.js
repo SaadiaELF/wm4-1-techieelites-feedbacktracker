@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
+import { IconButton, InputAdornment, Stack, Typography, Alert } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RedButton from "../components/RedButton";
@@ -17,9 +17,11 @@ const Login = () => {
 		email: false,
 		password: false,
 	});
-
+//check form validity
+const [formIsValid, setFormIsValid] = useState();
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setFormIsValid("Loading...");
 		
 	};
 	const handlePasswordVisibility = () => {
@@ -30,7 +32,6 @@ const isEmailValid = (email) => {
 }
 	const handleEmailBlur = () => {
 		if (!isEmailValid(values.email)) {
-			console.log(errors.email);
 		setErrors({...errors, email:!errors.email });
 		return;
 	}
@@ -69,7 +70,7 @@ const isEmailValid = (email) => {
 							error={errors.email}
 							onBlur={handleEmailBlur}
 							required
-							helperText={errors.email? "Please enter a valid email" : ""}
+							helperText={errors.email ? "Please enter a valid email" : ""}
 							onChange={(e) => setValues({ ...values, email: e.target.value })}
 						></TextField>
 
@@ -84,7 +85,9 @@ const isEmailValid = (email) => {
 							value={values.password}
 							error={errors.password}
 							required
-							helperText={errors.password? "Please enter a valid password" : ""}
+							helperText={
+								errors.password ? "Please enter a valid password" : ""
+							}
 							onBlur={handlePasswordBlur}
 							onChange={(e) =>
 								setValues({ ...values, password: e.target.value })
@@ -108,7 +111,16 @@ const isEmailValid = (email) => {
 							}}
 						></TextField>
 
-						<RedButton type="submit" fullWidth>Login</RedButton>
+						<RedButton type="submit" fullWidth>
+							Login
+						</RedButton>
+						<span>
+							{formIsValid && (
+								<Alert severity="success">
+								{formIsValid}
+								</Alert>
+							)}
+						</span>
 					</Stack>
 				</form>
 			</Stack>
