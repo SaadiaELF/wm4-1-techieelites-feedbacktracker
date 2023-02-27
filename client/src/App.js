@@ -22,10 +22,9 @@ const App = () => (
 			<Navbar />
 		</div>
 		<Routes>
-			<Route path="/" element={<Login />} />
-			<Route path="/about/this/site" element={<About />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/about" element={<About />} />
 			<Route path="/student" element={<StudentDashboard theme={theme} />} />
-			<Route path="/not" element={<h1>404</h1>} />
 		</Routes>
 	</div>
 );
