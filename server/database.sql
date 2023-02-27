@@ -1,6 +1,7 @@
-DDROP TABLE IF EXISTS module;
+DROP TABLE IF EXISTS module;
 
 
+DROP TABLE IF EXISTS student_mentor;
 
 DROP TABLE IF EXISTS users;
 
@@ -22,6 +23,24 @@ CREATE TABLE module
 )
 
 
+
+CREATE TABLE student_mentor
+(
+    student_id integer NOT NULL DEFAULT 'nextval('students_student_id_seq'::regclass)',
+    mentor_id integer DEFAULT 'nextval('students_mentor_id_seq'::regclass)',
+    mentor_type mentor_type,
+    CONSTRAINT students_pkey PRIMARY KEY (student_id),
+    CONSTRAINT mentor_id FOREIGN KEY (mentor_id)
+        REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT user_id FOREIGN KEY (student_id)
+        REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+)
 
 CREATE TABLE users
 (
