@@ -9,23 +9,12 @@ import Progress from "../components/Progress";
 const StudentDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 
-	function authHeader() {
-		const user = JSON.parse(localStorage.getItem("user"));
-
-		if (user && user.token) {
-			// for Node.js Express back-end
-			return { "x-access-token": user.token };
-		} else {
-			return {};
-		}
-	}
-
 	const getUserById = async () => {
 		try {
 			const user = JSON.parse(localStorage.getItem("user"));
 
 			const res = await fetch(`/api/users/${user.userId}`, {
-				headers: authHeader(),
+				headers: { authorization: `Bearer ${user.token}` },
 			});
 			const data = await res.json();
 			console.log({ data });
