@@ -12,7 +12,7 @@ router.get("/", (_, res) => {
 	res.json({ message: "Hello, world!" });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
 	try {
 		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
@@ -21,7 +21,9 @@ router.post("/login", async (req, res) => {
 		]);
 		if (email === user.rows[0].email && password === user.rows[0].password) {
 			return res.json({
-				token: jsonwebtoken.sign({ user: user.rows[0].email }, JWT_SECRET, {
+				userId: user.rows[0].user_id,
+				role: user.rows[0].role,
+				token: jsonwebtoken.sign({ user: user.rows[0].user_id }, JWT_SECRET, {
 					expiresIn: "1800s",
 				}),
 			});
@@ -29,6 +31,18 @@ router.post("/login", async (req, res) => {
 		return res
 			.status(401)
 			.json({ message: "The email and password your provided are invalid" });
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+router.get("/users/:id", async (req, res) => {
+	try {
+		const userId = req.params.id;
+		const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
+			userId,
+		]);
+		return res.json(user.rows[0]);
 	} catch (error) {
 		console.log(error);
 	}

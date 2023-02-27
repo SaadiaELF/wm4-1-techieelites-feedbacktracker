@@ -6,22 +6,58 @@ import Profile from "../components/Profile";
 import FeedbackModal from "../components/FeedbackModal";
 import Progress from "../components/Progress";
 
-const StudentDashboard = ({ theme }) => (
-	<ThemeProvider theme={theme}>
-		<Stack
-			sx={{
-				maxWidth: "380px",
-				padding: "1rem",
-				margin: "auto",
-			}}
-			spacing={2}
-		>
-			<WelcomeMsg message="Welcome student name!👋" />
-			<Profile />
-      <Progress />
-			<FeedbackModal />
-		</Stack>
-	</ThemeProvider>
-);
+const StudentDashboard = ({ theme }) => {
+	const [user, setUser] = React.useState({});
+
+	function authHeader() {
+		const user = JSON.parse(localStorage.getItem("user"));
+
+		if (user && user.token) {
+			// for Node.js Express back-end
+			return { "x-access-token": user.token };
+		} else {
+			return {};
+		}
+	}
+
+	const getUserById = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/users/${user.userId}`, {
+				headers: authHeader(),
+			});
+			const data = await res.json();
+			console.log({ data });
+			setUser(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
+	React.useEffect(() => {
+		getUserById();
+	}, []);
+
+	return (
+		<ThemeProvider theme={theme}>
+			<Stack
+				sx={{
+					maxWidth: "380px",
+					padding: "1rem",
+					margin: "auto",
+				}}
+				spacing={2}
+			>
+				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
+				<Profile />
+				<Progress />
+				<FeedbackModal />
+			</Stack>
+		</ThemeProvider>
+	);
+};
 
 export default StudentDashboard;

@@ -1,28 +1,38 @@
 import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useNavigate } from "react-router-dom";
+import {
+	IconButton,
+	InputAdornment,
+	Stack,
+	Typography,
+	TextField,
+} from "@mui/material";
+import { VisibilityIcon, VisibilityOffIcon } from "@mui/icons-material";
 import RedButton from "../components/RedButton";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
 		showPassword: false,
 	});
 
-	async function setToken() {
+	async function login() {
 		try {
-			const res = await fetch("/api/login", {
+			const res = await fetch("/api/auth/login", {
 				method: "POST",
 				body: JSON.stringify(values),
 				headers: {
 					"Content-Type": "application/json",
 				},
 			});
-			const data = await res.json();
-			document.cookie = `token=${data.token}`;
+
+			if (res.status === 200) {
+				const data = await res.json();
+				localStorage.setItem("user", JSON.stringify(data));
+			}
+			return res;
 		} catch {
 			(error) => {
 				console.error(error);
@@ -32,8 +42,19 @@ const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setToken();
+		login().then(() => {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			if (user.role === "student") {
+				navigate("/student");
+				window.location.reload();
+			} else {
+				navigate("/not");
+				window.location.reload();
+			}
+		});
 	};
+	
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
 	};
