@@ -36,7 +36,7 @@ router.post("/auth/login", async (req, res) => {
 	}
 });
 
-router.get("/users/:id", async (req, res) => {
+router.get("/users/:id", auth, async (req, res) => {
 	try {
 		const userId = req.params.id;
 		const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
