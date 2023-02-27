@@ -17,7 +17,6 @@ const StudentDashboard = ({ theme }) => {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
 			const data = await res.json();
-			console.log({ data });
 			setUser(data);
 		} catch {
 			(error) => {
