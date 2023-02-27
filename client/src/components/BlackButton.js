@@ -3,9 +3,9 @@ import { styled } from "@mui/material/styles";
 
 const BlackButton = styled(Button)(({ theme }) => ({
 	margin: 5,
-	color: theme.palette.getContrastText("#000000"),
+	color: theme.palette.getContrastText("#231F20"),
 	textTransform: "none",
-	backgroundColor: "#000000",
+	backgroundColor: "#231F20",
 	"&:hover": {
 		color: theme.palette.getContrastText("#dbd9d9"),
 		backgroundColor: "#dbd9d9",
