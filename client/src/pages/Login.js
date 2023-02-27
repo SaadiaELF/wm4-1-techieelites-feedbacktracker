@@ -7,7 +7,8 @@ import {
 	Typography,
 	TextField,
 } from "@mui/material";
-import { VisibilityIcon, VisibilityOffIcon } from "@mui/icons-material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RedButton from "../components/RedButton";
 
 const Login = () => {
@@ -48,13 +49,18 @@ const Login = () => {
 			if (user.role === "student") {
 				navigate("/student");
 				window.location.reload();
+			} else if (user.role === "admin") {
+				navigate("/admin");
+				window.location.reload();
+			} else if (user.role === "mentor") {
+				navigate("/mentor");
+				window.location.reload();
 			} else {
-				navigate("/not");
 				window.location.reload();
 			}
 		});
 	};
-	
+
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
 	};
