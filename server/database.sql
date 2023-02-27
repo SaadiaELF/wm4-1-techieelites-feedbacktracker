@@ -1,5 +1,7 @@
+
 DROP TABLE IF EXISTS module;
 
+DROP TABLE IF EXISTS student_feedback;
 
 DROP TABLE IF EXISTS student_mentor;
 
@@ -22,6 +24,26 @@ CREATE TABLE module
         NOT VALID
 )
 
+CREATE TABLE student_feedback
+(
+    sfeedback_id integer NOT NULL,
+    student_id integer NOT NULL DEFAULT 'nextval('student_feedback_student_id_seq'::regclass)',
+    module_id integer NOT NULL DEFAULT 'nextval('student_feedback_module_id_seq'::regclass)',
+    module_type mentor_type NOT NULL DEFAULT 'tech'::mentor_type,
+    text character varying(255) COLLATE pg_catalog."default",
+    date date,
+    CONSTRAINT mentors_pkey PRIMARY KEY (sfeedback_id),
+    CONSTRAINT module_id FOREIGN KEY (module_id)
+        REFERENCES module (module_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT student_id FOREIGN KEY (student_id)
+        REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
 
 
 CREATE TABLE student_mentor
