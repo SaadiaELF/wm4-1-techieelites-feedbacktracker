@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Stack, Card, Avatar, CardContent, Typography, Chip } from "@mui/material";
-import RedButton from "./RedButton";
+import { Stack, Card, Avatar, CardContent, Typography } from "@mui/material";
 import BlackChip from "./BlackChip";
+import RedChip from "./RedChip";
 
 const StudentInfo = () => {
 	const [avatar, setAvatar] = useState("");
@@ -48,8 +48,8 @@ const StudentInfo = () => {
 						{fullName}
 					</Typography>
 					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
-						<BlackChip label="	Module" />
-						<Chip label="	Soft Skill" />
+						<RedChip label="	Module" />
+						<BlackChip label="	Soft Skill" />
 						{/* <RedButton size="small">Module</RedButton>
 						<BlackButton size="small">Soft Skill</BlackButton> */}
 					</Stack>
