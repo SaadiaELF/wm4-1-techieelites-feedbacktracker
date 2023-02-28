@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { IconButton, InputAdornment, Stack, Typography, Alert } from "@mui/material";
+import {
+	IconButton,
+	InputAdornment,
+	Stack,
+	Typography,
+	Alert,
+} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RedButton from "../components/RedButton";
-
-
 
 const Login = () => {
 	const [values, setValues] = useState({
@@ -17,33 +21,41 @@ const Login = () => {
 		email: false,
 		password: false,
 	});
-//check form validity
-const [formIsValid, setFormIsValid] = useState();
+
+	//check form validity
+	const [formIsValid, setFormIsValid] = useState();
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setFormIsValid("Loading...");
-		
 	};
+
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
 	};
-const isEmailValid = (email) => {
-	/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email);
-}
+
+	const isEmailValid = (email) => {
+		/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email);
+	};
+
 	const handleEmailBlur = () => {
 		if (!isEmailValid(values.email)) {
-		setErrors({...errors, email:!errors.email });
-		return;
-	}
-	setErrors({...errors, email:false });
-}
+			setErrors({ ...errors, email: !errors.email });
+			return;
+		}
+		setErrors({ ...errors, email: false });
+	};
+
 	const handlePasswordBlur = () => {
-		if (!values.password || values.password.length < 6 || values.password.length > 20) {
+		if (
+			!values.password ||
+			values.password.length < 6 ||
+			values.password.length > 20
+		) {
 			setErrors({ ...errors, password: !errors.password });
 			return;
-		} 
-		setErrors({...errors, password: false });
-	}
+		}
+		setErrors({ ...errors, password: false });
+	};
 
 	return (
 		<div style={{ marginInline: "auto", maxWidth: "72rem" }}>
@@ -115,11 +127,7 @@ const isEmailValid = (email) => {
 							Login
 						</RedButton>
 						<span>
-							{formIsValid && (
-								<Alert severity="success">
-								{formIsValid}
-								</Alert>
-							)}
+							{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
 						</span>
 					</Stack>
 				</form>
