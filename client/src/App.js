@@ -19,9 +19,7 @@ const theme = createTheme({
 
 const App = () => (
 	<div className="App">
-		<div>
-			<Navbar />
-		</div>
+		<Navbar />
 		<Routes>
 			<Route path="/" element={<Login />} />
 			<Route path="/about/this/site" element={<About />} />

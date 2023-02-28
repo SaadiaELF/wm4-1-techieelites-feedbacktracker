@@ -18,7 +18,7 @@ const StudentDashboard = ({ theme }) => (
 		>
 			<WelcomeMsg message="Welcome student name!👋" />
 			<Profile />
-      <Progress />
+			<Progress />
 			<FeedbackModal />
 		</Stack>
 	</ThemeProvider>
