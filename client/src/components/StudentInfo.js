@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Stack, Card, Avatar, CardContent, Typography } from "@mui/material";
+import { Stack, Card, Avatar, CardContent, Typography, Chip } from "@mui/material";
 import RedButton from "./RedButton";
-import BlackButton from "./BlackButton";
+import BlackChip from "./BlackChip";
 
 const StudentInfo = () => {
 	const [avatar, setAvatar] = useState("");
@@ -10,48 +10,48 @@ const StudentInfo = () => {
 		<Stack
 			spacing={2}
 			sx={{
-				alignItems: "center",
-				top: 75,
+				alignItems: "end",
+				top: 60,
 				position: "relative",
 			}}
 		>
+			<Avatar
+				sx={{
+					width: 90,
+					height: 90,
+					zIndex: 1,
+					left: 0,
+					bottom: 0,
+					position: "absolute",
+				}}
+				src={avatar}
+				alt="avatar"
+			></Avatar>
 			<Card
 				sx={{
 					display: "flex",
 					flexDirection: "column",
+					justifyContent: "center",
 					backgroundColor: "#F2EFF0",
-					maxHeight: 90,
-					width: "100%",
+					minHeight: 90,
+					width: "90%",
+					position: "relative",
 				}}
 			>
-				<Stack spacing={2}>
+				<CardContent sx={{ padding: "0 1rem !important" }}>
 					<Typography
-						sx={{ fontSize: 16, fontWeight: 800, padding: "0.5rem" }}
-						variant="p"
-						align="center"
+						sx={{marginLeft: "3rem", marginBottom: '0.5rem'}}
+						variant="body1"
+						
+						// align="center"
 					>
 						{fullName}
 					</Typography>
-				</Stack>
-
-				<CardContent>
-					<Avatar
-						sx={{
-							width: 90,
-							height: 90,
-							zIndex: 3,
-							position: "absolute",
-						}}
-						src={avatar}
-						alt="avatar"
-					></Avatar>
-					<Stack direction="row" sx={{ justifyContent: "end" }}>
-						<RedButton size="small" variant="contained">
-							Module
-						</RedButton>
-						<BlackButton size="small" variant="contained">
-							Soft Skill
-						</BlackButton>
+					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
+						<BlackChip label="	Module" />
+						<Chip label="	Soft Skill" />
+						{/* <RedButton size="small">Module</RedButton>
+						<BlackButton size="small">Soft Skill</BlackButton> */}
 					</Stack>
 				</CardContent>
 			</Card>
