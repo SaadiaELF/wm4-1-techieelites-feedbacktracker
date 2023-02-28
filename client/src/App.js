@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer";
 import StudentDashboard from "./pages/StudentDashboard";
 import Login from "./pages/Login";
 import { createTheme } from "@mui/material/styles";
@@ -20,12 +21,13 @@ const theme = createTheme({
 
 const App = () => (
 	<div className="App">
-			<Navbar />
+		<Navbar />
 		<Routes>
 			<Route path="/" element={<Login />} />
 			<Route path="/about/this/site" element={<About />} />
 			<Route path="/student" element={<StudentDashboard theme={theme} />} />
 		</Routes>
+		<Footer />
 	</div>
 );
 
