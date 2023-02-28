@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Stack, Card, Avatar, CardContent } from "@mui/material";
+import { Stack, Card, Avatar, CardContent, Typography } from "@mui/material";
 import RedButton from "./RedButton";
 import BlackButton from "./BlackButton";
 
 const StudentInfo = () => {
 	const [avatar, setAvatar] = useState("");
+	const [fullName, setFullName] = useState("Student Name");
 	return (
 		<Stack
 			spacing={2}
@@ -19,24 +20,39 @@ const StudentInfo = () => {
 					display: "flex",
 					flexDirection: "column",
 					backgroundColor: "#F2EFF0",
-					minHeight: 100,
+					maxHeight: 90,
 					width: "100%",
 				}}
 			>
-				{<h4>Student name</h4>}
+				<Stack spacing={2}>
+					<Typography
+						sx={{ fontSize: 16, fontWeight: 800, padding: "0.5rem" }}
+						variant="p"
+						align="center"
+					>
+						{fullName}
+					</Typography>
+				</Stack>
+
 				<CardContent>
 					<Avatar
 						sx={{
-							width: 100,
-							height: 100,
+							width: 90,
+							height: 90,
 							zIndex: 3,
 							position: "absolute",
 						}}
 						src={avatar}
 						alt="avatar"
 					></Avatar>
-          <RedButton>Module</RedButton>
-          <BlackButton>Course</BlackButton>
+					<Stack direction="row" sx={{ justifyContent: "end" }}>
+						<RedButton size="small" variant="contained">
+							Module
+						</RedButton>
+						<BlackButton size="small" variant="contained">
+							Soft Skill
+						</BlackButton>
+					</Stack>
 				</CardContent>
 			</Card>
 		</Stack>

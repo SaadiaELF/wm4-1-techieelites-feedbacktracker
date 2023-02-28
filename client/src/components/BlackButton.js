@@ -7,8 +7,8 @@ const BlackButton = styled(Button)(({ theme }) => ({
 	textTransform: "none",
 	backgroundColor: "#231F20",
 	"&:hover": {
-		color: theme.palette.getContrastText("#dbd9d9"),
-		backgroundColor: "#dbd9d9",
+		color: theme.palette.getContrastText("#201D1E"),
+		backgroundColor: "#201D1E",
 	},
 }));
 
