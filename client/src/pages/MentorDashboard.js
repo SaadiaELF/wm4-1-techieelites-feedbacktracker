@@ -16,10 +16,10 @@ const MentorDashboard = ({ theme }) => (
 			}}
 			spacing={2}
 		>
-			<WelcomeMsg message="Welcome student name!👋" />
+			<WelcomeMsg message="Welcome mentor name!👋" />
 			<Profile />
 			<StudentInfo />
-			<FeedbackModal />
+			
 		</Stack>
 	</ThemeProvider>
 );
