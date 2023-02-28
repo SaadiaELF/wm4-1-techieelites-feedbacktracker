@@ -17,6 +17,7 @@ const Login = () => {
 		password: "",
 		showPassword: false,
 	});
+
 	const [errors, setErrors] = useState({
 		email: false,
 		password: false,
@@ -32,6 +33,7 @@ const Login = () => {
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
 	};
+
 
 	const isEmailValid = (email) => {
 		/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email);
@@ -129,6 +131,7 @@ const Login = () => {
 						<span>
 							{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
 						</span>
+
 					</Stack>
 				</form>
 			</Stack>
