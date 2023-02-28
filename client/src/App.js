@@ -4,8 +4,10 @@ import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer";
 import StudentDashboard from "./pages/StudentDashboard";
+import Login from "./pages/Login";
 import { createTheme } from "@mui/material/styles";
 import "./App.css";
+
 
 const theme = createTheme({
 	components: {
