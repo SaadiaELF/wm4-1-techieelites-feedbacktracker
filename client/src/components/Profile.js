@@ -13,26 +13,18 @@ import avatarImg from "../img/hacker.png";
 import { Uploader } from "uploader";
 import { UploadButton } from "react-uploader";
 
-const Profile = () => {
+const Profile = ({ mentorName, userName, bio, handleBioChange }) => {
 	const [editable, setEditable] = React.useState(false);
-	const [bio, setBio] = React.useState(
-		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
-	);
 	const [avatar, setAvatar] = React.useState(avatarImg);
 	// Calling the uploader function from library , the apikey should be stored on on tne .env file
-	const uploader = Uploader({ apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn" });
-
-	const handleBioChange = (e) => {
-		setBio(e.target.value);
-	};
-
+	const uploader = Uploader({
+		apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn",
+	});
 	return (
 		<Stack
 			spacing={2}
 			sx={{
 				alignItems: "center",
-				top: 30,
-				position: "relative",
 			}}
 		>
 			<Avatar
@@ -69,7 +61,7 @@ const Profile = () => {
 						variant="body1"
 						align="center"
 					>
-						Mentor Name
+						{mentorName ? `My mentor : ${mentorName}` : userName}
 					</Typography>
 					{/* Showing the upload button and making the bio editable only when we click on edit profile  */}
 					{editable ? (
