@@ -3,7 +3,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
 import Profile from "../components/Profile";
-import FeedbackModal from "../components/FeedbackModal";
 import StudentInfo from '../components/StudentInfo';
 
 const MentorDashboard = ({ theme }) => (
