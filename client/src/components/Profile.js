@@ -9,23 +9,17 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { Avatar } from "@mui/material";
-import avatarImg from "../img/hacker.png";
-import { Upload } from "upload-js";
 
-const Profile = ({ mentorName, userName, bio, handleBioChange }) => {
+const Profile = ({
+	mentorName,
+	userName,
+	bio,
+	avatar,
+	handleBioChange,
+	onFileSelected,
+}) => {
 	const [editable, setEditable] = React.useState(false);
-	const [avatar, setAvatar] = React.useState(avatarImg);
-	const upload = Upload({ apiKey: "free" });
 
-	async function onFileSelected(event) {
-		const [file] = event.target.files;
-		const { fileUrl } = await upload.uploadFile(file, {
-			onBegin: ({ cancel }) => console.log("File upload started!"),
-			onProgress: ({ progress }) =>
-				console.log(`File uploading... ${progress}%`),
-		});
-		setAvatar(fileUrl);
-	}
 	return (
 		<Stack
 			spacing={2}
