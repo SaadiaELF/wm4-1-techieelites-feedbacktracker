@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import RedButton from "./RedButton";
 import WhiteButton from "./WhiteButton";
 
-const FeedbackModal = () => {
+const FeedbackModal = ({ techModule, softSkill }) => {
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -36,7 +36,7 @@ const FeedbackModal = () => {
 				</DialogTitle>
 				<DialogContent dividers>
 					<DialogContentText sx={{ paddingBottom: "1rem" }}>
-						Module :
+						{`Module : ${techModule.module} / ${techModule.lesson}`}
 					</DialogContentText>
 					<TextField
 						sx={{ backgroundColor: "#FFFFFF" }}
