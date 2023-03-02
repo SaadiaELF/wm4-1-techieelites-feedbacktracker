@@ -20,11 +20,13 @@ const theme = createTheme({
 const App = () => (
 	<div className="App">
 		<Navbar />
-		<Routes>
-			<Route path="/" element={<Login />} />
-			<Route path="/about/this/site" element={<About />} />
-			<Route path="/student" element={<StudentDashboard theme={theme} />} />
-		</Routes>
+		<main className="main">
+			<Routes>
+				<Route path="/" element={<Login />} />
+				<Route path="/about/this/site" element={<About />} />
+				<Route path="/student" element={<StudentDashboard theme={theme} />} />
+			</Routes>
+		</main>
 		<Footer />
 	</div>
 );

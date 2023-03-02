@@ -48,9 +48,7 @@ function Footer() {
 		<Box
 			component="footer"
 			sx={{
-				position: "fixed",
-				bottom: 0,
-				zIndex: 5,
+				marginTop: "5rem",
 				backgroundColor: "#f2eff0",
 				width: "100%",
 			}}
