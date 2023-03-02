@@ -112,7 +112,7 @@ const Login = () => {
 					<Stack spacing={2}>
 						<TextField
 							variant="outlined"
-							label="Email"
+							label="Email" 
 							type="email"
 							fullWidth
 							id="email"
