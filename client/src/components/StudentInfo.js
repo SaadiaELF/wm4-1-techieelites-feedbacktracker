@@ -43,15 +43,12 @@ const StudentInfo = () => {
 						sx={{marginLeft: "3rem", marginBottom: '0.5rem'}}
 						variant="body1"
 						
-						// align="center"
 					>
 						{fullName}
 					</Typography>
 					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
 						<RedChip label="	Module" />
 						<BlackChip label="	Soft Skill" />
-						{/* <RedButton size="small">Module</RedButton>
-						<BlackButton size="small">Soft Skill</BlackButton> */}
 					</Stack>
 				</CardContent>
 			</Card>
