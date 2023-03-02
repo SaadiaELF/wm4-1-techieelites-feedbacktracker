@@ -6,6 +6,7 @@ import {
 	Stack,
 	Typography,
 	TextField,
+	Alert,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -18,6 +19,13 @@ const Login = () => {
 		password: "",
 		showPassword: false,
 	});
+	const [errors, setErrors] = useState({
+		email: false,
+		password: false,
+	});
+
+	//check form validity
+	const [formIsValid, setFormIsValid] = useState();
 
 	async function login() {
 		try {
@@ -43,6 +51,7 @@ const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setFormIsValid("Loading...");
 		login().then(() => {
 			const user = JSON.parse(localStorage.getItem("user"));
 
@@ -60,9 +69,32 @@ const Login = () => {
 			}
 		});
 	};
-
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
+	};
+
+	const isEmailValid = (email) => {
+		/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email);
+	};
+
+	const handleEmailBlur = () => {
+		if (!isEmailValid(values.email)) {
+			setErrors({ ...errors, email: !errors.email });
+			return;
+		}
+		setErrors({ ...errors, email: false });
+	};
+
+	const handlePasswordBlur = () => {
+		if (
+			!values.password ||
+			values.password.length < 6 ||
+			values.password.length > 20
+		) {
+			setErrors({ ...errors, password: !errors.password });
+			return;
+		}
+		setErrors({ ...errors, password: false });
 	};
 
 	return (
@@ -86,7 +118,11 @@ const Login = () => {
 							id="email"
 							name="email"
 							placeholder="example@gmail.com"
+							value={values.email}
+							error={errors.email}
+							onBlur={handleEmailBlur}
 							required
+							helperText={errors.email ? "Please enter a valid email" : ""}
 							onChange={(e) => setValues({ ...values, email: e.target.value })}
 						></TextField>
 
@@ -98,7 +134,13 @@ const Login = () => {
 							id="password"
 							name="password"
 							placeholder="********"
+							value={values.password}
+							error={errors.password}
 							required
+							helperText={
+								errors.password ? "Please enter a valid password" : ""
+							}
+							onBlur={handlePasswordBlur}
 							onChange={(e) =>
 								setValues({ ...values, password: e.target.value })
 							}
@@ -124,6 +166,9 @@ const Login = () => {
 						<RedButton type="submit" fullWidth>
 							Login
 						</RedButton>
+						<span>
+							{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
+						</span>
 					</Stack>
 				</form>
 			</Stack>
