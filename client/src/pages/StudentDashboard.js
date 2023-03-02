@@ -6,22 +6,79 @@ import Profile from "../components/Profile";
 import FeedbackModal from "../components/FeedbackModal";
 import Progress from "../components/Progress";
 
-const StudentDashboard = ({ theme }) => (
-	<ThemeProvider theme={theme}>
-		<Stack
-			sx={{
-				maxWidth: "380px",
-				padding: "1rem",
-				margin: "auto",
-			}}
-			spacing={2}
-		>
-			<WelcomeMsg message="Welcome student name!👋" />
-			<Profile />
-			<Progress />
-			<FeedbackModal />
-		</Stack>
-	</ThemeProvider>
-);
+const StudentDashboard = ({ theme }) => {
+	const [user, setUser] = React.useState({});
+
+	const getUserById = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/users/${user.userId}`, {
+				headers: { authorization: `Bearer ${user.token}` },
+			});
+			const data = await res.json();
+			setUser(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
+	React.useEffect(() => {
+		getUserById();
+	}, []);
+
+	const [bio, setBio] = React.useState(
+		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
+	);
+	const [techModule, setTechModule] = React.useState({
+		module: "",
+		lesson: "",
+	});
+
+	const [sofSkill, setSoftSkill] = React.useState("");
+
+	// handle input change functions
+	const handleBioChange = (e) => {
+		setBio(e.target.value);
+	};
+	function handleModuleChange(e, newValue) {
+		setTechModule({ ...techModule, module: newValue });
+	}
+	function handleLessonChange(e, newValue) {
+		setTechModule({ ...techModule, lesson: newValue });
+	}
+	function handleSoftSkillChange(e, newValue) {
+		setSoftSkill(newValue);
+	}
+	return (
+		<ThemeProvider theme={theme}>
+			<Stack
+				sx={{
+					maxWidth: "380px",
+					padding: "1rem",
+					margin: "auto",
+				}}
+				spacing={2}
+			>
+				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
+				<Profile
+					mentorName="mentor name"
+					bio={bio}
+					handleBioChange={handleBioChange}
+				/>
+				<Progress
+					techModule={techModule}
+					sofSkill={sofSkill}
+					handleModuleChange={handleModuleChange}
+					handleLessonChange={handleLessonChange}
+					handleSoftSkillChange={handleSoftSkillChange}
+				/>
+				<FeedbackModal techModule={techModule} sofSkill={sofSkill} />
+			</Stack>
+		</ThemeProvider>
+	);
+};
 
 export default StudentDashboard;

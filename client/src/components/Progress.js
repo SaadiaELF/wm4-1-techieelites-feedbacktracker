@@ -8,7 +8,13 @@ import {
 	TextField,
 } from "@mui/material";
 
-const Progress = () => {
+const Progress = ({
+	techModule,
+	softSkill,
+	handleLessonChange,
+	handleModuleChange,
+	handleSoftSkillChange,
+}) => {
 	const date = new Date();
 	const options = {
 		weekday: "long",
@@ -16,12 +22,7 @@ const Progress = () => {
 		month: "long",
 		day: "numeric",
 	};
-	const [techModule, setTechModule] = React.useState({
-		module: "",
-		lesson: "",
-	});
-
-	const [sofSkill, setSoftSkill] = React.useState("");
+	console.log(techModule);
 
 	const modules = [
 		{ module: "Intro to digital", lessons: [] },
@@ -114,19 +115,6 @@ const Progress = () => {
 	const selectedTechModule = modules.find(
 		(i) => i.module === techModule.module
 	);
-
-	// handle input change functions
-	function handleModuleChange(e, newValue) {
-		setTechModule({ ...techModule, module: newValue });
-	}
-	function handleLessonChange(e, newValue) {
-		setTechModule({ ...techModule, lesson: newValue });
-	}
-	function handleSoftSkillChange(e, newValue) {
-		setSoftSkill(newValue);
-	}
-
-	console.log({ techModule, sofSkill });
 
 	return (
 		<Stack
