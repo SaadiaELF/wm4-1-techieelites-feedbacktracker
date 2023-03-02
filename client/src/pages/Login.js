@@ -93,10 +93,8 @@ const Login = () => {
 				<Stack
 					sx={{
 						display: "flex",
-						justifyContent: "center",
 						maxWidth: 360,
-						height: "90vh",
-						padding: "1rem",
+						paddingTop: { md: "8rem" },
 						margin: { xs: "1rem auto", md: "1rem 1rem 1rem auto" },
 					}}
 					spacing={5}
@@ -112,6 +110,7 @@ const Login = () => {
 					<form onSubmit={handleSubmit}>
 						<Stack spacing={2}>
 							<TextField
+								sx={{ background: "transparent" }}
 								variant="outlined"
 								label="Email"
 								type="email"
