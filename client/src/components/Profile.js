@@ -7,19 +7,25 @@ import WhiteButton from "./WhiteButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import UploadIcon from "@mui/icons-material/Upload";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { Avatar } from "@mui/material";
 import avatarImg from "../img/hacker.png";
-import { Uploader } from "uploader";
-import { UploadButton } from "react-uploader";
+import { Upload } from "upload-js";
 
 const Profile = ({ mentorName, userName, bio, handleBioChange }) => {
 	const [editable, setEditable] = React.useState(false);
 	const [avatar, setAvatar] = React.useState(avatarImg);
-	// Calling the uploader function from library , the apikey should be stored on on tne .env file
-	const uploader = Uploader({
-		apiKey: "public_W142hdK6nZbvitGGpUnUMKggEffn",
-	});
+	const upload = Upload({ apiKey: "free" });
+
+	async function onFileSelected(event) {
+		const [file] = event.target.files;
+		const { fileUrl } = await upload.uploadFile(file, {
+			onBegin: ({ cancel }) => console.log("File upload started!"),
+			onProgress: ({ progress }) =>
+				console.log(`File uploading... ${progress}%`),
+		});
+		setAvatar(fileUrl);
+	}
 	return (
 		<Stack
 			spacing={2}
@@ -66,33 +72,23 @@ const Profile = ({ mentorName, userName, bio, handleBioChange }) => {
 					{/* Showing the upload button and making the bio editable only when we click on edit profile  */}
 					{editable ? (
 						<Stack spacing={2}>
-							<UploadButton
-								uploader={uploader}
-								options={{
-									maxFileCount: 1,
-									maxFileSizeBytes: 5000000,
-									mimeTypes: ["image/jpeg", "image/png"],
-								}}
-								onComplete={(files) => {
-									if (files.length >= 1) {
-										setAvatar(files.map((x) => x.fileUrl).join("\n"));
-									} else {
-										setAvatar(avatarImg);
-									}
-								}}
+							<RedButton
+								sx={{ margin: "1rem 0 0" }}
+								size="small"
+								variant="contained"
+								component="label"
 							>
-								{({ onClick }) => (
-									<RedButton
-										sx={{ margin: "1rem 0 0" }}
-										size="small"
-										variant="contained"
-										onClick={onClick}
-									>
-										<UploadIcon />
-										Upload Picture
-									</RedButton>
-								)}
-							</UploadButton>
+								<PhotoCamera sx={{ paddingRight: "0.5rem" }} />
+								Upload Picture
+								<input
+									hidden
+									accept="image/*"
+									multiple
+									type="file"
+									onChange={onFileSelected}
+								/>
+							</RedButton>
+
 							<TextField
 								sx={{ backgroundColor: "#FFFFFF" }}
 								multiline
