@@ -5,6 +5,7 @@ import {
 	InputAdornment,
 	Stack,
 	Typography,
+	Container,
 	TextField,
 	Alert,
 } from "@mui/material";
@@ -74,7 +75,7 @@ const Login = () => {
 	};
 
 	const isEmailValid = (email) => {
-		/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email);
+		return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 	};
 
 	const handleEmailBlur = () => {
@@ -98,81 +99,123 @@ const Login = () => {
 	};
 
 	return (
-		<div style={{ marginInline: "auto", maxWidth: "72rem" }}>
-			<Stack sx={{ maxWidth: 360, padding: "1rem" }} spacing={2}>
-				<Stack>
-					<Typography variant="h4" sx={{ fontSize: 32 }}>
-						Hi, Welcome back! 👋
-					</Typography>
-					<Typography variant="h6" sx={{ fontSize: 20 }}>
-						Hello again, you have been missed
-					</Typography>
-				</Stack>
-				<form onSubmit={handleSubmit}>
-					<Stack spacing={2}>
-						<TextField
-							variant="outlined"
-							label="Email" 
-							type="email"
-							fullWidth
-							id="email"
-							name="email"
-							placeholder="example@gmail.com"
-							value={values.email}
-							error={errors.email}
-							onBlur={handleEmailBlur}
-							required
-							helperText={errors.email ? "Please enter a valid email" : ""}
-							onChange={(e) => setValues({ ...values, email: e.target.value })}
-						></TextField>
+		<Container
+			maxWidth="xxl"
+			sx={{
+				height: "90vh",
+				position: "relative",
 
-						<TextField
-							variant="outlined"
-							label="Password"
-							type={values.showPassword ? "text" : "password"}
-							fullWidth
-							id="password"
-							name="password"
-							placeholder="********"
-							value={values.password}
-							error={errors.password}
-							required
-							helperText={
-								errors.password ? "Please enter a valid password" : ""
-							}
-							onBlur={handlePasswordBlur}
-							onChange={(e) =>
-								setValues({ ...values, password: e.target.value })
-							}
-							InputProps={{
-								endAdornment: (
-									<InputAdornment position="end">
-										<IconButton
-											onClick={handlePasswordVisibility}
-											aria-label="toggle password"
-											edge="end"
-										>
-											{values.showPassword ? (
-												<VisibilityOffIcon />
-											) : (
-												<VisibilityIcon />
-											)}
-										</IconButton>
-									</InputAdornment>
-								),
-							}}
-						></TextField>
-
-						<RedButton type="submit" fullWidth>
-							Login
-						</RedButton>
-						<span>
-							{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
-						</span>
+				"&::before": {
+					zIndex: -1,
+					content: '""',
+					position: "absolute",
+					top: 0,
+					left: 0,
+					width: "100%",
+					height: "100%",
+					filter: {
+						xs: "grayscale(80%) blur(1px) opacity(0.3)",
+						md: "grayscale(60%) blur(2px) opacity(0.5)",
+					},
+					backgroundImage:
+						"url(https://images.pexels.com/photos/3762806/pexels-photo-3762806.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+					backgroundSize: "cover",
+				},
+			}}
+		>
+			<Container
+				sx={{
+					marginInline: "auto",
+					maxWidth: "72rem",
+				}}
+			>
+				<Stack
+					sx={{
+						display: "flex",
+						maxWidth: 360,
+						paddingTop: { xs: "4rem", md: "8rem" },
+						margin: { xs: "1rem auto", md: "1rem 1rem 1rem auto" },
+					}}
+					spacing={5}
+				>
+					<Stack spacing={1}>
+						<Typography variant="h4" sx={{ fontSize: { xs: 24, md: 32 } }}>
+							Hi, Welcome back! 👋
+						</Typography>
+						<Typography variant="h6" sx={{ fontSize: { xs: 16, md: 22 } }}>
+							Hello again, you have been missed
+						</Typography>
 					</Stack>
-				</form>
-			</Stack>
-		</div>
+
+					<form onSubmit={handleSubmit}>
+						<Stack spacing={2}>
+							<TextField
+								sx={{ background: "transparent" }}
+								variant="outlined"
+								label="Email"
+								type="email"
+								fullWidth
+								id="email"
+								name="email"
+								placeholder="example@gmail.com"
+								value={values.email}
+								error={errors.email}
+								onBlur={handleEmailBlur}
+								required
+								helperText={errors.email ? "Please enter a valid email" : ""}
+								onChange={(e) =>
+									setValues({ ...values, email: e.target.value })
+								}
+							></TextField>
+
+							<TextField
+								variant="outlined"
+								label="Password"
+								type={values.showPassword ? "text" : "password"}
+								fullWidth
+								id="password"
+								name="password"
+								placeholder="********"
+								value={values.password}
+								error={errors.password}
+								required
+								helperText={
+									errors.password ? "Please enter a valid password" : ""
+								}
+								onBlur={handlePasswordBlur}
+								onChange={(e) =>
+									setValues({ ...values, password: e.target.value })
+								}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton
+												onClick={handlePasswordVisibility}
+												aria-label="toggle password"
+												edge="end"
+											>
+												{values.showPassword ? (
+													<VisibilityOffIcon />
+												) : (
+													<VisibilityIcon />
+												)}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							></TextField>
+
+							<RedButton size="large" type="submit" fullWidth>
+								Login
+							</RedButton>
+							<span>
+								{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
+							</span>
+						</Stack>
+					</form>
+				</Stack>
+			</Container>
+		</Container>
 	);
 };
 
