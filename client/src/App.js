@@ -8,7 +8,6 @@ import MentorDashboard from "./pages/MentorDashboard";
 import { createTheme } from "@mui/material/styles";
 import "./App.css";
 
-
 const theme = createTheme({
 	components: {
 		MuiTypography: {
@@ -22,12 +21,14 @@ const theme = createTheme({
 const App = () => (
 	<div className="App">
 		<Navbar />
-		<Routes>
-			<Route path="/login" element={<Login />} />
-			<Route path="/about" element={<About />} />
-			<Route path="/student" element={<StudentDashboard theme={theme} />} />
-			<Route path="/mentor" element={<MentorDashboard theme={theme} />} />
-		</Routes>
+		<main className="main">
+			<Routes>
+				<Route path="/login" element={<Login />} />
+				<Route path="/about" element={<About />} />
+				<Route path="/student" element={<StudentDashboard theme={theme} />} />
+				<Route path="/mentor" element={<MentorDashboard theme={theme} />} />
+			</Routes>
+		</main>
 		<Footer />
 	</div>
 );
