@@ -8,7 +8,6 @@ import { Upload } from "upload-js";
 
 const MentorDashboard = ({ theme }) => {
 		const [user, setUser] = React.useState({});
-		const [bio, setBio] = React.useState("");
 		const [avatarUrl, setAvatarUrl] = React.useState("");
 		const upload = Upload({ apiKey: "free" });
 
@@ -59,7 +58,7 @@ const MentorDashboard = ({ theme }) => {
 		>
 			<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
 			<Profile bio={user.bio} handleBioChange={handleBioChange} avatar={avatarUrl || user.img_url} onFileSelected={onFileSelected} />
-			<StudentInfo />
+			<StudentInfo student={user.student_name} />
 		</Stack>
 	</ThemeProvider>
 	)
