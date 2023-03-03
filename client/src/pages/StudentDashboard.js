@@ -35,6 +35,7 @@ const StudentDashboard = ({ theme }) => {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
 			const data = await res.json();
+			console.log(data);
 			setUser(data);
 		} catch {
 			(error) => {
@@ -73,7 +74,7 @@ const StudentDashboard = ({ theme }) => {
 			>
 				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
 				<Profile
-					mentorName="mentor name"
+					mentorName={user.mentor_name}
 					avatar={user.img_url || avatarUrl}
 					bio={bio}
 					handleBioChange={handleBioChange}

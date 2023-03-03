@@ -39,9 +39,23 @@ router.post("/auth/login", async (req, res) => {
 router.get("/users/:id", auth, async (req, res) => {
 	try {
 		const userId = req.params.id;
-		const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
+
+		let user = await db.query("SELECT * FROM users WHERE user_id = $1", [
 			userId,
-		]);
+					]);
+					if (user.rows[0].role === "student") {
+						user = await db.query(
+							"SELECT u.*, sm.mentor_type, us.full_name AS mentor_name FROM users u INNER JOIN student_mentor sm  ON (u.user_id = sm.student_id) INNER JOIN users us ON (us.user_id = sm.mentor_id) WHERE u.user_id = $1",
+							[userId]
+						);
+
+					}
+					if (user.rows[0].role === "mentor") {
+						user = await db.query(
+							"SELECT u.*, sm.mentor_type, us.full_name AS student_name FROM users u INNER JOIN student_mentor sm  ON (u.user_id = sm.mentor_id) INNER JOIN users us ON (us.user_id = sm.student_id) WHERE u.user_id = $1",
+							[userId]
+						);
+					}
 		return res.json(user.rows[0]);
 	} catch (error) {
 		console.log(error);

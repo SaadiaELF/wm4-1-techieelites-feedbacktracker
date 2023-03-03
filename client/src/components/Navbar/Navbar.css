@@ -8,13 +8,12 @@ nav {
     justify-content: space-between;
     margin-inline: auto;
     max-width: 72rem;
+    align-items: center;
+    padding: 1rem;
 }
 
 .logo {
-    padding-left: 10px;
-    padding-top: 20px;
     width: 10rem;
-    margin-bottom: 18px;
 }
 
 .link {
