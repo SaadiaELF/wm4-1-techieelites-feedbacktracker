@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	IconButton,
 	InputAdornment,
 	Stack,
 	Typography,
 	Container,
+	TextField,
 	Alert,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -13,12 +14,12 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RedButton from "../components/RedButton";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
 		showPassword: false,
 	});
-
 	const [errors, setErrors] = useState({
 		email: false,
 		password: false,
@@ -26,11 +27,49 @@ const Login = () => {
 
 	//check form validity
 	const [formIsValid, setFormIsValid] = useState();
+
+	async function login() {
+		try {
+			const res = await fetch("/api/auth/login", {
+				method: "POST",
+				body: JSON.stringify(values),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			if (res.status === 200) {
+				const data = await res.json();
+				localStorage.setItem("user", JSON.stringify(data));
+			}
+			return res;
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	}
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setFormIsValid("Loading...");
-	};
+		login().then(() => {
+			const user = JSON.parse(localStorage.getItem("user"));
 
+			if (user.role === "student") {
+				navigate("/student");
+				window.location.reload();
+			} else if (user.role === "admin") {
+				navigate("/admin");
+				window.location.reload();
+			} else if (user.role === "mentor") {
+				navigate("/mentor");
+				window.location.reload();
+			} else {
+				window.location.reload();
+			}
+		});
+	};
 	const handlePasswordVisibility = () => {
 		setValues({ ...values, showPassword: !values.showPassword });
 	};
@@ -107,6 +146,7 @@ const Login = () => {
 							Hello again, you have been missed
 						</Typography>
 					</Stack>
+
 					<form onSubmit={handleSubmit}>
 						<Stack spacing={2}>
 							<TextField
@@ -165,7 +205,7 @@ const Login = () => {
 								}}
 							></TextField>
 
-							<RedButton type="submit" fullWidth>
+							<RedButton size="large" type="submit" fullWidth>
 								Login
 							</RedButton>
 							<span>

@@ -7,6 +7,28 @@ import FeedbackModal from "../components/FeedbackModal";
 import Progress from "../components/Progress";
 
 const StudentDashboard = ({ theme }) => {
+	const [user, setUser] = React.useState({});
+
+	const getUserById = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/users/${user.userId}`, {
+				headers: { authorization: `Bearer ${user.token}` },
+			});
+			const data = await res.json();
+			setUser(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
+	React.useEffect(() => {
+		getUserById();
+	}, []);
+
 	const [bio, setBio] = React.useState(
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec consequat ipsum."
 	);
@@ -40,7 +62,7 @@ const StudentDashboard = ({ theme }) => {
 				}}
 				spacing={2}
 			>
-				<WelcomeMsg message="Welcome student name!👋" />
+				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
 				<Profile
 					mentorName="mentor name"
 					bio={bio}
