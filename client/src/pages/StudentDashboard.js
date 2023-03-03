@@ -9,7 +9,6 @@ import { Upload } from "upload-js";
 
 const StudentDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
-	const [bio, setBio] = React.useState(user.bio);
 	const [techModule, setTechModule] = React.useState({
 		module: "",
 		lesson: "",
@@ -50,7 +49,7 @@ const StudentDashboard = ({ theme }) => {
 
 	// handle input change functions
 	const handleBioChange = (e) => {
-		setBio(e.target.value);
+		setUser((user) => ({ ...user, bio: e.target.value }));
 	};
 	function handleModuleChange(e, newValue) {
 		setTechModule({ ...techModule, module: newValue });
@@ -76,7 +75,7 @@ const StudentDashboard = ({ theme }) => {
 				<Profile
 					mentorName={user.mentor_name}
 					avatar={user.img_url || avatarUrl}
-					bio={bio}
+					bio={user.bio}
 					handleBioChange={handleBioChange}
 					onFileSelected={onFileSelected}
 				/>
