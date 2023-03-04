@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
