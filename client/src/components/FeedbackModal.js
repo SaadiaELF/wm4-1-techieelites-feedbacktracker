@@ -26,7 +26,7 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 				position: "relative",
 				top: 75,
 			}}
-		>
+		> 
 			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
 				Add Feedback
 			</RedButton>
