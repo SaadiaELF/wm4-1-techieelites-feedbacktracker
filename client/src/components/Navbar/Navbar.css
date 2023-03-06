@@ -9,19 +9,44 @@ nav {
     margin-inline: auto;
     max-width: 72rem;
     align-items: center;
-    padding: 1rem;
 }
 
 .logo {
-    width: 10rem;
+    height: 4rem;
+    padding-right: 1rem;
 }
 
-.link {
-    font-size: x-large;
-    font-weight: bold;
+.navbar-title {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #3f3f3f;
+
+}
+
+#title-mobile {
+    display: none;
 }
 
 #logInOut {
-    background-color: transparent;
-    border: 0;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar-wrapper {
+        padding: 1rem;
+    }
+
+    #title-desktop {
+        display: none;
+    }
+
+    #title-mobile {
+        margin: 0;
+        display: block;
+    }
 }
