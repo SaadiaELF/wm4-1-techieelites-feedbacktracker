@@ -9,6 +9,7 @@ import {
 import Profile from "../components/Profile";
 import { Stack } from "@mui/system";
 import MentorFeedBackModal from "./MentorFeedbackModal";
+import RedButton from "./RedButton";
 
 const StudentProfileModal = ({ student, theme }) => {
 	const [user, setUser] = React.useState({});
@@ -55,7 +56,7 @@ const StudentProfileModal = ({ student, theme }) => {
 							Module/Lesson:{" "}
 						</Typography>
 						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
-							softSkill:{" "}
+							SoftSkill:{" "}
 						</Typography>
 						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
 							Feedback about the course:{" "}
