@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-	Button,
-	ThemeProvider,
-	CardContent,
-	Typography,
-	Card,
-} from "@mui/material";
-import Profile from "../components/Profile";
+import { ThemeProvider, CardContent, Typography, Card } from "@mui/material";
 import { Stack } from "@mui/system";
 import MentorFeedBackModal from "./MentorFeedbackModal";
 import StudentProfileMentor from "./StudentProfileMentor";
@@ -21,27 +14,24 @@ const StudentProfileModal = ({ student, theme }) => {
 					maxWidth: "380px",
 					padding: "1rem",
 					margin: "auto",
-					marginBottom: "3rem",
 				}}
 				spacing={2}
 			>
 				<StudentProfileMentor student={student} bio={user.bio} />
 			</Stack>
 			<Stack
-				spacing={2}
+				spacing={1}
 				sx={{
 					maxWidth: "380px",
 					padding: "1rem",
 					margin: "auto",
-          
 				}}
 			>
-				<Typography
-					variant="body1"
-					sx={{ fontWeight: "bold"}}
-				>
-					Progress
-				</Typography>
+				<Stack spacing={2} sx={{ maxWidth: "380px", marginTop: "3rem" }}>
+					<Typography variant="body1" sx={{ fontWeight: "bold" }}>
+						Progress
+					</Typography>
+				</Stack>
 				<Card
 					sx={{
 						display: "flex",
@@ -51,7 +41,7 @@ const StudentProfileModal = ({ student, theme }) => {
 						width: "100%",
 					}}
 				>
-					<CardContent >
+					<CardContent>
 						<Typography variant="body2" sx={{ fontWeight: 600 }}>
 							Module/Lesson:{" "}
 						</Typography>

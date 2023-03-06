@@ -24,7 +24,7 @@ const MentorFeedBackModal = () => {
 		<Box
 			sx={{
 				position: "relative",
-				top: 75,
+				top: 10,
 			}}
 		>
 			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
@@ -35,9 +35,7 @@ const MentorFeedBackModal = () => {
 					Mentor Feedback Form
 				</DialogTitle>
 				<DialogContent dividers>
-					<DialogContentText >
-						{`Student : `}
-					</DialogContentText>
+					<DialogContentText>{`Student : `}</DialogContentText>
 					<DialogContentText sx={{ paddingBottom: "1rem" }}>
 						{`Module : `}
 					</DialogContentText>
