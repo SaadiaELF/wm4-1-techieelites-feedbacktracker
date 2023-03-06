@@ -134,8 +134,8 @@ const Login = () => {
 					sx={{
 						display: "flex",
 						maxWidth: 360,
-						paddingTop: { xs: "4rem", md: "8rem" },
-						margin: { xs: "0rem auto", md: "0rem 0rem 1rem auto" },
+						paddingTop: { xs: "4rem", md: "10rem" },
+						margin: { xs: "0rem auto", md: "0 0 1rem auto" },
 					}}
 					spacing={5}
 				>
