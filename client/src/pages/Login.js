@@ -135,7 +135,7 @@ const Login = () => {
 						display: "flex",
 						maxWidth: 360,
 						paddingTop: { xs: "4rem", md: "8rem" },
-						margin: { xs: "1rem auto", md: "1rem 1rem 1rem auto" },
+						margin: { xs: "0rem auto", md: "0rem 0rem 1rem auto" },
 					}}
 					spacing={5}
 				>
