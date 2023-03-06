@@ -9,18 +9,22 @@ import { Upload } from "upload-js";
 const MentorDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 	const [students, setStudents] = React.useState([]);
-	const [avatarUrl, setAvatarUrl] = React.useState("");
 	const upload = Upload({ apiKey: "free" });
 
-	async function onFileSelected(event) {
+	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
 		const { fileUrl } = await upload.uploadFile(file, {
 			onBegin: ({ cancel }) => console.log("File upload started!"),
 			onProgress: ({ progress }) =>
 				console.log(`File uploading... ${progress}%`),
 		});
-		setAvatarUrl(fileUrl);
+		setUser((user) => ({ ...user, img_url: fileUrl }));
 	}
+
+	const handleBioChange = (e) => {
+		setUser((user) => ({ ...user, bio: e.target.value }));
+	};
+
 	const getUserById = async () => {
 		try {
 			const user = JSON.parse(localStorage.getItem("user"));
@@ -29,12 +33,15 @@ const MentorDashboard = ({ theme }) => {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
 			const data = await res.json();
-			console.log(data);
-
 			setUser(data[0]);
-			setStudents(data.map((user) => {
-				return {studentId: user.student_id, student_name: user.student_name}
-			}));
+			setStudents(
+				data.map((user) => {
+					return {
+						studentId: user.student_id,
+						student_name: user.student_name,
+					};
+				})
+			);
 		} catch {
 			(error) => {
 				console.error(error);
@@ -46,30 +53,27 @@ const MentorDashboard = ({ theme }) => {
 		getUserById();
 	}, []);
 
-	// handle input change functions
-	const handleBioChange = (e) => {
-		setUser((user) => ({ ...user, bio: e.target.value }));
-	};
-//update user profile
-	const updateUserById = async (mentor) => {
-try {
+	//update user profile
+	const updateUserById = async (userData) => {
+		try {
 			const user = JSON.parse(localStorage.getItem("user"));
 
 			const res = await fetch(`/api/users/${user.userId}`, {
 				method: "PUT",
-				body: JSON.stringify(mentor),
-				headers: { authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
+				body: JSON.stringify(userData),
+				headers: {
+					authorization: `Bearer ${user.token}`,
+					"Content-Type": "application/json",
+				},
 			});
 			const data = await res.json();
-
-			setUser(data);
-			
+			console.log(data);
 		} catch {
 			(error) => {
 				console.error(error);
 			};
-	}
-}
+		}
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -85,11 +89,16 @@ try {
 				<Profile
 					bio={user.bio}
 					handleBioChange={handleBioChange}
-					avatar={avatarUrl || user.img_url}
-					onFileSelected={onFileSelected}
+					avatar={user.img_url}
+					handleAvatarChange={handleAvatarChange}
+					onSave={() => updateUserById(user)}
 				/>
 				{students.map((student, index) => (
-					<StudentInfo key={index} student={student.student_name} id={student.student_id} />
+					<StudentInfo
+						key={index}
+						student={student.student_name}
+						id={student.student_id}
+					/>
 				))}
 			</Stack>
 		</ThemeProvider>
