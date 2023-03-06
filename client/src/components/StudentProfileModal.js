@@ -9,7 +9,7 @@ import {
 import Profile from "../components/Profile";
 import { Stack } from "@mui/system";
 import MentorFeedBackModal from "./MentorFeedbackModal";
-import RedButton from "./RedButton";
+import StudentProfileMentor from "./StudentProfileMentor";
 
 const StudentProfileModal = ({ student, theme }) => {
 	const [user, setUser] = React.useState({});
@@ -25,7 +25,7 @@ const StudentProfileModal = ({ student, theme }) => {
 				}}
 				spacing={2}
 			>
-				<Profile student={student} bio={user.bio} />
+				<StudentProfileMentor student={student} bio={user.bio} />
 			</Stack>
 			<Stack
 				spacing={2}
