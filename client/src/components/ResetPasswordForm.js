@@ -32,6 +32,12 @@ const ResetPasswordForm = () => {
 				<DialogContent dividers>
 					<Stack spacing={2}>
 						<TextField
+							label="Old Password"
+							size="small"
+							placeholder="Old Password"
+							required
+						/>
+						<TextField
 							label="New Password"
 							size="small"
 							placeholder="New Password"
