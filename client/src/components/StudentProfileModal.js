@@ -7,8 +7,8 @@ import {
 	Card,
 } from "@mui/material";
 import Profile from "../components/Profile";
-import Progress from "../components/Progress";
 import { Stack } from "@mui/system";
+import RedButton from "./RedButton";
 
 const StudentProfileModal = ({ student, theme }) => {
 	const [open, setOpen] = React.useState(false);
@@ -71,6 +71,7 @@ const StudentProfileModal = ({ student, theme }) => {
 						</Typography>
 					</CardContent>
 				</Card>
+        <RedButton>Add Feedback</RedButton>
 			</Stack>
 		</ThemeProvider>
 	);
