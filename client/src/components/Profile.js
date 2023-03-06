@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { Avatar } from "@mui/material";
+import ResetPasswordForm from "./ResetPasswordForm";
 
 const Profile = ({
 	mentorName,
@@ -126,13 +127,16 @@ const Profile = ({
 							</RedButton>
 						</Stack>
 					) : (
-						<RedButton
-							size="small"
-							variant="contained"
-							onClick={() => setEditable(true)}
-						>
-							Edit Profile
-						</RedButton>
+						<Stack sx={{ flexDirection: "row" }}>
+							<ResetPasswordForm />
+							<RedButton
+								size="small"
+								variant="contained"
+								onClick={() => setEditable(true)}
+							>
+								Edit Profile
+							</RedButton>
+						</Stack>
 					)}
 				</CardActions>
 			</Card>
