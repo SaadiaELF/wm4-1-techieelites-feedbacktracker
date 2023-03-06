@@ -50,8 +50,10 @@ const Navbar = () => {
 			padding: 1rem;
 
 			a {
-				color: black;
+				color: #3f3f3f;
 				text-decoration: none;
+				font-weight: 400;
+				font-size: 1.5rem;
 			}
 		}
 		@media (max-width: 768px) {
@@ -74,8 +76,11 @@ const Navbar = () => {
 	return (
 		<nav>
 			<div className="navbar-wrapper">
-				<div>
+				<div className="navbar-title">
 					<img src={logo} alt="logo" className="logo"></img>
+					<h1 className="title" id="title-desktop">
+						Feedback Tracker
+					</h1>
 				</div>
 				<StyledBurger open={open} onClick={() => setOpen(!open)}>
 					<div />
@@ -84,24 +89,33 @@ const Navbar = () => {
 				</StyledBurger>
 				<Ul open={open}>
 					<li>
+						<h1 className="title" id="title-mobile">
+							Feedback Tracker
+						</h1>
+					</li>
+					<li>
 						<a href="/about" className="link">
 							About Us
 						</a>
 					</li>
 					<li>
-						<a href="https://syllabus.codeyourfuture.io/" className="link">
+						<a
+							href="https://syllabus.codeyourfuture.io/"
+							className="link"
+							target="_blank"
+						>
 							Syllabus
 						</a>
 					</li>
 					<li>
 						{loggedIn ? (
-							<button className="link" id="logInOut" onClick={signInOut}>
+							<a className="link" id="logInOut" onClick={signInOut}>
 								Sign Out
-							</button>
+							</a>
 						) : (
-							<button className="link" id="logInOut">
+							<a className="link" id="logInOut">
 								Login
-							</button>
+							</a>
 						)}
 					</li>
 				</Ul>
