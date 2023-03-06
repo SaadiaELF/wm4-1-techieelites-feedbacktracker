@@ -50,6 +50,7 @@ function Footer() {
 			sx={{
 				backgroundColor: "#f2eff0",
 				width: "100%",
+				marginTop: "5rem",
 			}}
 		>
 			<Container
