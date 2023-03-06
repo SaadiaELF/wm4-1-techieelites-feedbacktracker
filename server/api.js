@@ -45,7 +45,7 @@ router.get("/users/:id", auth, async (req, res) => {
 					]);
 					if (user.rows[0].role === "student") {
 						user = await db.query(
-							"SELECT u.*, sm.mentor_type, us.full_name AS mentor_name FROM users u INNER JOIN student_mentor sm  ON (u.user_id = sm.student_id) INNER JOIN users us ON (us.user_id = sm.mentor_id) WHERE u.user_id = $1",
+							"SELECT u.*, sm.mentor_type, us.full_name  AS mentor_name FROM users u FULL OUTER JOIN student_mentor sm  ON (u.user_id = sm.student_id) FULL OUTER JOIN users us ON (us.user_id = sm.mentor_id) WHERE u.user_id = $1",
 							[userId]
 						);
 
