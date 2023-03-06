@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import {
-	Stack,
-	Card,
-	Avatar,
-	CardContent,
-	Typography,
-	Button,
-} from "@mui/material";
+import { Stack, Card, Avatar, IconButton, CardHeader } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 import { useNavigate } from "react-router-dom";
-import NeutralButton from "./NeutralButton";
 
 const StudentInfo = ({ student }) => {
 	const [avatar, setAvatar] = useState("");
@@ -20,22 +13,10 @@ const StudentInfo = ({ student }) => {
 			spacing={2}
 			sx={{
 				alignItems: "end",
-				top: 60,
+				top: 70,
 				position: "relative",
 			}}
 		>
-			<Avatar
-				sx={{
-					width: 90,
-					height: 90,
-					zIndex: 1,
-					left: 0,
-					bottom: 0,
-					position: "absolute",
-				}}
-				src={avatar}
-				alt="avatar"
-			></Avatar>
 			<Card
 				sx={{
 					display: "flex",
@@ -47,22 +28,39 @@ const StudentInfo = ({ student }) => {
 					position: "relative",
 				}}
 			>
-				<CardContent sx={{ padding: "0 1rem !important" }}>
-					<NeutralButton
-						onClick={() => {
-							navigate("/studentProfile");
-						}}
-						sx={{ marginLeft: "6rem", marginBottom: "0.5rem" }}
-						variant="body1"
-					>
-						{student}
-					</NeutralButton>
-
-					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
-						<RedChip label="	Module" />
-						<BlackChip label="	Soft Skill" />
-					</Stack>
-				</CardContent>
+				<CardHeader
+					avatar={
+						<Avatar
+							sx={{
+								width: 70,
+								height: 70,
+								zIndex: 1,
+							}}
+							src={avatar}
+							alt="avatar"
+						></Avatar>
+					}
+					action={
+						<IconButton aria-label="settings">
+							<MoreVertIcon
+								onClick={() => {
+									navigate("/studentProfile");
+								}}
+							/>
+						</IconButton>
+					}
+					title={student}
+					subheader={
+						<Stack
+							spacing={1}
+							direction="row"
+							sx={{ justifyContent: "start", marginTop: "0.85rem" }}
+						>
+							<RedChip label="Module" />
+							<BlackChip label="Soft Skill" />
+						</Stack>
+					}
+				/>
 			</Card>
 		</Stack>
 	);
