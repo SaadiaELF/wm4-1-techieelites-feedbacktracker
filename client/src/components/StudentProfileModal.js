@@ -33,12 +33,12 @@ const StudentProfileModal = ({ student, theme }) => {
 					maxWidth: "380px",
 					padding: "1rem",
 					margin: "auto",
+          
 				}}
 			>
 				<Typography
 					variant="body1"
-					align="left"
-					sx={{ fontWeight: "bold", fontSize: "1.5rem" }}
+					sx={{ fontWeight: "bold"}}
 				>
 					Progress
 				</Typography>
@@ -51,14 +51,14 @@ const StudentProfileModal = ({ student, theme }) => {
 						width: "100%",
 					}}
 				>
-					<CardContent>
-						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
+					<CardContent >
+						<Typography variant="body2" sx={{ fontWeight: 600 }}>
 							Module/Lesson:{" "}
 						</Typography>
-						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
+						<Typography variant="body2" sx={{ fontWeight: 600 }}>
 							SoftSkill:{" "}
 						</Typography>
-						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
+						<Typography variant="body2" sx={{ fontWeight: 600 }}>
 							Feedback about the course:{" "}
 						</Typography>
 					</CardContent>

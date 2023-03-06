@@ -10,6 +10,7 @@ import {
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 import { useNavigate } from "react-router-dom";
+import NeutralButton from "./NeutralButton";
 
 const StudentInfo = ({ student }) => {
 	const [avatar, setAvatar] = useState("");
@@ -47,7 +48,7 @@ const StudentInfo = ({ student }) => {
 				}}
 			>
 				<CardContent sx={{ padding: "0 1rem !important" }}>
-					<Button
+					<NeutralButton
 						onClick={() => {
 							navigate("/studentProfile");
 						}}
@@ -55,7 +56,7 @@ const StudentInfo = ({ student }) => {
 						variant="body1"
 					>
 						{student}
-					</Button>
+					</NeutralButton>
 
 					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
 						<RedChip label="	Module" />
