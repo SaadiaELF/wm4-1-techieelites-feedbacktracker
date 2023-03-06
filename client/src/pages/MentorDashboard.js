@@ -50,6 +50,26 @@ const MentorDashboard = ({ theme }) => {
 	const handleBioChange = (e) => {
 		setUser((user) => ({ ...user, bio: e.target.value }));
 	};
+//update user profile
+	const updateUserById = async (mentor) => {
+try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/users/${user.userId}`, {
+				method: "PUT",
+				body: JSON.stringify(mentor),
+				headers: { authorization: `Bearer ${user.token}`, "Content-Type": "application/json" },
+			});
+			const data = await res.json();
+
+			setUser(data);
+			
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+	}
+}
 
 	return (
 		<ThemeProvider theme={theme}>

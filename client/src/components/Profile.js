@@ -20,6 +20,7 @@ const Profile = ({
 }) => {
 	const [editable, setEditable] = React.useState(false);
 
+	
 	return (
 		<Stack
 			spacing={2}
@@ -120,7 +121,11 @@ const Profile = ({
 							<RedButton
 								size="small"
 								variant="contained"
-								onClick={() => setEditable(false)}
+								onClick={() => {
+									
+									setEditable(false)
+									//saveUpdatedData();
+								}}
 							>
 								Save
 							</RedButton>
