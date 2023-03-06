@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
-import StudentProfileModal from "./StudentProfileModal";
 import { useNavigate } from "react-router-dom";
 
 const StudentInfo = ({ student }) => {
@@ -55,7 +54,7 @@ const StudentInfo = ({ student }) => {
 						sx={{ marginLeft: "6rem", marginBottom: "0.5rem" }}
 						variant="body1"
 					>
-						{student}
+						{`${student}`}
 					</Button>
 
 					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>

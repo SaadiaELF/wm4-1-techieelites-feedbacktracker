@@ -8,19 +8,10 @@ import {
 } from "@mui/material";
 import Profile from "../components/Profile";
 import { Stack } from "@mui/system";
-import RedButton from "./RedButton";
+import MentorFeedBackModal from "./MentorFeedbackModal";
 
 const StudentProfileModal = ({ student, theme }) => {
-	const [open, setOpen] = React.useState(false);
 	const [user, setUser] = React.useState({});
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -71,7 +62,7 @@ const StudentProfileModal = ({ student, theme }) => {
 						</Typography>
 					</CardContent>
 				</Card>
-        <RedButton>Add Feedback</RedButton>
+				<MentorFeedBackModal />
 			</Stack>
 		</ThemeProvider>
 	);
