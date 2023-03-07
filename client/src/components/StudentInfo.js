@@ -41,12 +41,13 @@ const StudentInfo = ({ student }) => {
 						></Avatar>
 					}
 					action={
-						<IconButton aria-label="settings">
-							<MoreVertIcon
-								onClick={() => {
-									navigate("/studentProfile");
-								}}
-							/>
+						<IconButton
+							aria-label="settings"
+							onClick={() => {
+								navigate("/studentProfile");
+							}}
+						>
+							<MoreVertIcon />
 						</IconButton>
 					}
 					title={student}
