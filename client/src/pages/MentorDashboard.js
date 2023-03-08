@@ -39,7 +39,7 @@ const MentorDashboard = ({ theme }) => {
 					return {
 						studentId: user.student_id,
 						student_name: user.student_name,
-						student_avatar: user.img_url,
+						student_avatar: user.student_avatar,
 					};
 				})
 			);
