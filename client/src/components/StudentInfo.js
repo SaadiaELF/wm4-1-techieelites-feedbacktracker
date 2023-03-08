@@ -3,8 +3,7 @@ import { Stack, Card, Avatar, CardContent, Typography } from "@mui/material";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 
-const StudentInfo = ({ student }) => {
-	const [avatar, setAvatar] = useState("");
+const StudentInfo = ({ studentName, studentAvatar }) => {
 	return (
 		<Stack
 			spacing={2}
@@ -23,7 +22,7 @@ const StudentInfo = ({ student }) => {
 					bottom: 0,
 					position: "absolute",
 				}}
-				src={avatar}
+				src={studentAvatar}
 				alt="avatar"
 			></Avatar>
 			<Card
@@ -39,11 +38,10 @@ const StudentInfo = ({ student }) => {
 			>
 				<CardContent sx={{ padding: "0 1rem !important" }}>
 					<Typography
-						sx={{marginLeft: "3rem", marginBottom: '0.5rem'}}
+						sx={{ marginLeft: "3rem", marginBottom: "0.5rem" }}
 						variant="body1"
-						
 					>
-						{student}
+						{studentName}
 					</Typography>
 					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
 						<RedChip label="	Module" />

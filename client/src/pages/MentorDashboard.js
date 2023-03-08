@@ -39,6 +39,7 @@ const MentorDashboard = ({ theme }) => {
 					return {
 						studentId: user.student_id,
 						student_name: user.student_name,
+						student_avatar: user.img_url,
 					};
 				})
 			);
@@ -96,7 +97,8 @@ const MentorDashboard = ({ theme }) => {
 				{students.map((student, index) => (
 					<StudentInfo
 						key={index}
-						student={student.student_name}
+						studentName={student.student_name}
+						studentAvatar={student.student_avatar}
 						id={student.student_id}
 					/>
 				))}
