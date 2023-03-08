@@ -5,8 +5,7 @@ import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 import { useNavigate } from "react-router-dom";
 
-const StudentInfo = ({ student }) => {
-	const [avatar, setAvatar] = useState("");
+const StudentInfo = ({ studentName, studentAvatar }) => {
 	const navigate = useNavigate();
 	return (
 		<Stack
@@ -36,7 +35,7 @@ const StudentInfo = ({ student }) => {
 								height: 70,
 								zIndex: 1,
 							}}
-							src={avatar}
+							src={studentAvatar}
 							alt="avatar"
 						></Avatar>
 					}
@@ -50,7 +49,7 @@ const StudentInfo = ({ student }) => {
 							<MoreVertIcon />
 						</IconButton>
 					}
-					title={student}
+					title={studentName}
 					subheader={
 						<Stack
 							spacing={1}
