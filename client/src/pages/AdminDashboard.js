@@ -53,6 +53,17 @@ const AdminDashboard = ({ theme }) => {
 
 
 
+		//Upload User
+		async function uploadUser(event) {
+			const [file] = event.target.files;
+			console.log(file);
+			fetch("localhost:3000/users/" + 111, {
+				method: "post",
+				body: {
+				"file": file,
+				},
+			});
+			}
 
 	return (
 	<ThemeProvider theme={theme}>
