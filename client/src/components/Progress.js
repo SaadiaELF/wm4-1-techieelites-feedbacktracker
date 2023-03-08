@@ -22,89 +22,7 @@ const Progress = ({
 		month: "long",
 		day: "numeric",
 	};
-	console.log(techModule);
-
-	const modules = [
-		{ module: "Intro to digital", lessons: [] },
-		{
-			module: "Fundamentals",
-			lessons: [
-				"Lesson 1 - Requirements",
-				"Lesson 2 - Iteration",
-				"Lesson 3 - Delivery",
-			],
-		},
-		{
-			module: "Git and Github",
-			lessons: [
-				"Lesson 1 - Github & Github Desktop",
-				"Lesson 2 - The Terminal",
-				"Lesson 3 - Git on the Command Line",
-				"Lesson 4 - Branches",
-			],
-		},
-		{
-			module: "HTML/CSS",
-			lessons: [
-				"Lesson 1 - Fundamentals • Semantics",
-				"Lesson 2 - Forms • Structuring Data",
-				"Lesson 3 - Layout • Flexbox • Grid",
-				"Lesson 4 - Ship it • Putting it all together",
-			],
-		},
-		{
-			module: "JavaScript Core 1",
-			lessons: [
-				"Lesson 1 - Hello world (of jS)",
-				"Lesson 2 - Forms • Structuring Data",
-				"Lesson 3 - Layout • Flexbox • Grid",
-				"Lesson 4 - Ship it • Putting it all together",
-			],
-		},
-		{
-			module: "JavaScript Core 2",
-			lessons: [
-				"Lesson 1 - Objects",
-				"Lesson 2 - TDD, arrays of Objects",
-				"Lesson 3 - JS in the Browser (DOM, and AJAX)",
-				"Lesson 4 - More JS in the Browser",
-			],
-		},
-		{
-			module: "JavaScript Core 3",
-			lessons: [
-				"Lesson 1 - Debugging",
-				"Lesson 2 - Fetch, AJAX, APIS",
-				"Lesson 3 - Scope & this",
-			],
-		},
-		{
-			module: "React",
-			lessons: [
-				"Lesson 1 - React 101",
-				"Lesson 2 - Reacting to Changes",
-				"Lesson 3 - Fetching Data",
-				"Lesson 4 - Routing (optional)",
-				"Lesson 4 - Class Components (optional)",
-			],
-		},
-		{
-			module: "Node.js",
-			lessons: [
-				"Lesson 1 - Node, Express workshop",
-				"Lesson 2 - Templating",
-				"Lesson 3 - Node Best Practices",
-			],
-		},
-		{
-			module: "SQL",
-			lessons: [
-				"Lesson 1 - Introduction to SQL",
-				"Lesson 2 - More SQL and integration with NodeJS",
-				"Lesson 3 - More integration with NodeJS",
-			],
-		},
-	];
+	const [modules, setModules] = React.useState([]);
 
 	const softSkills = [
 		"Time management",
@@ -112,9 +30,23 @@ const Progress = ({
 		"Critical thinking",
 	];
 
-	const selectedTechModule = modules.find(
-		(i) => i.module === techModule.module
-	);
+	const selectedTechModule = modules.find((i) => i.title === techModule.module);
+
+	const getAllModules = async () => {
+		try {
+			const res = await fetch("/api/modules");
+			const data = await res.json();
+			setModules(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
+	React.useEffect(() => {
+		getAllModules();
+	}, []);
 
 	return (
 		<Stack
@@ -147,7 +79,7 @@ const Progress = ({
 							sx={{ backgroundColor: "#FFFFFF" }}
 							size="small"
 							id="module"
-							options={modules.map((i) => i.module)}
+							options={modules.map((i) => i.title)}
 							renderInput={(params) => <TextField {...params} label="Module" />}
 							onChange={handleModuleChange}
 						/>
