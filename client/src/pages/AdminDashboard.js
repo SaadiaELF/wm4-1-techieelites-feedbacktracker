@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
