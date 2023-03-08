@@ -110,7 +110,7 @@ const StudentDashboard = ({ theme }) => {
 					handleLessonChange={handleLessonChange}
 					handleSoftSkillChange={handleSoftSkillChange}
 				/>
-				<FeedbackModal techModule={techModule} sofSkill={sofSkill} />
+				<FeedbackModal techModule={techModule} sofSkill={sofSkill} /> 
 			</Stack>
 		</ThemeProvider>
 	);
