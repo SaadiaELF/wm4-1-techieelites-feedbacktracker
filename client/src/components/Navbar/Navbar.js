@@ -5,9 +5,11 @@ import "./Navbar.css";
 
 const Navbar = () => {
 	const [open, setOpen] = useState(false);
-	const [loggedIn, setLoggedIn] = useState(false);
+	const user = JSON.parse(localStorage.getItem("user"));
 
-	const signInOut = () => setLoggedIn(!loggedIn);
+	const logout = () => {
+		localStorage.removeItem("user");
+	};
 
 	const StyledBurger = styled.div`
 		width: 2rem;
@@ -108,12 +110,12 @@ const Navbar = () => {
 						</a>
 					</li>
 					<li>
-						{loggedIn ? (
-							<a className="link" id="logInOut" onClick={signInOut}>
+						{user ? (
+							<a className="link" id="logInOut" href="/login" onClick={logout}>
 								Sign Out
 							</a>
 						) : (
-							<a className="link" id="logInOut">
+							<a className="link" id="logInOut" href="/login">
 								Login
 							</a>
 						)}

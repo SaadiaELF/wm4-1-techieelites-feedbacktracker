@@ -8,18 +8,23 @@ import { Upload } from "upload-js";
 
 const MentorDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
-	const [avatarUrl, setAvatarUrl] = React.useState("");
+	const [students, setStudents] = React.useState([]);
 	const upload = Upload({ apiKey: "free" });
 
-	async function onFileSelected(event) {
+	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
 		const { fileUrl } = await upload.uploadFile(file, {
 			onBegin: ({ cancel }) => console.log("File upload started!"),
 			onProgress: ({ progress }) =>
 				console.log(`File uploading... ${progress}%`),
 		});
-		setAvatarUrl(fileUrl);
+		setUser((user) => ({ ...user, img_url: fileUrl }));
 	}
+
+	const handleBioChange = (e) => {
+		setUser((user) => ({ ...user, bio: e.target.value }));
+	};
+
 	const getUserById = async () => {
 		try {
 			const user = JSON.parse(localStorage.getItem("user"));
@@ -28,7 +33,16 @@ const MentorDashboard = ({ theme }) => {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
 			const data = await res.json();
-			setUser(data);
+			setUser(data[0]);
+			setStudents(
+				data.map((user) => {
+					return {
+						studentId: user.student_id,
+						student_name: user.student_name,
+						student_avatar: user.student_avatar,
+					};
+				})
+			);
 		} catch {
 			(error) => {
 				console.error(error);
@@ -40,9 +54,26 @@ const MentorDashboard = ({ theme }) => {
 		getUserById();
 	}, []);
 
-	// handle input change functions
-	const handleBioChange = (e) => {
-		setUser((user) => ({ ...user, bio: e.target.value }));
+	//update user profile
+	const updateUserById = async (userData) => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/users/${user.userId}`, {
+				method: "PUT",
+				body: JSON.stringify(userData),
+				headers: {
+					authorization: `Bearer ${user.token}`,
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			console.log(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
 	};
 
 	return (
@@ -59,10 +90,18 @@ const MentorDashboard = ({ theme }) => {
 				<Profile
 					bio={user.bio}
 					handleBioChange={handleBioChange}
-					avatar={avatarUrl || user.img_url}
-					onFileSelected={onFileSelected}
+					avatar={user.img_url}
+					handleAvatarChange={handleAvatarChange}
+					onSave={() => updateUserById(user)}
 				/>
-				<StudentInfo student={user.student_name} />
+				{students.map((student, index) => (
+					<StudentInfo
+						key={index}
+						studentName={student.student_name}
+						studentAvatar={student.student_avatar}
+						id={student.student_id}
+					/>
+				))}
 			</Stack>
 		</ThemeProvider>
 	);
