@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import RedButton from "./RedButton";
 import WhiteButton from "./WhiteButton";
 
-const FeedbackModal = ({ techModule, softSkill }) => {
+const MentorFeedBackModal = () => {
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -24,19 +24,20 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 		<Box
 			sx={{
 				position: "relative",
-				top: 75,
+				top: 10,
 			}}
-		> 
+		>
 			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
 				Add Feedback
 			</RedButton>
 			<Dialog open={open} onClose={handleClose} fullWidth>
 				<DialogTitle sx={{ backgroundColor: "#EE4344", color: "#FFFFFF" }}>
-					Feedback Form
+					Mentor Feedback Form
 				</DialogTitle>
 				<DialogContent dividers>
+					<DialogContentText>{`Student : `}</DialogContentText>
 					<DialogContentText sx={{ paddingBottom: "1rem" }}>
-						{`Module : ${techModule.module} / ${techModule.lesson}`}
+						{`Module : `}
 					</DialogContentText>
 					<TextField
 						sx={{ backgroundColor: "#FFFFFF" }}
@@ -55,4 +56,4 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 	);
 };
 
-export default FeedbackModal;
+export default MentorFeedBackModal;

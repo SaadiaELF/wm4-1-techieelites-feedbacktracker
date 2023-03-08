@@ -16,7 +16,8 @@ const Profile = ({
 	bio,
 	avatar,
 	handleBioChange,
-	onFileSelected,
+	handleAvatarChange,
+	onSave,
 }) => {
 	const [editable, setEditable] = React.useState(false);
 
@@ -79,7 +80,7 @@ const Profile = ({
 									accept="image/*"
 									multiple
 									type="file"
-									onChange={onFileSelected}
+									onChange={handleAvatarChange}
 								/>
 							</RedButton>
 
@@ -120,7 +121,7 @@ const Profile = ({
 							<RedButton
 								size="small"
 								variant="contained"
-								onClick={() => setEditable(false)}
+								onClick={(onSave(), () => setEditable(false))}
 							>
 								Save
 							</RedButton>
