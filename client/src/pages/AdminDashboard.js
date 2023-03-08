@@ -1,14 +1,16 @@
+/* eslint-disable linebreak-style */
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
 import Profile from "../components/Profile";
-import StudentInfo from "../components/StudentInfo";
+import BlackButton from "../components/BlackButton";
 import { Upload } from "upload-js";
 
+
 const AdminDashboard = ({ theme }) => {
-		const [user, setUser] = React.useState({});
-		const [avatarUrl, setAvatarUrl] = React.useState("");
+	const [user, setUser] = React.useState({});
+	const [avatarUrl, setAvatarUrl] = React.useState("");
 		const upload = Upload({ apiKey: "free" });
 
 		async function onFileSelected(event) {
@@ -46,6 +48,12 @@ const AdminDashboard = ({ theme }) => {
 
 		};
 
+
+
+
+
+
+
 	return (
 	<ThemeProvider theme={theme}>
 		<Stack
@@ -58,10 +66,26 @@ const AdminDashboard = ({ theme }) => {
 		>
 			<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
 			<Profile bio={user.bio} handleBioChange={handleBioChange} avatar={avatarUrl || user.img_url} onFileSelected={onFileSelected} />
-			<StudentInfo student={user.student_name} />
+
+
+			<Stack spacing={2}>
+				<BlackButton
+					sx={{ width: "100px" , margin: "1rem", marginTop:"0.5rem" }}
+					size="small"
+					variant="contained"
+					component="label"
+				>
+					Add Student
+					<input
+						hidden
+						accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+						type="file"
+						onChange={uploadUser}
+					/>
+				</BlackButton>
+			</Stack>
 		</Stack>
 	</ThemeProvider>
 	);
 };
 export default AdminDashboard;
-
