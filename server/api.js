@@ -88,4 +88,13 @@ router.put("/users/:id", auth, async (req, res) => {
 	}
 });
 
+// Get all modules
+router.get("/modules", async (req, res) => {
+	try {
+		let modules = await db.query("SELECT * FROM modules");
+		return res.json(modules.rows);
+	} catch (error) {
+		console.log(error);
+	}
+});
 export default router;
