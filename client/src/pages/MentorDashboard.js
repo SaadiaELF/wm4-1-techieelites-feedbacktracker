@@ -99,7 +99,7 @@ const MentorDashboard = ({ theme }) => {
 						key={index}
 						studentName={student.student_name}
 						studentAvatar={student.student_avatar}
-						id={student.student_id}
+						studentId={student.studentId}
 					/>
 				))}
 			</Stack>

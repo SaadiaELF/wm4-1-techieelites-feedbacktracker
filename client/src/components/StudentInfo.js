@@ -5,8 +5,31 @@ import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 import { useNavigate } from "react-router-dom";
 
-const StudentInfo = ({ studentName, studentAvatar }) => {
+const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 	const navigate = useNavigate();
+	const [moduleName, setModuleName] = useState();
+
+	console.log(studentId);
+	const getStudentFeedbackById = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/feedback/student/${studentId}`, {
+				headers: { authorization: `Bearer ${user.token}` },
+			});
+			const data = await res.json();
+			setModuleName(data.title);
+			console.log(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
+	React.useEffect(() => {
+		getStudentFeedbackById();
+	}, []);
 	return (
 		<Stack
 			spacing={2}
@@ -28,6 +51,7 @@ const StudentInfo = ({ studentName, studentAvatar }) => {
 				}}
 			>
 				<CardHeader
+					id={studentId}
 					avatar={
 						<Avatar
 							sx={{
@@ -56,7 +80,7 @@ const StudentInfo = ({ studentName, studentAvatar }) => {
 							direction="row"
 							sx={{ justifyContent: "start", marginTop: "0.85rem" }}
 						>
-							<RedChip label="Module" />
+							<RedChip label={moduleName} />
 							<BlackChip label="Soft Skill" />
 						</Stack>
 					}

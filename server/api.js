@@ -98,8 +98,19 @@ router.get("/modules", async (req, res) => {
 		console.log(error);
 	}
 });
-
-router.post("/feedback/student", async (req, res) => {
+router.get("/feedback/student/:id", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.id);
+		let modules = await db.query(
+			"SELECT * FROM users u INNER JOIN student_feedback sf ON u.user_id = sf.student_id INNER JOIN modules m ON sf.module_id = m.module_id WHERE u.user_id = $1 ORDER BY sf.date DESC",
+			[userId]
+		);
+		return res.json(modules.rows[0]);
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post("/feedback/student", auth, async (req, res) => {
 	try {
 		const id = generateUniqueId({
 			length: 5,
