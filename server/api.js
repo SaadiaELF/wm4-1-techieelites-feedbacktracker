@@ -62,62 +62,6 @@ router.get("/users/:id", auth, async (req, res) => {
 	}
 });
 
-router.post("/users/:id", async (req, res) => {
-	try {
-		const userId = req.params.id;
-		const mod_id = req.body.mod_id;
-		const std_id = req.body.std_id;
-
-		let user = await db.query("SELECT * FROM users WHERE user_id = $1", [
-			userId,
-		]);
-		const newUser = user.rows[0];
-		const id = generateUniqueId({
-			length: 5,
-			useLetters: false,
-		});
-		const curDate = new Date();
-		const moduleId = await db.query(
-			"SELECT module_id FROM modules WHERE module_id = $1",
-			[mod_id]
-		);
-		const studentId = await db.query("SELECT student_id FROM student_mentor WHERE user_id = $1", [std_id])
-		 console.log(studentId);
-
-		if (newUser.role === "student") {
-			
-			const {
-				sfeedback_id = newUser.id,
-				student_id = newUser.user_id,
-				text = newUser.text,
-				module_id = moduleId,
-				date = curDate,
-			} = req.body;
-			user = await db.query(
-				" INSERT INTO student_feedback (sfeedback_id, text, date, student_id, module_id) VALUES ($1, $2, $3, $4, $5) ",
-				[sfeedback_id, text, date, student_id, module_id]
-			);
-		}
-		 if (user.rows[0].role === "mentor") {
-			const {
-				mfeedback_id = newUser.id,
-				student_id = studentId,
-				mentor_id = newUser.user_id,
-				text = newUser.text,
-				module_id = moduleId,
-				date = curDate,
-			} = req.body;
-			user = await db.query(
-				" INSERT INTO mentor_feedback (mfeedback_id, text, date, student_id, mentor_id module_id) VALUES ($1, $2, $3, $4, $5, $6) ",
-				[mfeedback_id, text, date, student_id, mentor_id, module_id]
-			);
-		 }
-		res.json({ message: "success" });
-	} catch (error) {
-		console.error(error);
-	}
-});
-
 router.put("/users/:id", auth, async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
@@ -154,4 +98,44 @@ router.get("/modules", async (req, res) => {
 		console.log(error);
 	}
 });
+
+router.post("/feedback/student", async (req, res) => {
+	try {
+		const id = generateUniqueId({
+			length: 5,
+			useLetters: false,
+		});
+		const curDate = new Date();
+
+		const { student_id, text, module_id, module_type } = req.body;
+		await db.query(
+			" INSERT INTO student_feedback (sfeedback_id, text, date, student_id, module_id, module_type) VALUES ($1, $2, $3, $4, $5, $6) ",
+			[id, text, curDate, student_id, module_id, module_type]
+		);
+
+		res.json({ message: "success" });
+	} catch (error) {
+		console.error(error);
+	}
+});
+
+router.post("/feedback/mentor", async (req, res) => {
+	try {
+		const id = generateUniqueId({
+			length: 5,
+			useLetters: false,
+		});
+		const curDate = new Date();
+		const { mentor_id, student_id, text, module_id } = req.body;
+
+		await db.query(
+			" INSERT INTO mentor_feedback (mfeedback_id, text, date, student_id, mentor_id, module_id) VALUES ($1, $2, $3, $4, $5, $6) ",
+			[id, text, curDate, student_id, mentor_id, module_id]
+		);
+		res.json({ message: "success" });
+	} catch (error) {
+		console.error(error);
+	}
+});
+
 export default router;
