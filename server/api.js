@@ -4,6 +4,7 @@ import logger from "./utils/logger";
 import jsonwebtoken from "jsonwebtoken";
 import auth from "./utils/auth";
 import "dotenv/config";
+import bcrypt from "bcrypt";
 
 const router = Router();
 
@@ -16,9 +17,16 @@ router.post("/auth/login", async (req, res) => {
 	try {
 		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
+		const hash = await bcrypt.hash(password, 10);
+		console.log(hash);
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
+		// const isValid = await bcrypt.compare(password, user[0].password);
+		// if (!isValid) {
+		// 	res.status(401).json({ message: "Invalid credentials" });
+		// 	return;
+		// }
 		if (email === user.rows[0].email && password === user.rows[0].password) {
 			return res.json({
 				userId: user.rows[0].user_id,
