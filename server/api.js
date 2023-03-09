@@ -66,6 +66,7 @@ router.post("/users/:id", async (req, res) => {
 	try {
 		const userId = req.params.id;
 		const mod_id = req.body.mod_id;
+		const std_id = req.body.std_id;
 
 		let user = await db.query("SELECT * FROM users WHERE user_id = $1", [
 			userId,
@@ -80,8 +81,8 @@ router.post("/users/:id", async (req, res) => {
 			"SELECT module_id FROM modules WHERE module_id = $1",
 			[mod_id]
 		);
-		// const studentId = await db.query()
-		// console.log(moduleId);
+		const studentId = await db.query("SELECT student_id FROM student_mentor WHERE user_id = $1", [std_id])
+		 console.log(studentId);
 
 		if (newUser.role === "student") {
 			
@@ -97,20 +98,20 @@ router.post("/users/:id", async (req, res) => {
 				[sfeedback_id, text, date, student_id, module_id]
 			);
 		}
-		//  if (user.rows[0].role === "mentor") {
-		// 	const {
-		// 		mfeedback_id = newUser.id,
-		// 		student_id = studentId,
-		// 		mentor_id = newUser.user_id,
-		// 		text = newUser.text,
-		// 		module_id = moduleId,
-		// 		date = curDate,
-		// 	} = req.body;
-		// 	user = await db.query(
-		// 		" INSERT INTO mentor_feedback (mfeedback_id, text, date, student_id, mentor_id module_id) VALUES ($1, $2, $3, $4, $5, $6) ",
-		// 		[mfeedback_id, text, date, student_id, mentor_id, module_id]
-		// 	);
-		//  }
+		 if (user.rows[0].role === "mentor") {
+			const {
+				mfeedback_id = newUser.id,
+				student_id = studentId,
+				mentor_id = newUser.user_id,
+				text = newUser.text,
+				module_id = moduleId,
+				date = curDate,
+			} = req.body;
+			user = await db.query(
+				" INSERT INTO mentor_feedback (mfeedback_id, text, date, student_id, mentor_id module_id) VALUES ($1, $2, $3, $4, $5, $6) ",
+				[mfeedback_id, text, date, student_id, mentor_id, module_id]
+			);
+		 }
 		res.json({ message: "success" });
 	} catch (error) {
 		console.error(error);
