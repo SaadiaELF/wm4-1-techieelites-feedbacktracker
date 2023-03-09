@@ -29,7 +29,6 @@ const App = () => (
 				<Route path="/about" element={<About />} />
 				<Route path="/student" element={<StudentDashboard theme={theme} />} />
 				<Route path="/mentor" element={<MentorDashboard theme={theme} />} />
-				<Route path="/studentProfile" element={<StudentProfileModal theme={theme} />} />
 			</Routes>
 		</main>
 		<Footer />
