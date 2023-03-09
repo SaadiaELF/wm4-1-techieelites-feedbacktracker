@@ -34,6 +34,7 @@ const MentorFeedBackModal = () => {
 				<DialogTitle sx={{ backgroundColor: "#EE4344", color: "#FFFFFF" }}>
 					Mentor Feedback Form
 				</DialogTitle>
+				
 				<DialogContent dividers>
 					<DialogContentText>{`Student : `}</DialogContentText>
 					<DialogContentText sx={{ paddingBottom: "1rem" }}>
