@@ -16,8 +16,7 @@ const Profile = ({
 	bio,
 	avatar,
 	handleBioChange,
-	handleAvatarChange,
-	onSave,
+	onFileSelected,
 }) => {
 	const [editable, setEditable] = React.useState(false);
 
@@ -28,28 +27,33 @@ const Profile = ({
 				alignItems: "center",
 			}}
 		>
-			<Avatar
-				sx={{
-					width: 150,
-					height: 150,
-					zIndex: 1,
-					position: "absolute",
-				}}
-				src={avatar}
-				alt="avatar"
-			></Avatar>
 			<Card
 				sx={{
 					display: "flex",
 					flexDirection: "column",
 					backgroundColor: "#F2EFF0",
-					minHeight: 230,
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
-					top: 75,
+					marginTop: "6.5rem",
+					paddingTop: "2.5rem",
+					overflow: "visible",
 				}}
 			>
+				<Avatar
+					sx={{
+						width: 150,
+						height: 150,
+						zIndex: 1,
+						position: "absolute",
+						left: 0,
+						right: 0,
+						top: -103,
+						margin: " 0 auto",
+					}}
+					src={avatar}
+					alt="avatar"
+				></Avatar>
 				<CardContent
 					sx={{
 						display: "flex",
@@ -80,7 +84,7 @@ const Profile = ({
 									accept="image/*"
 									multiple
 									type="file"
-									onChange={handleAvatarChange}
+									onChange={onFileSelected}
 								/>
 							</RedButton>
 
@@ -95,7 +99,11 @@ const Profile = ({
 							/>
 						</Stack>
 					) : (
-						<Typography variant="body2" color="text.secondary" align="center">
+						<Typography
+							variant="body2"
+							align="center"
+							sx={{ fontWeight: "bold" }}
+						>
 							{bio}
 						</Typography>
 					)}
@@ -121,7 +129,7 @@ const Profile = ({
 							<RedButton
 								size="small"
 								variant="contained"
-								onClick={(onSave(), () => setEditable(false))}
+								onClick={() => setEditable(false)}
 							>
 								Save
 							</RedButton>
