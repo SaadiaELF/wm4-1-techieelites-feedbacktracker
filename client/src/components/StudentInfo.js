@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Stack, Card, Avatar, IconButton, CardHeader } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
-import { useNavigate } from "react-router-dom";
-
+import StudentProfile from "./StudentProfile";
 const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
-	const navigate = useNavigate();
-	const [moduleName, setModuleName] = useState();
+	const [studentData, setStudentData] = useState({});
 
-	console.log(studentId);
 	const getStudentFeedbackById = async () => {
 		try {
 			const user = JSON.parse(localStorage.getItem("user"));
@@ -18,8 +14,7 @@ const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
 			const data = await res.json();
-			setModuleName(data.title);
-			console.log(data);
+			setStudentData(data);
 		} catch {
 			(error) => {
 				console.error(error);
@@ -63,16 +58,7 @@ const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 							alt="avatar"
 						></Avatar>
 					}
-					action={
-						<IconButton
-							aria-label="settings"
-							onClick={() => {
-								navigate("/studentProfile");
-							}}
-						>
-							<MoreVertIcon />
-						</IconButton>
-					}
+					action={<StudentProfile studentData={studentData} />}
 					title={studentName}
 					subheader={
 						<Stack
@@ -80,8 +66,11 @@ const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 							direction="row"
 							sx={{ justifyContent: "start", marginTop: "0.85rem" }}
 						>
-							<RedChip label={moduleName} />
-							<BlackChip label="Soft Skill" />
+							{studentData.module_Type === "pd" ? (
+								<BlackChip label="Soft Skill" />
+							) : (
+								<RedChip label={studentData.title} />
+							)}
 						</Stack>
 					}
 				/>

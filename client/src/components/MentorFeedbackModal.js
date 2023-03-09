@@ -9,8 +9,15 @@ import Box from "@mui/material/Box";
 import RedButton from "./RedButton";
 import WhiteButton from "./WhiteButton";
 
-const MentorFeedBackModal = () => {
+const MentorFeedBackModal = ({ studentData }) => {
 	const [open, setOpen] = React.useState(false);
+	const user = JSON.parse(localStorage.getItem("user"));
+	const [newFeedback, setNewFeedback] = React.useState({
+		student_id: 0,
+		text: "",
+		module_id: 0,
+		mentor_id: user.userId,
+	});
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -20,11 +27,40 @@ const MentorFeedBackModal = () => {
 		setOpen(false);
 	};
 
+	const handleTextChange = (e) => {
+		setNewFeedback({
+			...newFeedback,
+			text: e.target.value,
+			module_id: studentData.module_id,
+			student_id: studentData.user_id,
+		});
+	};
+
+	async function addNewFeedback() {
+		try {
+			const res = await fetch("/api/feedback/mentor", {
+				method: "POST",
+				body: JSON.stringify(newFeedback),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const result = await res.json();
+			console.log(result);
+			if (!res.ok) {
+				throw Error(res.statusText);
+			}
+		} catch (error) {
+			console.log({ error });
+		}
+		setOpen(false);
+	}
+
 	return (
 		<Box
 			sx={{
 				position: "relative",
-				top: 10,
+				top: 75,
 			}}
 		>
 			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
@@ -35,9 +71,9 @@ const MentorFeedBackModal = () => {
 					Mentor Feedback Form
 				</DialogTitle>
 				<DialogContent dividers>
-					<DialogContentText>{`Student : `}</DialogContentText>
+					<DialogContentText>{`Student : ${studentData.full_name}`}</DialogContentText>
 					<DialogContentText sx={{ paddingBottom: "1rem" }}>
-						{`Module : `}
+						{`Module : ${studentData.title} `}
 					</DialogContentText>
 					<TextField
 						sx={{ backgroundColor: "#FFFFFF" }}
@@ -45,11 +81,12 @@ const MentorFeedBackModal = () => {
 						label="Message"
 						rows={2}
 						fullWidth
+						onChange={handleTextChange}
 					/>
 				</DialogContent>
 				<DialogActions>
 					<WhiteButton onClick={handleClose}>Cancel</WhiteButton>
-					<RedButton onClick={handleClose}>Send</RedButton>
+					<RedButton onClick={addNewFeedback}>Send</RedButton>
 				</DialogActions>
 			</Dialog>
 		</Box>
