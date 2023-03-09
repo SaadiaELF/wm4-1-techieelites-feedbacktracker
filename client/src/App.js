@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer";
 import StudentDashboard from "./pages/StudentDashboard";
 import MentorDashboard from "./pages/MentorDashboard";
-import StudentProfileModal from "./components/StudentProfileModal";
 import { createTheme } from "@mui/material/styles";
 import "./App.css";
 
