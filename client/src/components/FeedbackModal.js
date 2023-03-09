@@ -11,6 +11,13 @@ import WhiteButton from "./WhiteButton";
 
 const FeedbackModal = ({ techModule, softSkill }) => {
 	const [open, setOpen] = React.useState(false);
+	const user = JSON.parse(localStorage.getItem("user"));
+	const [newFeedback, setNewFeedback] = React.useState({
+		student_id: user.userId,
+		text: "",
+		module_id: 0,
+		module_type: "tech",
+	});
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -20,13 +27,41 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 		setOpen(false);
 	};
 
+	const handleTextChange = (e) => {
+		setNewFeedback({
+			...newFeedback,
+			text: e.target.value,
+			module_id: techModule.module_id,
+		});
+	};
+
+	async function addNewFeedback() {
+		try {
+			const res = await fetch("/api/feedback/student", {
+				method: "POST",
+				body: JSON.stringify(newFeedback),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const result = await res.json();
+			console.log(result);
+			if (!res.ok) {
+				throw Error(res.statusText);
+			}
+		} catch (error) {
+			console.log({ error });
+		}
+		setOpen(false);
+	}
+
 	return (
 		<Box
 			sx={{
 				position: "relative",
 				top: 75,
 			}}
-		> 
+		>
 			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
 				Add Feedback
 			</RedButton>
@@ -44,11 +79,12 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 						label="Message"
 						rows={2}
 						fullWidth
+						onChange={handleTextChange}
 					/>
 				</DialogContent>
 				<DialogActions>
 					<WhiteButton onClick={handleClose}>Cancel</WhiteButton>
-					<RedButton onClick={handleClose}>Send</RedButton>
+					<RedButton onClick={addNewFeedback}>Send</RedButton>
 				</DialogActions>
 			</Dialog>
 		</Box>
