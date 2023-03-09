@@ -5,22 +5,6 @@ import jsonwebtoken from "jsonwebtoken";
 import auth from "./utils/auth";
 import "dotenv/config";
 
-/*
-const fs = require("fs");const fastcsv = require("fast-csv");
-
-let stream = fs.createReadStream("bezkoder.csv");
-let csvData = [];
-let csvStream = fastcsv
-  .parse()
-  .on("data", function(data) {
-    csvData.push(data);
-  })
-  .on("end", function() {
-    // remove the first line: header
-    csvData.shift();
-  });
-*/
-
 const router = Router();
 
 router.get("/", (_, res) => {
@@ -85,25 +69,14 @@ router.get("/users/:id", auth, async (req, res) => {
 });
 
 /*router.post("/users/:id", async (req, res) => {
-	try {
-		const file = req.body;
+
+		const [ID, Name, Email, Password] = req.body;
 		//const [user_id, full_name, email, password, img_url, bio] = req.body;
-		console.log(file);
+		console.log(ID, Name, Email, Password);
 		//console.log(user_id, full_name, email, password, img_url, bio);
-		const id = req.params.id;
 
-		const user = await db.query("SELECT * FROM users WHERE user_id = $1", [id]);
-		if (user.rows.role === "admin") {
-			const createUser = await db.query(
-			"INSERT INTO users (user_id, full_name, email, password, img_url, bio) VALUES ($1, $2, $3, $4, $5, $6)", [user_id, full_name, email, password, img_url, bio]);
-			//return res.json({ createUser });
-			//console.log("inserted " + res.rowCount + " row:", row);
+		await db.query("INSERT INTO users (user_id, full_name, email, password, img_url, bio) VALUES ($1, $2, $3, $4, $5, $6)", [ID, Name, Email, Password, "",  ""]);
 
-		}
-
-		} catch (error) {
-		console.log(error);
-	}
 });*/
 
 

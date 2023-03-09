@@ -56,12 +56,60 @@ const AdminDashboard = ({ theme }) => {
 		async function uploadUser(event) {
 			const [file] = event.target.files;
 			console.log(file);
-			fetch("localhost:3000/users/" + 111, {
-				method: "post",
-				body: {
-				"file": file,
-				},
-			});
+
+
+			//BRUTE FORCE METHOD
+			//let holder = {};
+			/*
+			let jsonArray = [];
+
+				try {
+				let reader = new FileReader();
+				reader.readAsBinaryString(file);
+				reader.onload = function(e) {
+					let headers = [];
+					let jsonData = [];
+					let rows = e.target.result.split("\r\n");
+					for (let i = 0; i < rows.length; i++) {
+						let cells = rows[i].split(",");
+						let rowData = {};
+						for(let j=0;j<cells.length;j++){
+							if(i==0){
+								let headerName = cells[j].trim();
+								headers.push(headerName);
+							}else{
+								let key = headers[j];
+								if(key){
+									rowData[key] = cells[j].trim();
+								}
+							}
+						}
+						//skip the first row (header) data
+						if(i!=0){
+							jsonData.push(rowData);
+						}
+					}
+
+					//console.log(jsonData);
+					//let jsonDataFormatter = jsonData[0];
+					//jsonDataFormatter = (JSON.stringify(jsonData[0])).slice(2);
+					//jsonDataFormatter = jsonDataFormatter.substring(0, jsonDataFormatter.length - 5);
+					//jsonArray = jsonDataFormatter.split(";");
+					//console.log(jsonArray);
+
+					fetch("localhost:3000/users/" + jsonArray[0], {
+						method: "post",
+						body: {
+							"ID": jsonArray[0],
+							"Name": jsonArray[1],
+							"Email": jsonArray[2],
+							"Password": jsonArray[3],
+						},
+					});
+					};
+				}catch(e){
+					console.error(e);
+				}*/
 			}
 
 	return (
