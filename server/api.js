@@ -5,6 +5,7 @@ import jsonwebtoken from "jsonwebtoken";
 import auth from "./utils/auth";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
 
@@ -12,16 +13,22 @@ router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
 });
+
 router.post("/users", async (req, res) => {
 try {
-	const { full_name, email, password } = req.body;
+	const id = generateUniqueId({
+		length: 6,
+		useLetters: false,
+	});
+	const { full_name, email, password, role } = req.body;
 
 	const hash = await bcrypt.hash(JSON.stringify(password), 10);
+
 	
 	console.log(hash);
 	
 	const user = await db.query(
-		"INSERT INTO users (user_id, full_name, email, password) VALUES ($1, $2, $3, $4) ", [id,full_name, email, hash]
+		"INSERT INTO users (user_id, full_name, email, password, role) VALUES ($1, $2, $3, $4, $5) ", [id,full_name, email, hash, role]
 	)
 	res.status(201).json(user.rows[0]);
 } catch (error) {
@@ -37,16 +44,17 @@ router.post("/auth/login", async (req, res) => {
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
-		// console.log(user);
-		// const isValid = await bcrypt.compare(user.password, user[0].password);
-		// console.log(user.password)
-		// console.log(isValid)
-		// // if (!isValid) {
-		// // 	res.status(401).json({ message: "Invalid credentials" });
-		// // 	return;
-		// // }
-		if (email === user.rows[0].email && password === user.rows[0].password) {
-			return res.json({
+		console.log(user.rows[0], email, password);
+		const isValid = await bcrypt.compare(password, user.rows[0].password);
+		
+		console.log(password)
+		console.log(isValid)
+		if (!isValid) {
+			res.status(401).json({ message: "Invalid credentials" });
+			return;
+		} 
+		if (isValid && email === user.rows[0].email) {
+			res.json({
 				userId: user.rows[0].user_id,
 				role: user.rows[0].role,
 				token: jsonwebtoken.sign({ user: user.rows[0].user_id }, JWT_SECRET, {
@@ -54,9 +62,6 @@ router.post("/auth/login", async (req, res) => {
 				}),
 			});
 		}
-		return res
-			.status(401)
-			.json({ message: "The email and password your provided are invalid" });
 	} catch (error) {
 		console.log(error);
 	}
