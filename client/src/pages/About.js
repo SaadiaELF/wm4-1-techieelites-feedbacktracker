@@ -135,6 +135,30 @@ export default function Album() {
 							</Stack>
 						</Card>
 					</Grid>
+
+					<Grid item xs={5} sm={5} md={4} margin="auto">
+						<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+
+							<h2 align="center">Product Manager</h2>
+							<CardMedia component="img"
+								image={Chris_Img}
+								alt="profile_pic" />
+							<h2 align="center">Chris Perrin</h2>
+
+							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
+								<IconButton color="inherit" target="_blank" size="large"
+									href="">
+									<LinkedInIcon fontSize="large"></LinkedInIcon>
+								</IconButton>
+
+								<IconButton color="inherit" target="_blank" size="large"
+									href="">
+									<GitHubIcon fontSize="large" />
+								</IconButton>
+							</Stack>
+						</Card>
+					</Grid>
+
 				</Grid>
 			</Container>
 		</main>
