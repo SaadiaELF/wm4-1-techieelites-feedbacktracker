@@ -5,11 +5,13 @@ import WelcomeMsg from "../components/WelcomeMsg";
 import Profile from "../components/Profile";
 import BlackButton from "../components/BlackButton";
 import { Upload } from "upload-js";
+import AddUser from "../components/AddUser";
 
 
 const AdminDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 	const [avatarUrl, setAvatarUrl] = React.useState("");
+	const [createUser, setCreateUser] = React.useState(false);
 		const upload = Upload({ apiKey: "free" });
 
 		async function onFileSelected(event) {
@@ -52,65 +54,10 @@ const AdminDashboard = ({ theme }) => {
 
 
 
-		//Upload User
-		async function uploadUser(event) {
-			const [file] = event.target.files;
-			console.log(file);
-
-
-			//BRUTE FORCE METHOD
-			//let holder = {};
-			/*
-			let jsonArray = [];
-
-				try {
-				let reader = new FileReader();
-				reader.readAsBinaryString(file);
-				reader.onload = function(e) {
-					let headers = [];
-					let jsonData = [];
-					let rows = e.target.result.split("\r\n");
-					for (let i = 0; i < rows.length; i++) {
-						let cells = rows[i].split(",");
-						let rowData = {};
-						for(let j=0;j<cells.length;j++){
-							if(i==0){
-								let headerName = cells[j].trim();
-								headers.push(headerName);
-							}else{
-								let key = headers[j];
-								if(key){
-									rowData[key] = cells[j].trim();
-								}
-							}
-						}
-						//skip the first row (header) data
-						if(i!=0){
-							jsonData.push(rowData);
-						}
-					}
-
-					//console.log(jsonData);
-					//let jsonDataFormatter = jsonData[0];
-					//jsonDataFormatter = (JSON.stringify(jsonData[0])).slice(2);
-					//jsonDataFormatter = jsonDataFormatter.substring(0, jsonDataFormatter.length - 5);
-					//jsonArray = jsonDataFormatter.split(";");
-					//console.log(jsonArray);
-
-					fetch("localhost:3000/users/" + jsonArray[0], {
-						method: "post",
-						body: {
-							"ID": jsonArray[0],
-							"Name": jsonArray[1],
-							"Email": jsonArray[2],
-							"Password": jsonArray[3],
-						},
-					});
-					};
-				}catch(e){
-					console.error(e);
-				}*/
-			}
+		//Add User
+		const handleAddUser = async () => {
+			createUser ? setCreateUser(false) : setCreateUser(true);
+			};
 
 	return (
 	<ThemeProvider theme={theme}>
@@ -127,20 +74,22 @@ const AdminDashboard = ({ theme }) => {
 
 
 			<Stack spacing={2}>
-				<BlackButton
+			<BlackButton
 					sx={{ width: "100px" , margin: "1rem", marginTop:"0.5rem" }}
 					size="small"
 					variant="contained"
 					component="label"
+					onClick={handleAddUser}
 				>
-					Add Student
-					<input
-						hidden
-						accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-						type="file"
-						onChange={uploadUser}
-					/>
-				</BlackButton>
+				Add User
+			</BlackButton>
+
+			{ createUser ?
+				(
+					<AddUser theme={theme} />
+				) : (
+					null
+				)}
 			</Stack>
 		</Stack>
 	</ThemeProvider>

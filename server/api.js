@@ -4,6 +4,7 @@ import logger from "./utils/logger";
 import jsonwebtoken from "jsonwebtoken";
 import auth from "./utils/auth";
 import "dotenv/config";
+const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
 
@@ -68,16 +69,21 @@ router.get("/users/:id", auth, async (req, res) => {
 	}
 });
 
-/*router.post("/users/:id", async (req, res) => {
+router.post("/admin", async (req, res) => {
 
-		const [ID, Name, Email, Password] = req.body;
-		//const [user_id, full_name, email, password, img_url, bio] = req.body;
-		console.log(ID, Name, Email, Password);
-		//console.log(user_id, full_name, email, password, img_url, bio);
+		const { full_name, email, role } = req.body;
 
-		await db.query("INSERT INTO users (user_id, full_name, email, password, img_url, bio) VALUES ($1, $2, $3, $4, $5, $6)", [ID, Name, Email, Password, "",  ""]);
+		const ID = generateUniqueId({
+			length: 6,
+			useLetters: false,
+		});
 
-});*/
+		const password = "123456";
+
+		await db.query("INSERT INTO users (user_id, full_name, email, password, role) VALUES ($1, $2, $3, $4, $5)", [ID, full_name, email, password, role]);
+
+		res.status(201).send(db);
+});
 
 
 
