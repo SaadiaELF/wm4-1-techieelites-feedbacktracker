@@ -14,6 +14,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Chioma_Img from "../img/Chioma.jpg";
 import Kerim_Img from "../img/Kerim.jpg";
 import Saadia_Img from "../img/Saadia.jpg";
+import Ali_Img from "../img/Ali.jpg";
+import Chris_Img from "../img/Chris.jpg";
+import Tony_Img from "../img/Tony.jpg";
+import Victor_Img from "../img/Victor.png";
 
 const theme = createTheme();
 
@@ -39,13 +43,15 @@ export default function Album() {
 			<Container sx={{ py: 8 }} maxWidth="md">
 				{/* End hero unit */}
 				<h1 align="center">Meet The Team</h1>
-				<h2 align="center">Developers:</h2>
+
+				<h2 align="center">Developers</h2>
 				<Grid container spacing={4}>
 					<Grid item xs={5} sm={5} md={4} margin="auto">
 						<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
 							<CardMedia component="img"
 								image={Chioma_Img}
 								alt="profile_pic" />
+							<h2 align="center">Chioma Okeke</h2>
 
 							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
 								<IconButton color="inherit" target="_blank" size="large"
@@ -66,6 +72,7 @@ export default function Album() {
 							<CardMedia component="img"
 									image={Kerim_Img}
 									alt="profile_pic" />
+							<h2 align="center">Kerim Zamir</h2>
 
 							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
 								<IconButton color="inherit" target="_blank" size="large"
@@ -86,7 +93,7 @@ export default function Album() {
 							<CardMedia component="img"
 									image={Saadia_Img}
 									alt="profile_pic" />
-
+							<h2 align="center">Saadia El fekak</h2>
 
 							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
 								<IconButton color="inherit" target="_blank" size="large"
@@ -104,15 +111,32 @@ export default function Album() {
 				</Grid>
 			</Container>
 
+			<Container sx={{ py: 8 }} maxWidth="md">
+				<Grid container spacing={4}>
+					<Grid item xs={5} sm={5} md={4} margin="auto">
+						<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
 
+							<h2 align="center">Product Owner</h2>
+							<CardMedia component="img"
+								image={Ali_Img}
+								alt="profile_pic" />
+							<h2 align="center">Ali Cagatay</h2>
 
+							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
+								<IconButton color="inherit" target="_blank" size="large"
+									href="https://www.linkedin.com/in/alicagatay/">
+									<LinkedInIcon fontSize="large"></LinkedInIcon>
+								</IconButton>
 
-
-
-
-
-
-
+								<IconButton color="inherit" target="_blank" size="large"
+									href="https://github.com/alicagatay">
+									<GitHubIcon fontSize="large" />
+								</IconButton>
+							</Stack>
+						</Card>
+					</Grid>
+				</Grid>
+			</Container>
 		</main>
     </ThemeProvider>
 	);
