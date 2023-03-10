@@ -12,21 +12,39 @@ router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
 });
+router.post("/users", async (req, res) => {
+try {
+	const { full_name, email, password } = req.body;
 
+	const hash = await bcrypt.hash(JSON.stringify(password), 10);
+	
+	console.log(hash);
+	
+	const user = await db.query(
+		"INSERT INTO users (user_id, full_name, email, password) VALUES ($1, $2, $3, $4) ", [id,full_name, email, hash]
+	)
+	res.status(201).json(user.rows[0]);
+} catch (error) {
+	console.error(error);
+}
+})
 router.post("/auth/login", async (req, res) => {
 	try {
 		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
-		const hash = await bcrypt.hash(password, 10);
-		console.log(hash);
+		
+		
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
-		// const isValid = await bcrypt.compare(password, user[0].password);
-		// if (!isValid) {
-		// 	res.status(401).json({ message: "Invalid credentials" });
-		// 	return;
-		// }
+		// console.log(user);
+		// const isValid = await bcrypt.compare(user.password, user[0].password);
+		// console.log(user.password)
+		// console.log(isValid)
+		// // if (!isValid) {
+		// // 	res.status(401).json({ message: "Invalid credentials" });
+		// // 	return;
+		// // }
 		if (email === user.rows[0].email && password === user.rows[0].password) {
 			return res.json({
 				userId: user.rows[0].user_id,
