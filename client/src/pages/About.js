@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,6 +11,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import Chioma_Img from "../img/Chioma.jpg";
+import Kerim_Img from "../img/Kerim.jpg";
+import Saadia_Img from "../img/Saadia.jpg";
 
 const theme = createTheme();
 
@@ -35,21 +39,22 @@ export default function Album() {
 			<Container sx={{ py: 8 }} maxWidth="md">
 				{/* End hero unit */}
 				<h1 align="center">Meet The Team</h1>
+				<h2 align="center">Developers:</h2>
 				<Grid container spacing={4}>
 					<Grid item xs={5} sm={5} md={4} margin="auto">
 						<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
 							<CardMedia component="img"
-								image="https://source.unsplash.com/random"
+								image={Chioma_Img}
 								alt="profile_pic" />
 
 							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
 								<IconButton color="inherit" target="_blank" size="large"
-									href="">
+									href="http://www.linkedin.com/in/chiomajokeke">
 									<LinkedInIcon fontSize="large"></LinkedInIcon>
 								</IconButton>
 
 								<IconButton color="inherit" target="_blank" size="large"
-									href="">
+									href="https://github.com/JanefrancessC">
 									<GitHubIcon fontSize="large" />
 								</IconButton>
 							</Stack>
@@ -59,17 +64,17 @@ export default function Album() {
 					<Grid item xs={5} sm={5} md={4} margin="auto">
 						<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
 							<CardMedia component="img"
-								image="https://source.unsplash.com/random"
-								alt="profile_pic" />
+									image={Kerim_Img}
+									alt="profile_pic" />
 
 							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
 								<IconButton color="inherit" target="_blank" size="large"
-									href="">
+									href="https://www.linkedin.com/in/kerim-zamir-4390a5235/">
 									<LinkedInIcon fontSize="large"></LinkedInIcon>
 								</IconButton>
 
 								<IconButton color="inherit" target="_blank" size="large"
-									href="">
+									href="https://github.com/Arbeits-Sachen">
 									<GitHubIcon fontSize="large" />
 								</IconButton>
 							</Stack>
@@ -79,17 +84,18 @@ export default function Album() {
 					<Grid item xs={5} sm={5} md={4} margin="auto">
 						<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
 							<CardMedia component="img"
-								image="https://source.unsplash.com/random"
-								alt="profile_pic" />
+									image={Saadia_Img}
+									alt="profile_pic" />
+
 
 							<Stack direction="row" spacing={{ xs: 1, md: 3 }} sx={{ justifyContent: "center" }}>
 								<IconButton color="inherit" target="_blank" size="large"
-									href="">
+									href="https://www.linkedin.com/in/saadia-el-fekak-5b138780">
 									<LinkedInIcon fontSize="large"></LinkedInIcon>
 								</IconButton>
 
 								<IconButton color="inherit" target="_blank" size="large"
-									href="">
+									href="https://github.com/SaadiaELF">
 									<GitHubIcon fontSize="large" />
 								</IconButton>
 							</Stack>
@@ -97,6 +103,16 @@ export default function Album() {
 					</Grid>
 				</Grid>
 			</Container>
+
+
+
+
+
+
+
+
+
+
 		</main>
     </ThemeProvider>
 	);
