@@ -24,6 +24,7 @@ const App = () => (
 		<Navbar />
 		<main className="main">
 			<Routes>
+				<Route path="/" element={<Login />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/student" element={<StudentDashboard theme={theme} />} />
