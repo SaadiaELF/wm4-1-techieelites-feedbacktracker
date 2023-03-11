@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
-
+//Admin adding users
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
