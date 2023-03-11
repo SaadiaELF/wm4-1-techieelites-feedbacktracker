@@ -38,10 +38,12 @@ const MentorFeedBackModal = ({ studentData }) => {
 
 	async function addNewFeedback() {
 		try {
+			const user = JSON.parse(localStorage.getItem("user"));
 			const res = await fetch("/api/feedback/mentor", {
 				method: "POST",
 				body: JSON.stringify(newFeedback),
 				headers: {
+					authorization: `Bearer ${user.token}`,
 					"Content-Type": "application/json",
 				},
 			});

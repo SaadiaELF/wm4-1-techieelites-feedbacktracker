@@ -37,10 +37,12 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 
 	async function addNewFeedback() {
 		try {
+			const user = JSON.parse(localStorage.getItem("user"));
 			const res = await fetch("/api/feedback/student", {
 				method: "POST",
 				body: JSON.stringify(newFeedback),
 				headers: {
+					authorization: `Bearer ${user.token}`,
 					"Content-Type": "application/json",
 				},
 			});

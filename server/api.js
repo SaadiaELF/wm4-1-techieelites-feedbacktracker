@@ -130,7 +130,7 @@ router.post("/feedback/student", auth, async (req, res) => {
 	}
 });
 
-router.post("/feedback/mentor", async (req, res) => {
+router.post("/feedback/mentor", auth, async (req, res) => {
 	try {
 		const id = generateUniqueId({
 			length: 5,
