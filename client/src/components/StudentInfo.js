@@ -26,62 +26,53 @@ const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 		getStudentFeedbackById();
 	}, []);
 	return (
-		<Stack
-			spacing={2}
+		<Card
 			sx={{
-				alignItems: "end",
-				top: 70,
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				backgroundColor: "#F2EFF0",
+				minHeight: 90,
+				width: "100%",
 				position: "relative",
 			}}
 		>
-			<Card
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					backgroundColor: "#F2EFF0",
-					minHeight: 90,
-					width: "100%",
-					position: "relative",
-				}}
-			>
-				<CardHeader
-					id={studentId}
-					avatar={
-						<Avatar
-							sx={{
-								width: 70,
-								height: 70,
-								zIndex: 1,
-							}}
-							src={studentAvatar}
-							alt="avatar"
-						></Avatar>
-					}
-					action={<StudentProfile studentData={studentData} />}
-					title={studentName}
-					subheader={
-						<Stack
-							spacing={1}
-							direction="row"
-							sx={{ justifyContent: "start", marginTop: "0.85rem" }}
-						>
-							{studentData.module_Type === "pd" ? (
-								<BlackChip label="Soft Skill" />
-							) : (
-								<RedChip
-									component="a"
-									label={studentData.title}
-									href={studentData.module_url}
-									target="_blank"
-									clickable
-								/>
-							)}
-						</Stack>
-					}
-				/>
-			</Card>
-		</Stack>
+			<CardHeader
+				id={studentId}
+				avatar={
+					<Avatar
+						sx={{
+							width: 70,
+							height: 70,
+							zIndex: 1,
+						}}
+						src={studentAvatar}
+						alt="avatar"
+					></Avatar>
+				}
+				action={<StudentProfile studentData={studentData} />}
+				title={studentName}
+				subheader={
+					<Stack
+						spacing={1}
+						direction="row"
+						sx={{ justifyContent: "start", marginTop: "0.85rem" }}
+					>
+						{studentData.module_Type === "pd" ? (
+							<BlackChip label="Soft Skill" />
+						) : (
+							<RedChip
+								component="a"
+								label={studentData.title}
+								href={studentData.module_url}
+								target="_blank"
+								clickable
+							/>
+						)}
+					</Stack>
+				}
+			/>
+		</Card>
 	);
 };
 
