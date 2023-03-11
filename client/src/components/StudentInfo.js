@@ -1,57 +1,78 @@
 import React, { useState } from "react";
-import { Stack, Card, Avatar, CardContent, Typography } from "@mui/material";
+import { Stack, Card, Avatar, IconButton, CardHeader } from "@mui/material";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
+import StudentProfile from "./StudentProfile";
+const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
+	const [studentData, setStudentData] = useState({});
 
-const StudentInfo = ({ student }) => {
-	const [avatar, setAvatar] = useState("");
+	const getStudentFeedbackById = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/feedback/student/${studentId}`, {
+				headers: { authorization: `Bearer ${user.token}` },
+			});
+			const data = await res.json();
+			setStudentData(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
+	React.useEffect(() => {
+		getStudentFeedbackById();
+	}, []);
 	return (
-		<Stack
-			spacing={2}
+		<Card
 			sx={{
-				alignItems: "end",
-				top: 60,
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				backgroundColor: "#F2EFF0",
+				minHeight: 90,
+				width: "100%",
 				position: "relative",
 			}}
 		>
-			<Avatar
-				sx={{
-					width: 90,
-					height: 90,
-					zIndex: 1,
-					left: 0,
-					bottom: 0,
-					position: "absolute",
-				}}
-				src={avatar}
-				alt="avatar"
-			></Avatar>
-			<Card
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					backgroundColor: "#F2EFF0",
-					minHeight: 90,
-					width: "90%",
-					position: "relative",
-				}}
-			>
-				<CardContent sx={{ padding: "0 1rem !important" }}>
-					<Typography
-						sx={{marginLeft: "3rem", marginBottom: '0.5rem'}}
-						variant="body1"
-						
+			<CardHeader
+				id={studentId}
+				avatar={
+					<Avatar
+						sx={{
+							width: 70,
+							height: 70,
+							zIndex: 1,
+						}}
+						src={studentAvatar}
+						alt="avatar"
+					></Avatar>
+				}
+				action={<StudentProfile studentData={studentData} />}
+				title={studentName}
+				subheader={
+					<Stack
+						spacing={1}
+						direction="row"
+						sx={{ justifyContent: "start", marginTop: "0.85rem" }}
 					>
-						{student}
-					</Typography>
-					<Stack spacing={1} direction="row" sx={{ justifyContent: "end" }}>
-						<RedChip label="	Module" />
-						<BlackChip label="	Soft Skill" />
+						{studentData.module_Type === "pd" ? (
+							<BlackChip label="Soft Skill" />
+						) : (
+							<RedChip
+								component="a"
+								label={studentData.title}
+								href={studentData.module_url}
+								target="_blank"
+								clickable
+							/>
+						)}
 					</Stack>
-				</CardContent>
-			</Card>
-		</Stack>
+				}
+			/>
+		</Card>
 	);
 };
 
