@@ -55,16 +55,8 @@ const Login = () => {
 		setFormIsValid("Loading...");
 		login().then(() => {
 			const user = JSON.parse(localStorage.getItem("user"));
-
-			if (user.role === "student") {
-				navigate("/student");
-				window.location.reload();
-			} else if (user.role === "admin") {
-				navigate("/admin");
-				window.location.reload();
-			} else if (user.role === "mentor") {
-				navigate("/mentor");
-				window.location.reload();
+			if (user.role) {
+				navigate(`/${user.role}/${user.userId}`);
 			} else {
 				window.location.reload();
 			}
