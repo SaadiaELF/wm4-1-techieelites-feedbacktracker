@@ -5,6 +5,7 @@ import jsonwebtoken from "jsonwebtoken";
 import auth from "./utils/auth";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+
 const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
@@ -129,4 +130,55 @@ router.get("/modules", async (req, res) => {
 		console.log(error);
 	}
 });
+router.get("/feedback/student/:id", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.id);
+		let modules = await db.query(
+			"SELECT * FROM users u INNER JOIN student_feedback sf ON u.user_id = sf.student_id INNER JOIN modules m ON sf.module_id = m.module_id WHERE u.user_id = $1 ORDER BY sf.date DESC",
+			[userId]
+		);
+		return res.json(modules.rows[0]);
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post("/feedback/student", auth, async (req, res) => {
+	try {
+		const id = generateUniqueId({
+			length: 5,
+			useLetters: false,
+		});
+		const curDate = new Date();
+
+		const { student_id, text, module_id, module_type } = req.body;
+		await db.query(
+			" INSERT INTO student_feedback (sfeedback_id, text, date, student_id, module_id, module_type) VALUES ($1, $2, $3, $4, $5, $6) ",
+			[id, text, curDate, student_id, module_id, module_type]
+		);
+
+		res.json({ message: "success" });
+	} catch (error) {
+		console.error(error);
+	}
+});
+
+router.post("/feedback/mentor", auth, async (req, res) => {
+	try {
+		const id = generateUniqueId({
+			length: 5,
+			useLetters: false,
+		});
+		const curDate = new Date();
+		const { mentor_id, student_id, text, module_id } = req.body;
+
+		await db.query(
+			" INSERT INTO mentor_feedback (mfeedback_id, text, date, student_id, mentor_id, module_id) VALUES ($1, $2, $3, $4, $5, $6) ",
+			[id, text, curDate, student_id, mentor_id, module_id]
+		);
+		res.json({ message: "success" });
+	} catch (error) {
+		console.error(error);
+	}
+});
+
 export default router;
