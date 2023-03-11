@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer";
 import StudentDashboard from "./pages/StudentDashboard";
 import MentorDashboard from "./pages/MentorDashboard";
-import StudentProfileModal from "./components/StudentProfileModal";
 import { createTheme } from "@mui/material/styles";
 import "./App.css";
 
@@ -29,7 +28,6 @@ const App = () => (
 				<Route path="/about" element={<About />} />
 				<Route path="/student" element={<StudentDashboard theme={theme} />} />
 				<Route path="/mentor" element={<MentorDashboard theme={theme} />} />
-				<Route path="/studentProfile" element={<StudentProfileModal theme={theme} />} />
 			</Routes>
 		</main>
 		<Footer />
