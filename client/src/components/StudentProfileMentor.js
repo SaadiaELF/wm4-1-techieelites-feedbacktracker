@@ -5,11 +5,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { Avatar } from "@mui/material";
 
-const StudentProfileMentor = ({
-	studentName,
-	bio,
-	avatar,
-}) => {
+const StudentProfileMentor = ({ studentName, bio, avatar }) => {
 	return (
 		<Stack
 			spacing={2}
@@ -32,7 +28,7 @@ const StudentProfileMentor = ({
 					display: "flex",
 					flexDirection: "column",
 					backgroundColor: "#F2EFF0",
-					minHeight: 230,
+					minHeight: 150,
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
@@ -46,11 +42,11 @@ const StudentProfileMentor = ({
 						justifyContent: "center",
 					}}
 				>
-          <Typography variant="body1" align="center" sx={{padding: '1rem'}}>{studentName} Student Name</Typography>
+					<Typography variant="body1" align="center" sx={{ padding: "1rem" }}>
+						{studentName}
+					</Typography>
 					<Typography variant="body2" align="center">
-						{bio}Lorem Ipsum is simply dummy text of the printing and
-						typesetting industry. Lorem Ipsum has been the industry's standard
-						dummy text ever since the 1500s.
+						{bio}
 					</Typography>
 				</CardContent>
 			</Card>

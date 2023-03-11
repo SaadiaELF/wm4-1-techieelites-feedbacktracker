@@ -10,6 +10,7 @@ import { Upload } from "upload-js";
 const StudentDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 	const [techModule, setTechModule] = React.useState({
+		module_id: 0,
 		module: "",
 		lesson: "",
 	});
@@ -31,7 +32,11 @@ const StudentDashboard = ({ theme }) => {
 	};
 
 	const handleModuleChange = (e, newValue) => {
-		setTechModule({ ...techModule, module: newValue });
+		setTechModule({
+			...techModule,
+			module: newValue.label,
+			module_id: newValue.id,
+		});
 	};
 
 	const handleLessonChange = (e, newValue) => {
