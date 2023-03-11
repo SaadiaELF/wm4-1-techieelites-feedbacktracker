@@ -14,8 +14,8 @@ router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
 });
-//Admin adding users
 
+//Admin adding users
 router.post("/users", auth, async (req, res) => {
 	try {
 		const id = generateUniqueId({
@@ -46,13 +46,13 @@ router.post("/auth/login", async (req, res) => {
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
-		console.log(user.rows[0], email, password);
-		const isValid = await bcrypt.compare(password, user.rows[0].password);
 
-		console.log(password);
-		console.log(isValid);
+		const isValid = await bcrypt.compare(
+			JSON.stringify(password),
+			user.rows[0].password
+		);
 		if (!isValid) {
-			res.status(401).json({ message: "Invalid credentials" });
+			res.json({ message: "Invalid credentials" });
 			return;
 		}
 		if (isValid && email === user.rows[0].email) {
