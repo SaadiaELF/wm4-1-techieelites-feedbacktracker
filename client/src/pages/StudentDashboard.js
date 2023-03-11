@@ -75,7 +75,7 @@ const StudentDashboard = ({ theme }) => {
 			const res = await fetch(`/api/users/${user.userId}`, {
 				method: "PUT",
 				body: JSON.stringify(userData),
-				headers: {
+				headers: { 
 					authorization: `Bearer ${user.token}`,
 					"Content-Type": "application/json",
 				},
