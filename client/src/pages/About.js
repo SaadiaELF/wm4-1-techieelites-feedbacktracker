@@ -36,7 +36,6 @@ export default function Album() {
 					</Typography>
 					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
 						<Button variant="contained" sx={{ bgcolor: "red", ":hover":{ bgcolor:"black" } }}>Main Button</Button>
-						<Button variant="outlined" sx={{ bgcolor: "black", color: "white", ":hover":{ color:"black", border: "1px solid black" } }}>Secondary Button</Button>
 					</Stack>
 				</Container>
 			</Box>
