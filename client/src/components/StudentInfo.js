@@ -69,7 +69,13 @@ const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 							{studentData.module_Type === "pd" ? (
 								<BlackChip label="Soft Skill" />
 							) : (
-								<RedChip label={studentData.title} />
+								<RedChip
+									component="a"
+									label={studentData.title}
+									href={studentData.module_url}
+									target="_blank"
+									clickable
+								/>
 							)}
 						</Stack>
 					}
