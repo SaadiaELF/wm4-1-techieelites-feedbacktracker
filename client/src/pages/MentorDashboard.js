@@ -94,14 +94,23 @@ const MentorDashboard = ({ theme }) => {
 					handleAvatarChange={handleAvatarChange}
 					onSave={() => updateUserById(user)}
 				/>
-				{students.map((student, index) => (
-					<StudentInfo
-						key={index}
-						studentName={student.student_name}
-						studentAvatar={student.student_avatar}
-						id={student.student_id}
-					/>
-				))}
+				<Stack
+					spacing={1}
+					sx={{
+						alignItems: "end",
+						top: 70,
+						position: "relative",
+					}}
+				>
+					{students.map((student, index) => (
+						<StudentInfo
+							key={index}
+							studentName={student.student_name}
+							studentAvatar={student.student_avatar}
+							studentId={student.studentId}
+						/>
+					))}
+				</Stack>
 			</Stack>
 		</ThemeProvider>
 	);

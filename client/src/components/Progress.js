@@ -77,9 +77,12 @@ const Progress = ({
 					<Stack spacing={2} sx={{ paddingTop: "1rem" }}>
 						<Autocomplete
 							sx={{ backgroundColor: "#FFFFFF" }}
+							isOptionEqualToValue={(option, value) => option.id === value.id}
 							size="small"
 							id="module"
-							options={modules.map((i) => i.title)}
+							options={modules.map((i) => {
+								return { label: i.title, id: i.module_id };
+							})}
 							renderInput={(params) => <TextField {...params} label="Module" />}
 							onChange={handleModuleChange}
 						/>
