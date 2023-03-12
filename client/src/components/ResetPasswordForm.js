@@ -18,7 +18,7 @@ const ResetPasswordForm = () => {
 	});
 	const [errors, setErrors] = React.useState({
 		newPassword: false,
-		oldPassword: false,
+		oldPassword: true,
 		confirmPassword: false,
 	});
 
@@ -60,6 +60,27 @@ const ResetPasswordForm = () => {
 		setErrors({ ...errors, confirmPassword: false });
 	};
 
+	const updateUserById = async (userData) => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+			console.log(userData);
+			const res = await fetch(`/api/users/${user.userId}`, {
+				method: "PUT",
+				body: JSON.stringify(userData),
+				headers: {
+					authorization: `Bearer ${user.token}`,
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			console.log(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
+
 	return (
 		<Box>
 			<RedButton size="small" variant="contained" onClick={handleClickOpen}>
@@ -80,6 +101,7 @@ const ResetPasswordForm = () => {
 							value={password.oldPassword}
 							placeholder="Old Password"
 							onChange={handleInputChange}
+							helperText={errors.oldPassword && "wrong password"}
 							required
 						/>
 						<TextField
@@ -115,7 +137,7 @@ const ResetPasswordForm = () => {
 				</DialogContent>
 				<DialogActions>
 					<WhiteButton onClick={handleClose}>Cancel</WhiteButton>
-					<RedButton onClick={handleClose}>Save</RedButton>
+					<RedButton onClick={() => updateUserById(password)}>Save</RedButton>
 				</DialogActions>
 			</Dialog>
 		</Box>
