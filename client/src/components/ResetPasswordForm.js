@@ -11,6 +11,16 @@ import { Stack } from "@mui/system";
 
 const ResetPasswordForm = () => {
 	const [open, setOpen] = React.useState(false);
+	const [password, setPassword] = React.useState({
+		oldPassword: "",
+		newPassword: "",
+		confirmPassword: "",
+	});
+	const [errors, setErrors] = React.useState({
+		newPassword: false,
+		oldPassword: false,
+		confirmPassword: false,
+	});
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -18,6 +28,36 @@ const ResetPasswordForm = () => {
 
 	const handleClose = () => {
 		setOpen(false);
+		setErrors({
+			newPassword: false,
+			oldPassword: false,
+			confirmPassword: false,
+		});
+		setPassword({ oldPassword: "", newPassword: "", confirmPassword: "" });
+	};
+
+	const handleInputChange = (e) => {
+		setPassword({ ...password, [e.target.name]: e.target.value });
+	};
+
+	const isValidPassword = () => {
+		if (
+			!password.newPassword ||
+			password.newPassword.length < 6 ||
+			password.newPassword.length > 20
+		) {
+			setErrors({ ...errors, newPassword: !errors.newPassword });
+			return;
+		}
+		setErrors({ ...errors, newPassword: false });
+	};
+
+	const isSamePassword = () => {
+		if (password.newPassword !== password.confirmPassword) {
+			setErrors({ ...errors, confirmPassword: !errors.confirmPassword });
+			return;
+		}
+		setErrors({ ...errors, confirmPassword: false });
 	};
 
 	return (
@@ -32,21 +72,43 @@ const ResetPasswordForm = () => {
 				<DialogContent dividers>
 					<Stack spacing={2}>
 						<TextField
+							error={errors.oldPassword}
 							label="Old Password"
 							size="small"
+							name="oldPassword"
+							type="password"
+							value={password.oldPassword}
 							placeholder="Old Password"
+							onChange={handleInputChange}
 							required
 						/>
 						<TextField
+							error={errors.newPassword}
 							label="New Password"
 							size="small"
+							name="newPassword"
+							type="password"
+							value={password.newPassword}
 							placeholder="New Password"
+							onChange={handleInputChange}
+							onBlur={isValidPassword}
+							helperText={
+								errors.newPassword &&
+								"Password should be between 6-20 characters"
+							}
 							required
 						/>
 						<TextField
-							label="Repeat Password"
+							error={errors.confirmPassword}
+							label="Confirm Password"
 							size="small"
-							placeholder="Repeat password"
+							name="confirmPassword"
+							type="password"
+							value={password.confirmPassword}
+							placeholder="Confirm password"
+							onBlur={isSamePassword}
+							onChange={handleInputChange}
+							helperText={errors.confirmPassword && "Passwords do not match"}
 							required
 						/>
 					</Stack>
