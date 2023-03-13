@@ -7,7 +7,10 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import RedButton from "./RedButton";
 import WhiteButton from "./WhiteButton";
-import { Stack } from "@mui/system";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ResetPasswordForm = () => {
 	const [open, setOpen] = React.useState(false);
@@ -21,6 +24,7 @@ const ResetPasswordForm = () => {
 		oldPassword: true,
 		confirmPassword: false,
 	});
+	const [isUpdated, setIsUpdated] = React.useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -72,8 +76,11 @@ const ResetPasswordForm = () => {
 					"Content-Type": "application/json",
 				},
 			});
-			const data = await res.json();
-			console.log(data);
+			await res.json();
+			setIsUpdated((isUpdated) => !isUpdated);
+			setTimeout(() => {
+				setOpen(false);
+			}, 1000);
 		} catch {
 			(error) => {
 				console.error(error);
@@ -88,6 +95,20 @@ const ResetPasswordForm = () => {
 			</RedButton>
 			<Dialog open={open} onClose={handleClose} fullWidth>
 				<DialogTitle sx={{ backgroundColor: "#EE4344", color: "#FFFFFF" }}>
+					{handleClose ? (
+						<IconButton
+							aria-label="close"
+							onClick={handleClose}
+							sx={{
+								position: "absolute",
+								right: 8,
+								top: 8,
+								color: "#FFFFFF",
+							}}
+						>
+							<CloseIcon />
+						</IconButton>
+					) : null}{" "}
 					Reset Password
 				</DialogTitle>
 				<DialogContent dividers>
@@ -133,6 +154,11 @@ const ResetPasswordForm = () => {
 							helperText={errors.confirmPassword && "Passwords do not match"}
 							required
 						/>
+						{isUpdated && (
+							<Alert severity="success">
+								Password was successfully changed
+							</Alert>
+						)}
 					</Stack>
 				</DialogContent>
 				<DialogActions>
