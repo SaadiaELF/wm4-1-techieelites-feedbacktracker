@@ -10,48 +10,65 @@ import AddUser from "../components/AddUser";
 
 const AdminDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
-	const [avatarUrl, setAvatarUrl] = React.useState("");
+	const upload = Upload({ apiKey: "free" });
 	const [createUser, setCreateUser] = React.useState(false);
-		const upload = Upload({ apiKey: "free" });
 
-		async function onFileSelected(event) {
-			const [file] = event.target.files;
-			const { fileUrl } = await upload.uploadFile(file, {
-				onBegin: ({ cancel }) => console.log("File upload started!"),
-				onProgress: ({ progress }) =>
-					console.log(`File uploading... ${progress}%`),
+	async function handleAvatarChange(event) {
+		const [file] = event.target.files;
+		const { fileUrl } = await upload.uploadFile(file, {
+			onBegin: ({ cancel }) => console.log("File upload started!"),
+			onProgress: ({ progress }) =>
+				console.log(`File uploading... ${progress}%`),
+		});
+		setUser((user) => ({ ...user, img_url: fileUrl }));
+	}
+
+	const handleBioChange = (e) => {
+		setUser((user) => ({ ...user, bio: e.target.value }));
+	};
+
+	const getUserById = async () => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
+
+			const res = await fetch(`/api/users/${user.userId}`, {
+				headers: { authorization: `Bearer ${user.token}` },
 			});
-			setAvatarUrl(fileUrl);
+			const data = await res.json();
+			setUser(data[0]);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
 		}
-		const getUserById = async () => {
-			try {
-				const user = JSON.parse(localStorage.getItem("user"));
+	};
 
-				const res = await fetch(`/api/users/${user.userId}`, {
-					headers: { authorization: `Bearer ${user.token}` },
-				});
-				const data = await res.json();
-				setUser(data);
-			} catch {
-				(error) => {
-					console.error(error);
-				};
-			}
-		};
-
-		React.useEffect(() => {
-			getUserById();
-		}, []);
-
-		// handle input change functions
-		const handleBioChange = (e) => {
-			setUser((user) => ({ ...user, bio: e.target.value }));
-
-		};
+	React.useEffect(() => {
+		getUserById();
+	}, []);
 
 
+	//update user profile
+	const updateUserById = async (userData) => {
+		try {
+			const user = JSON.parse(localStorage.getItem("user"));
 
-
+			const res = await fetch(`/api/users/${user.userId}`, {
+				method: "PUT",
+				body: JSON.stringify(userData),
+				headers: {
+					authorization: `Bearer ${user.token}`,
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			console.log(data);
+		} catch {
+			(error) => {
+				console.error(error);
+			};
+		}
+	};
 
 
 		//Add User
@@ -70,8 +87,13 @@ const AdminDashboard = ({ theme }) => {
 			spacing={2}
 		>
 			<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
-			<Profile bio={user.bio} handleBioChange={handleBioChange} avatar={avatarUrl || user.img_url} onFileSelected={onFileSelected} />
-
+			<Profile
+					bio={user.bio}
+					handleBioChange={handleBioChange}
+					avatar={user.img_url}
+					handleAvatarChange={handleAvatarChange}
+					onSave={() => updateUserById(user)}
+				/>
 
 			<Stack spacing={2}>
 			<BlackButton
