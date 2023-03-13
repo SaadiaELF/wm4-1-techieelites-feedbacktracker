@@ -49,7 +49,7 @@ router.post("/users", auth, async (req, res) => {
 			"INSERT INTO users (user_id, full_name, email, password, role) VALUES ($1, $2, $3, $4, $5) ",
 			[id, full_name, email, hash, role]
 		);
-		res.status(201).json({ message: "User created successfully" });
+		res.status(201).send({ message: "User created successfully" });
 	} catch (error) {
 		console.error(error);
 	}

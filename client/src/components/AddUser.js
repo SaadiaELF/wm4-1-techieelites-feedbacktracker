@@ -16,6 +16,7 @@ const AddUser = ({ theme }) => {
 		role: "",
 	});
 	const [errorMessage, setErrorMessage] = React.useState("");
+	const [successMessage, setSuccessMessage] = React.useState("");
 
 	const handleNameChange = (event) => {
 		setNewUser({ ...newUser, full_name: event.target.value });
@@ -44,7 +45,9 @@ const AddUser = ({ theme }) => {
 		})
 			.then((response) => {
 				if (!response.ok) {
-					setErrorMessage("User already exists");
+					setErrorMessage("Something went wrong. Please try again.");
+				} else if (response.status === 201) {
+					setSuccessMessage("User added successfully.");
 				}
 				response.json();
 			})
@@ -67,6 +70,9 @@ const AddUser = ({ theme }) => {
 				<Stack spacing={2}>
 					<span>
 						{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+					</span>
+					<span>
+						{successMessage && <Alert severity="success">{successMessage}</Alert>}
 					</span>
 					<TextField
 						id="outlined-basic"
