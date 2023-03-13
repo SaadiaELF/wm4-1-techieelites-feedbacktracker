@@ -67,7 +67,6 @@ const ResetPasswordForm = () => {
 	const updateUserById = async (userData) => {
 		try {
 			const user = JSON.parse(localStorage.getItem("user"));
-			console.log(userData);
 			const res = await fetch(`/api/users/${user.userId}`, {
 				method: "PUT",
 				body: JSON.stringify(userData),
