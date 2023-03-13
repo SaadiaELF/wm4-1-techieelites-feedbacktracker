@@ -9,6 +9,9 @@ import bcrypt from "bcrypt";
 const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
+	const isEmailValid = (email) => {
+		return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+	};
 
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
@@ -24,13 +27,22 @@ router.post("/users", auth, async (req, res) => {
 		});
 		const password = "123456";
 		const { full_name, email, role } = req.body;
-		const userExists = await db.query("SELECT * FROM users WHERE email = $1", [email])
-			if (userExists.rows.length > 0) {
-				//console.log("User already exists", userExists.rows[0].email);
-				res.status(409).json({ error: "User already exists" });
-				return;
-			}
-
+		const userExists = await db.query("SELECT * FROM users WHERE email = $1", [
+			email,
+		]);
+		if (userExists.rows.length > 0) {
+			res.status(409).json({ error: "User already exists" });
+			return;
+		}
+		if (!full_name) {
+			res.status(400).json({ error: "Full name is required"})
+		}
+		if (!email || !isEmailValid(email)) {
+			res.status(400).json({ error: "Email is required"})
+		} 
+		if (!role) {
+			res.status(400).json({ error: "Role must be provided"})
+		}
 		const hash = await bcrypt.hash(JSON.stringify(password), 10);
 
 		await db.query(

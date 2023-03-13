@@ -64,10 +64,10 @@ const AddUser = ({ theme }) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<form action="" method="post" className="form-example" onSubmit={addUser}>
-				<span>
-					{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-				</span>
 				<Stack spacing={2}>
+					<span>
+						{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+					</span>
 					<TextField
 						id="outlined-basic"
 						label="Enter Full Name"
