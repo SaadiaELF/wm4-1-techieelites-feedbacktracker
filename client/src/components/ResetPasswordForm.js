@@ -21,11 +21,10 @@ const ResetPasswordForm = () => {
 	});
 	const [errors, setErrors] = React.useState({
 		newPassword: false,
-		oldPassword: true,
 		confirmPassword: false,
 	});
 	const [isUpdated, setIsUpdated] = React.useState(false);
-
+	const [isNotUpdated, setIsNotUpdated] = React.useState(false);
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -34,10 +33,11 @@ const ResetPasswordForm = () => {
 		setOpen(false);
 		setErrors({
 			newPassword: false,
-			oldPassword: false,
 			confirmPassword: false,
 		});
 		setPassword({ oldPassword: "", newPassword: "", confirmPassword: "" });
+		setIsUpdated(false);
+		setIsNotUpdated(false);
 	};
 
 	const handleInputChange = (e) => {
@@ -76,11 +76,17 @@ const ResetPasswordForm = () => {
 					"Content-Type": "application/json",
 				},
 			});
-			await res.json();
-			setIsUpdated((isUpdated) => !isUpdated);
-			setTimeout(() => {
-				setOpen(false);
-			}, 1000);
+			const data = await res.json();
+			console.log(data);
+			if (res.ok) {
+				setIsUpdated((isUpdated) => !isUpdated);
+				setIsNotUpdated(false);
+				setTimeout(() => {
+					setOpen(false);
+				}, 1000);
+			} else {
+				setIsNotUpdated((isNotUpdated) => !isNotUpdated);
+			}
 		} catch {
 			(error) => {
 				console.error(error);
@@ -114,7 +120,6 @@ const ResetPasswordForm = () => {
 				<DialogContent dividers>
 					<Stack spacing={2}>
 						<TextField
-							error={errors.oldPassword}
 							label="Old Password"
 							size="small"
 							name="oldPassword"
@@ -122,7 +127,6 @@ const ResetPasswordForm = () => {
 							value={password.oldPassword}
 							placeholder="Old Password"
 							onChange={handleInputChange}
-							helperText={errors.oldPassword && "wrong password"}
 							required
 						/>
 						<TextField
@@ -154,6 +158,7 @@ const ResetPasswordForm = () => {
 							helperText={errors.confirmPassword && "Passwords do not match"}
 							required
 						/>
+						{isNotUpdated && <Alert severity="error">Something is wrong</Alert>}
 						{isUpdated && (
 							<Alert severity="success">
 								Password was successfully changed
