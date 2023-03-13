@@ -24,6 +24,12 @@ router.post("/users", auth, async (req, res) => {
 		});
 		const password = "123456";
 		const { full_name, email, role } = req.body;
+		const userExists = await db.query("SELECT * FROM users WHERE email = $1", [email])
+			if (userExists.rows.length > 0) {
+				//console.log("User already exists", userExists.rows[0].email);
+				res.status(409).json({ error: "User already exists" });
+				return;
+			}
 
 		const hash = await bcrypt.hash(JSON.stringify(password), 10);
 

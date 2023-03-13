@@ -6,6 +6,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import BlackButton from "./BlackButton";
+import Alert from "@mui/material/Alert";
 import { ThemeProvider } from "@mui/material/styles";
 
 const AddUser = ({ theme }) => {
@@ -14,6 +15,7 @@ const AddUser = ({ theme }) => {
 		email: "",
 		role: "",
 	});
+	const [errorMessage, setErrorMessage] = React.useState("");
 
 	const handleNameChange = (event) => {
 		setNewUser({ ...newUser, full_name: event.target.value });
@@ -40,19 +42,31 @@ const AddUser = ({ theme }) => {
 				"Content-Type": "application/json",
 			},
 		})
-			.then((response) => response.json())
+			.then((response) => {
+				if (!response.ok) {
+					setErrorMessage("User already exists");
+				}
+				response.json();
+			})
 			.then(() =>
 				setNewUser({
 					full_name: "",
 					email: "",
 					role: "",
 				})
-			);
+			)
+			.catch((error) => {
+				console.error(error);
+				setErrorMessage(error.message);
+			});
 	};
 
 	return (
 		<ThemeProvider theme={theme}>
 			<form action="" method="post" className="form-example" onSubmit={addUser}>
+				<span>
+					{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+				</span>
 				<Stack spacing={2}>
 					<TextField
 						id="outlined-basic"
