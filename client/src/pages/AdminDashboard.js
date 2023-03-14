@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
@@ -7,11 +8,11 @@ import BlackButton from "../components/BlackButton";
 import { Upload } from "upload-js";
 import AddUser from "../components/AddUser";
 
-
 const AdminDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 	const upload = Upload({ apiKey: "free" });
 	const [createUser, setCreateUser] = React.useState(false);
+	const navigate = useNavigate();
 
 	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
@@ -34,6 +35,9 @@ const AdminDashboard = ({ theme }) => {
 			const res = await fetch(`/api/users/${user.userId}`, {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
+			if (res.status !== 200) {
+				navigate("/login");
+			}
 			const data = await res.json();
 			setUser(data[0]);
 		} catch {
@@ -46,7 +50,6 @@ const AdminDashboard = ({ theme }) => {
 	React.useEffect(() => {
 		getUserById();
 	}, []);
-
 
 	//update user profile
 	const updateUserById = async (userData) => {
@@ -70,24 +73,23 @@ const AdminDashboard = ({ theme }) => {
 		}
 	};
 
-
-		//Add User
-		const handleAddUser = async () => {
-			createUser ? setCreateUser(false) : setCreateUser(true);
-			};
+	//Add User
+	const handleAddUser = async () => {
+		createUser ? setCreateUser(false) : setCreateUser(true);
+	};
 
 	return (
-	<ThemeProvider theme={theme}>
-		<Stack
-			sx={{
-				maxWidth: "380px",
-				padding: "1rem",
-				margin: "auto",
-			}}
-			spacing={2}
-		>
-			<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
-			<Profile
+		<ThemeProvider theme={theme}>
+			<Stack
+				sx={{
+					maxWidth: "380px",
+					padding: "1rem",
+					margin: "auto",
+				}}
+				spacing={2}
+			>
+				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
+				<Profile
 					bio={user.bio}
 					handleBioChange={handleBioChange}
 					avatar={user.img_url}
@@ -95,26 +97,21 @@ const AdminDashboard = ({ theme }) => {
 					onSave={() => updateUserById(user)}
 				/>
 
-			<Stack spacing={2}>
-			<BlackButton
-					sx={{ width: "100px" , margin: "1rem", marginTop:"0.5rem" }}
-					size="small"
-					variant="contained"
-					component="label"
-					onClick={handleAddUser}
-				>
-				Add User
-			</BlackButton>
+				<Stack spacing={2}>
+					<BlackButton
+						sx={{ width: "100px", margin: "1rem", marginTop: "0.5rem" }}
+						size="small"
+						variant="contained"
+						component="label"
+						onClick={handleAddUser}
+					>
+						Add User
+					</BlackButton>
 
-			{ createUser ?
-				(
-					<AddUser theme={theme} />
-				) : (
-					null
-				)}
+					{createUser ? <AddUser theme={theme} /> : null}
+				</Stack>
 			</Stack>
-		</Stack>
-	</ThemeProvider>
+		</ThemeProvider>
 	);
 };
 export default AdminDashboard;
