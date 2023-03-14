@@ -63,6 +63,15 @@ router.post("/auth/login", async (req, res) => {
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
+		if (!email || !isEmailValid(email)) {
+			res.status(400).json({ error: "Email is required" });
+		} 
+		if (!user) {
+			res.status(400).json({ error: "User not found" });
+		}
+		if (!password) {
+		res.status(400).json({ error: "Password is required" });
+		}
 
 		const isValid = await bcrypt.compare(
 			JSON.stringify(password),

@@ -60,7 +60,7 @@ const AddUser = ({ theme }) => {
 			)
 			.catch((error) => {
 				console.error(error);
-				setErrorMessage(error.message);
+				setErrorMessage(error.message.toString());
 			});
 	};
 
