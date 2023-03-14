@@ -27,7 +27,7 @@ const Login = () => {
 
 	//check form validity
 	const [formIsValid, setFormIsValid] = useState(null);
-	
+	const [errorMessage, setErrorMessage] = useState("");
 
 	async function login() {
 		try {
@@ -38,20 +38,22 @@ const Login = () => {
 					"Content-Type": "application/json",
 				},
 			});
-		
 
 			if (res.status === 200) {
-				setFormIsValid("Loading...");
-
 				const data = await res.json();
+
 				localStorage.setItem("user", JSON.stringify(data));
+				//return data;
+			} else {
+				const errorData = await res.json();
+				console.log(errorData);
+				throw new Error(errorData.error);
 			}
-				return res;
-		} catch {
-			(error) => {
+		} catch (error)  {
 				console.error(error);
-				setFormIsValid(error.message);
-			};
+				setFormIsValid(false);
+				setErrorMessage(error.message);
+			
 		}
 	}
 
@@ -215,11 +217,9 @@ const Login = () => {
 								Login
 							</RedButton>
 							<span>
-								{formIsValid && (
-									<Alert severity="success">{formIsValid}</Alert>
-								)}
+								{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
+								{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 							</span>
-							
 						</Stack>
 					</form>
 				</Stack>

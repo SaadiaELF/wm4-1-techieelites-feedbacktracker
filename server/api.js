@@ -9,9 +9,9 @@ import bcrypt from "bcrypt";
 const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
-	const isEmailValid = (email) => {
-		return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-	};
+const isEmailValid = (email) => {
+	return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+};
 
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
@@ -35,13 +35,13 @@ router.post("/users", auth, async (req, res) => {
 			return;
 		}
 		if (!full_name) {
-			res.status(400).json({ error: "Full name is required"})
+			res.status(400).json({ error: "Full name is required" });
 		}
 		if (!email || !isEmailValid(email)) {
-			res.status(400).json({ error: "Email is required"})
-		} 
+			res.status(400).json({ error: "Email is required" });
+		}
 		if (!role) {
-			res.status(400).json({ error: "Role must be provided"})
+			res.status(400).json({ error: "Role must be provided" });
 		}
 		const hash = await bcrypt.hash(JSON.stringify(password), 10);
 
@@ -60,17 +60,20 @@ router.post("/auth/login", async (req, res) => {
 		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
 
+		if (!email || !isEmailValid(email)) {
+			throw new Error("Invalid email address");
+		}
+
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
-		if (!email || !isEmailValid(email)) {
-			res.status(400).json({ error: "Email is required" });
-		} 
-		if (!user) {
+
+		if (user.rows.length === 0) {
 			res.status(400).json({ error: "User not found" });
+			return;
 		}
 		if (!password) {
-		res.status(400).json({ error: "Password is required" });
+			throw new Error("Password is required");
 		}
 
 		const isValid = await bcrypt.compare(
@@ -78,8 +81,7 @@ router.post("/auth/login", async (req, res) => {
 			user.rows[0].password
 		);
 		if (!isValid) {
-			res.json({ message: "Invalid credentials" });
-			return;
+			throw new Error("Invalid password");
 		}
 		if (isValid && email === user.rows[0].email) {
 			res.json({
@@ -91,7 +93,8 @@ router.post("/auth/login", async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.log(error);
+		console.error(error);
+		res.status(400).json({ error: error.message });
 	}
 });
 
