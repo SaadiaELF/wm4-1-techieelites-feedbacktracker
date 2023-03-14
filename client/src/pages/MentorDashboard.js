@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
@@ -10,6 +11,7 @@ const MentorDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 	const [students, setStudents] = React.useState([]);
 	const upload = Upload({ apiKey: "free" });
+	const navigate = useNavigate();
 
 	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
@@ -32,6 +34,9 @@ const MentorDashboard = ({ theme }) => {
 			const res = await fetch(`/api/users/${user.userId}`, {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
+			if (res.status !== 200) {
+				navigate("/login");
+			}
 			const data = await res.json();
 			setUser(data[0]);
 			setStudents(

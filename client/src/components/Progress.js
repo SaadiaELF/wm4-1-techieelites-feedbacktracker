@@ -62,7 +62,7 @@ const Progress = ({
 					display: "flex",
 					flexDirection: "column",
 					backgroundColor: "#F2EFF0",
-					minHeight: 230,
+					minHeight: 200,
 					width: "100%",
 				}}
 			>
@@ -95,7 +95,7 @@ const Progress = ({
 							renderInput={(params) => <TextField {...params} label="Lesson" />}
 							onChange={handleLessonChange}
 						/>
-						<Autocomplete
+						{/* <Autocomplete
 							sx={{ backgroundColor: "#FFFFFF" }}
 							size="small"
 							id="soft-skill"
@@ -104,7 +104,7 @@ const Progress = ({
 								<TextField {...params} label="Soft Skill" />
 							)}
 							onChange={handleSoftSkillChange}
-						/>
+						/> */}
 					</Stack>
 				</CardContent>
 			</Card>

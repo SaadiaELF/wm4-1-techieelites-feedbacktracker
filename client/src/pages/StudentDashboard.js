@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import WelcomeMsg from "../components/WelcomeMsg";
@@ -16,6 +17,7 @@ const StudentDashboard = ({ theme }) => {
 	});
 	const [sofSkill, setSoftSkill] = React.useState("");
 	const upload = Upload({ apiKey: "free" });
+	const navigate = useNavigate();
 
 	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
@@ -54,6 +56,9 @@ const StudentDashboard = ({ theme }) => {
 			const res = await fetch(`/api/users/${user.userId}`, {
 				headers: { authorization: `Bearer ${user.token}` },
 			});
+			if (res.status !== 200) {
+				navigate("/login");
+			}
 			const data = await res.json();
 			setUser(data[0]);
 		} catch {
@@ -75,7 +80,7 @@ const StudentDashboard = ({ theme }) => {
 			const res = await fetch(`/api/users/${user.userId}`, {
 				method: "PUT",
 				body: JSON.stringify(userData),
-				headers: { 
+				headers: {
 					authorization: `Bearer ${user.token}`,
 					"Content-Type": "application/json",
 				},
