@@ -46,14 +46,12 @@ const Login = () => {
 				//return data;
 			} else {
 				const errorData = await res.json();
-				console.log(errorData);
 				throw new Error(errorData.error);
 			}
-		} catch (error)  {
-				console.error(error);
-				setFormIsValid(false);
-				setErrorMessage(error.message);
-			
+		} catch (error) {
+			console.error(error);
+			setFormIsValid(false);
+			setErrorMessage(error.message);
 		}
 	}
 
@@ -171,9 +169,10 @@ const Login = () => {
 								onBlur={handleEmailBlur}
 								required
 								helperText={errors.email ? "Please enter a valid email" : ""}
-								onChange={(e) =>
-									setValues({ ...values, email: e.target.value })
-								}
+								onChange={(e) => {
+									setErrorMessage("");
+									setValues({ ...values, email: e.target.value });
+								}}
 							></TextField>
 
 							<TextField
@@ -191,9 +190,10 @@ const Login = () => {
 									errors.password ? "Please enter a valid password" : ""
 								}
 								onBlur={handlePasswordBlur}
-								onChange={(e) =>
-									setValues({ ...values, password: e.target.value })
-								}
+								onChange={(e) => {
+									setErrorMessage("");
+									setValues({ ...values, password: e.target.value });
+								}}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
