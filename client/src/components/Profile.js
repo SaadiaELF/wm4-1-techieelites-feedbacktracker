@@ -10,6 +10,10 @@ import Stack from "@mui/material/Stack";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { Avatar } from "@mui/material";
 import ResetPasswordForm from "./ResetPasswordForm";
+import BlackButton from "./BlackButton";
+import AddUser from "./AddUser";
+import { ThemeProvider } from "@mui/material/styles";
+
 
 const Profile = ({
 	mentorName,
@@ -19,8 +23,17 @@ const Profile = ({
 	handleBioChange,
 	handleAvatarChange,
 	onSave,
+	theme,
+	
 }) => {
 	const [editable, setEditable] = React.useState(false);
+	const [createUser, setCreateUser] = React.useState(false);
+	const handleAddUser = async () => {
+		createUser ? setCreateUser(false) : setCreateUser(true);
+	};
+
+	const user = JSON.parse(localStorage.getItem("user"));
+	console.log(user);
 
 	return (
 		<Stack
@@ -29,16 +42,6 @@ const Profile = ({
 				alignItems: "center",
 			}}
 		>
-			<Avatar
-				sx={{
-					width: 150,
-					height: 150,
-					zIndex: 1,
-					position: "absolute",
-				}}
-				src={avatar}
-				alt="avatar"
-			></Avatar>
 			<Card
 				sx={{
 					display: "flex",
@@ -48,9 +51,25 @@ const Profile = ({
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
-					top: 75,
+					// top: 75,
+					overflow: "visible",
+					marginTop: "7rem",
 				}}
 			>
+				<Avatar
+					sx={{
+						width: 150,
+						height: 150,
+						zIndex: 1,
+						position: "absolute",
+						left: 0,
+						right: 0,
+						top: -110,
+						margin: "0 auto",
+					}}
+					src={avatar}
+					alt="avatar"
+				></Avatar>
 				<CardContent
 					sx={{
 						display: "flex",
@@ -110,6 +129,7 @@ const Profile = ({
 							direction="row"
 							sx={{
 								justifyContent: "end",
+								marginTop: "1.5rem",
 							}}
 						>
 							<WhiteButton
@@ -128,7 +148,20 @@ const Profile = ({
 							</RedButton>
 						</Stack>
 					) : (
-						<Stack sx={{ flexDirection: "row" }}>
+						<Stack
+							sx={{ flexDirection: "row", justifyContent: "space-between" }}
+						>
+							{user.role === "admin" && (
+								<BlackButton
+									// sx={{ width: "100px", margin: "1rem", marginTop: "0.5rem" }}
+									size="small"
+									variant="contained"
+									component="label"
+									onClick={handleAddUser}
+								>
+									Add User
+								</BlackButton>
+							)}
 							<ResetPasswordForm />
 							<RedButton
 								size="small"
@@ -140,6 +173,7 @@ const Profile = ({
 						</Stack>
 					)}
 				</CardActions>
+				{createUser ? <AddUser theme={theme} /> : null}
 			</Card>
 		</Stack>
 	);
