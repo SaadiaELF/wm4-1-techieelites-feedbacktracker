@@ -18,7 +18,11 @@ export const clientRouter = (apiRoot) => {
 	return router;
 };
 
-export const configuredHelmet = () => helmet({ contentSecurityPolicy: false });
+export const configuredHelmet = () =>
+	helmet({
+		contentSecurityPolicy: false,
+		crossOriginEmbedderPolicy: "credentialless",
+	});
 
 export const configuredMorgan = () =>
 	morgan("dev", {
