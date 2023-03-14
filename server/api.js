@@ -54,12 +54,12 @@ router.post("/users", auth, async (req, res) => {
 		console.error(error);
 	}
 });
-
+// Authenticate user login
 router.post("/auth/login", async (req, res) => {
 	try {
 		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
-
+		//check if email is valid
 		if (!email || !isEmailValid(email)) {
 			throw new Error("Invalid email address");
 		}
@@ -67,11 +67,12 @@ router.post("/auth/login", async (req, res) => {
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
-
+		// check if user  with the queried email exists
 		if (user.rows.length === 0) {
 			res.status(400).json({ error: "User not found" });
 			return;
 		}
+		// check if password is present
 		if (!password) {
 			throw new Error("Password is required");
 		}
