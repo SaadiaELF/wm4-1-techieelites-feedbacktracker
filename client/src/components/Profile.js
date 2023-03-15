@@ -84,9 +84,9 @@ const Profile = ({
 									onChange={handleAvatarChange}
 								/>
 							</RedButton>
-
 							<TextField
 								sx={{ backgroundColor: "#FFFFFF" }}
+								label="Bio"
 								multiline
 								rows={2}
 								size="small"

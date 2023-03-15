@@ -46,7 +46,7 @@ const Ul = styled.ul`
 			color: #3f3f3f;
 			text-decoration: none;
 			font-weight: 400;
-			font-size: 1.5rem;
+			font-size: 1.2rem;
 		}
 	}
 	@media (max-width: 768px) {
@@ -109,17 +109,42 @@ const Navbar = () => {
 							Syllabus
 						</a>
 					</li>
-					<li>
+					<>
 						{user ? (
-							<a className="link" id="logInOut" href="/login" onClick={logout}>
-								Sign Out
-							</a>
+							<>
+								<li>
+									<a
+										className="link"
+										href={
+											user.role === "admin"
+												? "/admin"
+												: user.role === "student"
+												? "/student"
+												: "/mentor"
+										}
+									>
+										Dashboard
+									</a>
+								</li>
+								<li>
+									<a
+										className="link"
+										id="logInOut"
+										href="/login"
+										onClick={logout}
+									>
+										Sign Out
+									</a>
+								</li>
+							</>
 						) : (
-							<a className="link" id="logInOut" href="/login">
-								Login
-							</a>
+							<li>
+								<a className="link" id="logInOut" href="/login">
+									Login
+								</a>
+							</li>
 						)}
-					</li>
+					</>
 				</Ul>
 			</div>
 		</nav>

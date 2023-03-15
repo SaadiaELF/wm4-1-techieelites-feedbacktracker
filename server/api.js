@@ -146,8 +146,10 @@ router.put("/users/:id", auth, async (req, res) => {
 			JSON.stringify(oldPassword),
 			user.rows[0].password
 		);
-		if (!isValid) {
-			res.status(400).json({ error: "Invalid credentials" });
+
+		if (!isValid || !newPassword) {
+			res.status(400).json({ message: "Invalid credentials" });
+
 			return;
 		}
 		const hashNewPassword = await bcrypt.hash(JSON.stringify(newPassword), 10);
