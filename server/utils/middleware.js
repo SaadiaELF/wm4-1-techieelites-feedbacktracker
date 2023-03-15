@@ -21,7 +21,7 @@ export const clientRouter = (apiRoot) => {
 export const configuredHelmet = () =>
 	helmet({
 		contentSecurityPolicy: false,
-		crossOriginEmbedderPolicy: "credentialless",
+		crossOriginEmbedderPolicy: false,
 	});
 
 export const configuredMorgan = () =>
