@@ -39,6 +39,11 @@ const AddUser = ({ theme }) => {
 	const addUser = (event) => {
 		event.preventDefault();
 		const user = JSON.parse(localStorage.getItem("user"));
+//check if user role is admin
+		  if (user.role !== "admin") {
+				setErrorMessage("Only admin can create a new user.");
+				return;
+			}
 
 		fetch("/api/users", {
 			method: "POST",
