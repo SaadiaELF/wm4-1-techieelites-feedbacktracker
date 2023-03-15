@@ -134,7 +134,7 @@ router.put("/users/:id", auth, async (req, res) => {
 		]);
 		const userData = user.rows[0];
 		if (!userData) {
-			res.status(404).json({ message: "User not found" });
+		return	res.status(404).json({ message: "User not found" });
 		}
 		const {
 			oldPassword = userData.password,
@@ -147,7 +147,7 @@ router.put("/users/:id", auth, async (req, res) => {
 			user.rows[0].password
 		);
 		if (!isValid) {
-			res.status(400).json({ message: "Invalid credentials" });
+			res.status(400).json({ error: "Invalid credentials" });
 			return;
 		}
 		const hashNewPassword = await bcrypt.hash(JSON.stringify(newPassword), 10);
@@ -155,9 +155,10 @@ router.put("/users/:id", auth, async (req, res) => {
 			"UPDATE users SET password = $1, img_url = $2, bio = $3 WHERE user_id = $4",
 			[hashNewPassword, img_url, bio, userId]
 		);
-		res.json({ message: "User updated" });
+		return res.json({ message: "User updated" });
 	} catch (error) {
 		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
 	}
 });
 

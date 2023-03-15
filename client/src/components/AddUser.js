@@ -44,7 +44,6 @@ const AddUser = ({ theme }) => {
 				setErrorMessage("Only admin can create a new user.");
 				return;
 			}
-
 		fetch("/api/users", {
 			method: "POST",
 			body: JSON.stringify(newUser),

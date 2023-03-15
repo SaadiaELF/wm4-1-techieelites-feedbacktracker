@@ -41,9 +41,7 @@ const Login = () => {
 
 			if (res.status === 200) {
 				const data = await res.json();
-
 				localStorage.setItem("user", JSON.stringify(data));
-				//return data;
 			} else {
 				const errorData = await res.json();
 				throw new Error(errorData.error);
