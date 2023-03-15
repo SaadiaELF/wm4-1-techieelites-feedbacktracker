@@ -9,6 +9,9 @@ import bcrypt from "bcrypt";
 const generateUniqueId = require("generate-unique-id");
 
 const router = Router();
+const isEmailValid = (email) => {
+	return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+};
 
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
@@ -24,35 +27,63 @@ router.post("/users", auth, async (req, res) => {
 		});
 		const password = "123456";
 		const { full_name, email, role } = req.body;
+		const userExists = await db.query("SELECT * FROM users WHERE email = $1", [
+			email,
+		]);
 
+		if (!full_name) {
+			return res.status(400).json({ error: "Full name is required" });
+		}
+		if (!email || !isEmailValid(email)) {
+			return res.status(400).json({ error: "Email is required" });
+		}
+		if (!role) {
+			return res.status(400).json({ error: "Role must be provided" });
+		}
+		if (userExists.rows.length > 0) {
+			return res.status(409).json({ error: "User already exists" });
+		}
 		const hash = await bcrypt.hash(JSON.stringify(password), 10);
 
 		await db.query(
 			"INSERT INTO users (user_id, full_name, email, password, role) VALUES ($1, $2, $3, $4, $5) ",
 			[id, full_name, email, hash, role]
 		);
-		res.status(201).json({ message: "User created successfully" });
+		return res.status(201).json({ message: "User created successfully" });
 	} catch (error) {
 		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
 	}
 });
-
+// Authenticate user login
 router.post("/auth/login", async (req, res) => {
 	try {
 		const JWT_SECRET = process.env.JWT_SECRET;
 		const { email, password } = req.body;
+		//check if email is valid
+		if (!email || !isEmailValid(email)) {
+			throw new Error("Invalid email address");
+		}
 
 		const user = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
+		// check if user  with the queried email exists
+		if (user.rows.length === 0) {
+			res.status(400).json({ error: "User not found" });
+			return;
+		}
+		// check if password is present
+		if (!password) {
+			throw new Error("Password is required");
+		}
 
 		const isValid = await bcrypt.compare(
 			JSON.stringify(password),
 			user.rows[0].password
 		);
 		if (!isValid) {
-			res.json({ message: "Invalid credentials" });
-			return;
+			throw new Error("Invalid password");
 		}
 		if (isValid && email === user.rows[0].email) {
 			res.json({
@@ -64,7 +95,8 @@ router.post("/auth/login", async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.log(error);
+		console.error(error);
+		res.status(400).json({ error: error.message });
 	}
 });
 
@@ -102,7 +134,7 @@ router.put("/users/:id", auth, async (req, res) => {
 		]);
 		const userData = user.rows[0];
 		if (!userData) {
-			res.status(404).json({ message: "User not found" });
+		return	res.status(404).json({ message: "User not found" });
 		}
 		const {
 			oldPassword = userData.password,
@@ -117,6 +149,7 @@ router.put("/users/:id", auth, async (req, res) => {
 
 		if (!isValid || !newPassword) {
 			res.status(400).json({ message: "Invalid credentials" });
+
 			return;
 		}
 		const hashNewPassword = await bcrypt.hash(JSON.stringify(newPassword), 10);
@@ -124,9 +157,10 @@ router.put("/users/:id", auth, async (req, res) => {
 			"UPDATE users SET password = $1, img_url = $2, bio = $3 WHERE user_id = $4",
 			[hashNewPassword, img_url, bio, userId]
 		);
-		res.json({ message: "User updated" });
+		return res.json({ message: "User updated" });
 	} catch (error) {
 		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
 	}
 });
 
