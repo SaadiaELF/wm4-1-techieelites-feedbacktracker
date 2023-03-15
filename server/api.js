@@ -30,18 +30,18 @@ router.post("/users", auth, async (req, res) => {
 		const userExists = await db.query("SELECT * FROM users WHERE email = $1", [
 			email,
 		]);
-		if (userExists.rows.length > 0) {
-			res.status(409).json({ error: "User already exists" });
-			return;
-		}
+
 		if (!full_name) {
-			res.status(400).json({ error: "Full name is required" });
+			return res.status(400).json({ error: "Full name is required" });
 		}
 		if (!email || !isEmailValid(email)) {
-			res.status(400).json({ error: "Email is required" });
+			return res.status(400).json({ error: "Email is required" });
 		}
 		if (!role) {
-			res.status(400).json({ error: "Role must be provided" });
+			return res.status(400).json({ error: "Role must be provided" });
+		}
+		if (userExists.rows.length > 0) {
+			return res.status(409).json({ error: "User already exists" });
 		}
 		const hash = await bcrypt.hash(JSON.stringify(password), 10);
 
@@ -49,9 +49,10 @@ router.post("/users", auth, async (req, res) => {
 			"INSERT INTO users (user_id, full_name, email, password, role) VALUES ($1, $2, $3, $4, $5) ",
 			[id, full_name, email, hash, role]
 		);
-		res.status(201).send({ message: "User created successfully" });
+		return res.status(201).json({ message: "User created successfully" });
 	} catch (error) {
 		console.error(error);
+		return res.status(500).json({ error: "Internal server error" });
 	}
 });
 // Authenticate user login

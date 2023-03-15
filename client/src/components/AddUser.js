@@ -19,20 +19,25 @@ const AddUser = ({ theme }) => {
 	const [successMessage, setSuccessMessage] = React.useState("");
 
 	const handleNameChange = (event) => {
+		setErrorMessage("");
+		setSuccessMessage("");
 		setNewUser({ ...newUser, full_name: event.target.value });
 	};
 
 	const handleEmailChange = (event) => {
+		setErrorMessage("");
+		setSuccessMessage("");
 		setNewUser({ ...newUser, email: event.target.value });
 	};
 
 	const handleRoleChange = (event) => {
+		setErrorMessage("");
+		setSuccessMessage("");
 		setNewUser({ ...newUser, role: event.target.value });
 	};
 
 	const addUser = (event) => {
 		event.preventDefault();
-
 		const user = JSON.parse(localStorage.getItem("user"));
 
 		fetch("/api/users", {
@@ -45,11 +50,14 @@ const AddUser = ({ theme }) => {
 		})
 			.then((response) => {
 				if (!response.ok) {
-					setErrorMessage("Something went wrong. Please try again.");
+					response.json().then((error) => {
+						setErrorMessage(error.error);
+					});
 				} else if (response.status === 201) {
-					setSuccessMessage("User added successfully.");
+					response.json().then((data) => {
+						setSuccessMessage(data.message);
+					});
 				}
-				response.json();
 			})
 			.then(() =>
 				setNewUser({
@@ -60,7 +68,7 @@ const AddUser = ({ theme }) => {
 			)
 			.catch((error) => {
 				console.error(error);
-				setErrorMessage(error.message.toString());
+				setErrorMessage(error.message);
 			});
 	};
 
@@ -70,10 +78,11 @@ const AddUser = ({ theme }) => {
 				<Stack spacing={2}>
 					<span>
 						{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+						{successMessage && (
+							<Alert severity="success">{successMessage}</Alert>
+						)}
 					</span>
-					<span>
-						{successMessage && <Alert severity="success">{successMessage}</Alert>}
-					</span>
+
 					<TextField
 						id="outlined-basic"
 						label="Enter Full Name"
