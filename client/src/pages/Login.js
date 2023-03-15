@@ -26,7 +26,8 @@ const Login = () => {
 	});
 
 	//check form validity
-	const [formIsValid, setFormIsValid] = useState();
+	const [formIsValid, setFormIsValid] = useState(null);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	async function login() {
 		try {
@@ -41,12 +42,14 @@ const Login = () => {
 			if (res.status === 200) {
 				const data = await res.json();
 				localStorage.setItem("user", JSON.stringify(data));
+			} else {
+				const errorData = await res.json();
+				throw new Error(errorData.error);
 			}
-			return res;
-		} catch {
-			(error) => {
-				console.error(error);
-			};
+		} catch (error) {
+			console.error(error);
+			setFormIsValid(false);
+			setErrorMessage(error.message);
 		}
 	}
 
@@ -164,9 +167,10 @@ const Login = () => {
 								onBlur={handleEmailBlur}
 								required
 								helperText={errors.email ? "Please enter a valid email" : ""}
-								onChange={(e) =>
-									setValues({ ...values, email: e.target.value })
-								}
+								onChange={(e) => {
+									setErrorMessage("");
+									setValues({ ...values, email: e.target.value });
+								}}
 							></TextField>
 
 							<TextField
@@ -184,9 +188,10 @@ const Login = () => {
 									errors.password ? "Please enter a valid password" : ""
 								}
 								onBlur={handlePasswordBlur}
-								onChange={(e) =>
-									setValues({ ...values, password: e.target.value })
-								}
+								onChange={(e) => {
+									setErrorMessage("");
+									setValues({ ...values, password: e.target.value });
+								}}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
@@ -211,6 +216,7 @@ const Login = () => {
 							</RedButton>
 							<span>
 								{formIsValid && <Alert severity="success">{formIsValid}</Alert>}
+								{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 							</span>
 						</Stack>
 					</form>

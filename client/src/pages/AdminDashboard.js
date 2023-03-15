@@ -11,7 +11,7 @@ import AddUser from "../components/AddUser";
 const AdminDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 	const upload = Upload({ apiKey: "free" });
-	// const [createUser, setCreateUser] = React.useState(false);
+	const [createUser, setCreateUser] = React.useState(false);
 	const navigate = useNavigate();
 
 	async function handleAvatarChange(event) {
@@ -74,9 +74,9 @@ const AdminDashboard = ({ theme }) => {
 	};
 
 	//Add User
-	// const handleAddUser = async () => {
-	// 	createUser ? setCreateUser(false) : setCreateUser(true);
-	// };
+	const handleAddUser = async () => {
+		createUser ? setCreateUser(false) : setCreateUser(true);
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -98,17 +98,21 @@ const AdminDashboard = ({ theme }) => {
 				/>
 
 				<Stack spacing={2}>
-					{/* <BlackButton
-						sx={{ width: "100px", margin: "1rem", marginTop: "0.5rem" }}
+					<BlackButton
+						sx={{
+							width: { xs: "80px", md: "115px" },
+							margin: "1rem",
+							marginTop: "0.5rem",
+						}}
 						size="small"
 						variant="contained"
 						component="label"
 						onClick={handleAddUser}
 					>
 						Add User
-					</BlackButton> */}
+					</BlackButton> 
 
-					{/* {createUser ? <AddUser theme={theme} /> : null} */}
+					{createUser ? <AddUser theme={theme} /> : null}
 				</Stack>
 			</Stack>
 		</ThemeProvider>
