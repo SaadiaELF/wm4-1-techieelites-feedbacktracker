@@ -88,6 +88,10 @@ const AdminDashboard = ({ theme }) => {
 		createUser ? setCreateUser(false) : setCreateUser(true);
 	};
 
+	const hideCreateUser = async () => {
+		!createUser ? setCreateUser(true) : setCreateUser(false);
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Stack
@@ -110,24 +114,28 @@ const AdminDashboard = ({ theme }) => {
 						handleHide={handleHide}
 						handleShow={handleShow}
 					/>
-					{!isHidden && (<BlackButton
-						sx={{
-							width: { xs: "80px", md: "115px" },
-							position: "absolute",
-							left: 10,
-							right: 0,
-							top: 275,
-							margin: "0 auto",
-						}}
-						size="small"
-						variant="contained"
-						component="label"
-						onClick={handleAddUser}
-					>
-						Add User
-					</BlackButton>) }
+					{!isHidden && (
+						<BlackButton
+							sx={{
+								width: { xs: "80px", md: "115px" },
+								position: "absolute",
+								left: 10,
+								right: 0,
+								top: 275,
+								margin: "0 auto",
+							}}
+							size="small"
+							variant="contained"
+							component="label"
+							onClick={handleAddUser}
+						>
+							Add User
+						</BlackButton>
+					)}
 
-					{createUser ? <AddUser theme={theme} /> : null}
+					{createUser ? (
+						<AddUser theme={theme} hideCreateUser={hideCreateUser} />
+					) : null}
 				</Stack>
 			</Stack>
 		</ThemeProvider>
