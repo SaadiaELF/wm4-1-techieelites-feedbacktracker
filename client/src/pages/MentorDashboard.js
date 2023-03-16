@@ -91,7 +91,7 @@ const MentorDashboard = ({ theme }) => {
 				}}
 				spacing={2}
 			>
-				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
+				<WelcomeMsg sx={{ }}message={`Welcome ${user.full_name}!👋`} />
 				<Profile
 					bio={user.bio}
 					handleBioChange={handleBioChange}
@@ -103,8 +103,9 @@ const MentorDashboard = ({ theme }) => {
 					spacing={1}
 					sx={{
 						alignItems: "end",
-						top: 70,
+						top: 20,
 						position: "relative",
+						
 					}}
 				>
 					{students.map((student, index) => (

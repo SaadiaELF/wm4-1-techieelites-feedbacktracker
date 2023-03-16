@@ -100,9 +100,11 @@ const AdminDashboard = ({ theme }) => {
 				<Stack spacing={2}>
 					<BlackButton
 						sx={{
-							width: { xs: "80px", md: "115px" },
-							margin: "1rem",
-							marginTop: "0.5rem",
+							// width: { xs: "80px", md: "115px" },
+							width: "100%",
+							// margin: "1rem",
+
+							padding: "0.5rem",
 						}}
 						size="small"
 						variant="contained"

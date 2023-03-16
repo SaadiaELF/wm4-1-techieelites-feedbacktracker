@@ -13,7 +13,7 @@ import ResetPasswordForm from "./ResetPasswordForm";
 import BlackButton from "./BlackButton";
 import AddUser from "./AddUser";
 import { ThemeProvider } from "@mui/material/styles";
-
+import { auto } from "@popperjs/core";
 
 const Profile = ({
 	mentorName,
@@ -24,13 +24,12 @@ const Profile = ({
 	handleAvatarChange,
 	onSave,
 	theme,
-	
 }) => {
 	const [editable, setEditable] = React.useState(false);
-	const [createUser, setCreateUser] = React.useState(false);
-	const handleAddUser = async () => {
-		createUser ? setCreateUser(false) : setCreateUser(true);
-	};
+	// const [createUser, setCreateUser] = React.useState(false);
+	// const handleAddUser = async () => {
+	// 	createUser ? setCreateUser(false) : setCreateUser(true);
+	// };
 
 	const user = JSON.parse(localStorage.getItem("user"));
 	console.log(user);
@@ -51,7 +50,6 @@ const Profile = ({
 					width: "100%",
 					justifyContent: "end",
 					position: "relative",
-					// top: 75,
 					overflow: "visible",
 					marginTop: "7rem",
 				}}
@@ -78,7 +76,7 @@ const Profile = ({
 					}}
 				>
 					<Typography
-						sx={{ paddingBottom: "1rem" }}
+						sx={{ paddingBottom: "1rem", marginTop: "1.2rem", fontWeight: 700 }}
 						variant="body1"
 						align="center"
 					>
@@ -115,7 +113,12 @@ const Profile = ({
 							/>
 						</Stack>
 					) : (
-						<Typography variant="body2" color="text.secondary" align="center">
+						<Typography
+							variant="body2"
+							color="text.secondary"
+							align="center"
+							sx={{ fontWeight: 900, marginBottom: 5 }}
+						>
 							{bio}
 						</Typography>
 					)}
@@ -151,7 +154,7 @@ const Profile = ({
 						<Stack
 							sx={{ flexDirection: "row", justifyContent: "space-between" }}
 						>
-							{user.role === "admin" && (
+							{/* {user.role === "admin" && (
 								<BlackButton
 									// sx={{ width: "100px", margin: "1rem", marginTop: "0.5rem" }}
 									size="small"
@@ -161,7 +164,7 @@ const Profile = ({
 								>
 									Add User
 								</BlackButton>
-							)}
+							)} */}
 							<ResetPasswordForm />
 							<RedButton
 								size="small"
@@ -173,7 +176,7 @@ const Profile = ({
 						</Stack>
 					)}
 				</CardActions>
-				{createUser ? <AddUser theme={theme} /> : null}
+				{/* {createUser ? <AddUser theme={theme} /> : null} */}
 			</Card>
 		</Stack>
 	);
