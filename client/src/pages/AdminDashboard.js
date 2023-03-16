@@ -13,6 +13,16 @@ const AdminDashboard = ({ theme }) => {
 	const upload = Upload({ apiKey: "free" });
 	const [createUser, setCreateUser] = React.useState(false);
 	const navigate = useNavigate();
+	// to handle the adduser button
+	const [isHidden, setIsHidden] = React.useState(false);
+
+	const handleHide = () => {
+		setIsHidden(true);
+	};
+
+	const handleShow = () => {
+		setIsHidden(false);
+	};
 
 	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
@@ -78,6 +88,10 @@ const AdminDashboard = ({ theme }) => {
 		createUser ? setCreateUser(false) : setCreateUser(true);
 	};
 
+	const hideCreateUser = async () => {
+		!createUser ? setCreateUser(true) : setCreateUser(false);
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Stack
@@ -89,26 +103,39 @@ const AdminDashboard = ({ theme }) => {
 				spacing={2}
 			>
 				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
-				<Profile
-					bio={user.bio}
-					handleBioChange={handleBioChange}
-					avatar={user.img_url}
-					handleAvatarChange={handleAvatarChange}
-					onSave={() => updateUserById(user)}
-				/>
 
-				<Stack spacing={2}>
-					<BlackButton
-						sx={{ width: "100px", margin: "1rem", marginTop: "0.5rem" }}
-						size="small"
-						variant="contained"
-						component="label"
-						onClick={handleAddUser}
-					>
-						Add User
-					</BlackButton>
+				<Stack spacing={2} sx={{ position: "relative" }}>
+					<Profile
+						bio={user.bio}
+						handleBioChange={handleBioChange}
+						avatar={user.img_url}
+						handleAvatarChange={handleAvatarChange}
+						onSave={() => updateUserById(user)}
+						handleHide={handleHide}
+						handleShow={handleShow}
+					/>
+					{!isHidden && (
+						<BlackButton
+							sx={{
+								width: { xs: "90px", md: "115px" },
+								position: "absolute",
+								left: 16,
+								right: 0,
+								top: 243,
+								margin: "0 5px",
+							}}
+							size="small"
+							variant="contained"
+							component="label"
+							onClick={handleAddUser}
+						>
+							Add User
+						</BlackButton>
+					)}
 
-					{createUser ? <AddUser theme={theme} /> : null}
+					{createUser ? (
+						<AddUser theme={theme} hideCreateUser={hideCreateUser} />
+					) : null}
 				</Stack>
 			</Stack>
 		</ThemeProvider>

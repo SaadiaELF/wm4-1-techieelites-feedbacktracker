@@ -134,30 +134,39 @@ router.put("/users/:id", auth, async (req, res) => {
 		]);
 		const userData = user.rows[0];
 		if (!userData) {
-		return	res.status(404).json({ message: "User not found" });
+			return res.status(404).json({ message: "User not found" });
 		}
-		const {
-			oldPassword = userData.password,
-			newPassword = userData.password,
-			img_url = userData.img_url,
-			bio = userData.bio,
-		} = req.body;
+		const { oldPassword, newPassword, img_url, bio } = req.body;
+
+		if (bio || img_url) {
+			await db.query(
+				"UPDATE users SET img_url = $1, bio = $2 WHERE user_id = $3",
+				[img_url, bio, userId]
+			);
+			return res.json({ message: "User updated" });
+		}
 		const isValid = await bcrypt.compare(
 			JSON.stringify(oldPassword),
 			user.rows[0].password
 		);
 
-		if (!isValid || !newPassword) {
+		if (!isValid) {
 			res.status(400).json({ message: "Invalid credentials" });
-
 			return;
 		}
-		const hashNewPassword = await bcrypt.hash(JSON.stringify(newPassword), 10);
-		await db.query(
-			"UPDATE users SET password = $1, img_url = $2, bio = $3 WHERE user_id = $4",
-			[hashNewPassword, img_url, bio, userId]
-		);
-		return res.json({ message: "User updated" });
+
+		if (newPassword) {
+			const hashNewPassword = await bcrypt.hash(
+				JSON.stringify(newPassword),
+				10
+			);
+
+			await db.query("UPDATE users SET password = $1 WHERE user_id = $2", [
+				hashNewPassword,
+				userId,
+			]);
+			return res.json({ message: "User updated" });
+		}
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ error: "Internal server error" });

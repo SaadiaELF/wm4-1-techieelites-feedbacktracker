@@ -29,6 +29,7 @@ export default function StudentProfile({ studentData }) {
 			</IconButton>
 			<Dialog
 				fullScreen
+				align="center"
 				open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}

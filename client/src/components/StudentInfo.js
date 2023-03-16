@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, Card, Avatar, IconButton, CardHeader } from "@mui/material";
+import { Stack, Card, Avatar, CardHeader, Typography } from "@mui/material";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 import StudentProfile from "./StudentProfile";
@@ -50,26 +50,30 @@ const StudentInfo = ({ studentId, studentName, studentAvatar }) => {
 						alt="avatar"
 					></Avatar>
 				}
-				action={<StudentProfile studentData={studentData} />}
+				action={
+					studentData.text && <StudentProfile studentData={studentData} />
+				}
 				title={studentName}
 				subheader={
-					<Stack
-						spacing={1}
-						direction="row"
-						sx={{ justifyContent: "start", marginTop: "0.85rem" }}
-					>
-						{studentData.module_Type === "pd" ? (
-							<BlackChip label="Soft Skill" />
-						) : (
-							<RedChip
-								component="a"
-								label={studentData.title}
-								href={studentData.module_url}
-								target="_blank"
-								clickable
-							/>
-						)}
-					</Stack>
+					studentData.text && (
+						<Stack
+							spacing={1}
+							direction="row"
+							sx={{ justifyContent: "start", marginTop: "0.85rem" }}
+						>
+							{studentData.module_Type === "pd" ? (
+								<BlackChip label="Soft Skill" />
+							) : (
+								<RedChip
+									component="a"
+									label={studentData.title}
+									href={studentData.module_url}
+									target="_blank"
+									clickable
+								/>
+							)}
+						</Stack>
+					)
 				}
 			/>
 		</Card>
