@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, Card, Avatar, CardHeader } from "@mui/material";
+import { Stack, Card, Avatar, CardHeader, Typography } from "@mui/material";
 import BlackChip from "./BlackChip";
 import RedChip from "./RedChip";
 import StudentProfile from "./StudentProfile";

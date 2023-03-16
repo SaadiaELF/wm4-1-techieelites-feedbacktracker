@@ -11,7 +11,6 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { Avatar } from "@mui/material";
 import ResetPasswordForm from "./ResetPasswordForm";
 
-
 const Profile = ({
 	mentorName,
 	userName,
@@ -22,10 +21,10 @@ const Profile = ({
 	onSave,
 	handleHide,
 	handleShow,
-	
 }) => {
 	const [editable, setEditable] = React.useState(false);
-	
+
+	const user = JSON.parse(localStorage.getItem("user"));
 
 	return (
 		<Stack
@@ -132,8 +131,11 @@ const Profile = ({
 								size="small"
 								variant="contained"
 								onClick={() => {
-									handleShow()
-									setEditable(false)
+									if (user.role === "admin") {
+										handleShow();
+									}
+
+									setEditable(false);
 								}}
 							>
 								Cancel
@@ -144,7 +146,9 @@ const Profile = ({
 								onClick={() => {
 									onSave();
 									setEditable(false);
-									handleShow()
+									if (user.role === "admin") {
+										handleShow();
+									}
 								}}
 							>
 								Save
@@ -154,13 +158,15 @@ const Profile = ({
 						<Stack
 							sx={{ flexDirection: "row", justifyContent: "space-between" }}
 						>
-							
 							<ResetPasswordForm />
 							<RedButton
 								size="small"
 								variant="contained"
 								onClick={() => {
-									handleHide();
+									if (user.role === "admin") {
+										handleHide();
+									}
+
 									setEditable(true);
 								}}
 							>
@@ -169,7 +175,6 @@ const Profile = ({
 						</Stack>
 					)}
 				</CardActions>
-				
 			</Card>
 		</Stack>
 	);

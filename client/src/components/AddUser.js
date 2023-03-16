@@ -139,7 +139,9 @@ const AddUser = ({ theme, hideCreateUser }) => {
 						<BlackButton type="submit" value="Create_User">
 							Create User
 						</BlackButton>
-						<RedButton onClick={hideCreateUser}>Cancel</RedButton>
+						<RedButton size="medium" onClick={hideCreateUser}>
+							Cancel
+						</RedButton>
 					</div>
 				</Stack>
 			</form>

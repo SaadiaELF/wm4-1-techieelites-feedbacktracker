@@ -91,7 +91,7 @@ const MentorDashboard = ({ theme }) => {
 				}}
 				spacing={2}
 			>
-				<WelcomeMsg sx={{ }}message={`Welcome ${user.full_name}!👋`} />
+				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
 				<Profile
 					bio={user.bio}
 					handleBioChange={handleBioChange}
