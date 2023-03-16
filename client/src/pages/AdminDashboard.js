@@ -117,12 +117,12 @@ const AdminDashboard = ({ theme }) => {
 					{!isHidden && (
 						<BlackButton
 							sx={{
-								width: { xs: "80px", md: "115px" },
+								width: { xs: "90px", md: "115px" },
 								position: "absolute",
-								left: 10,
+								left: 16,
 								right: 0,
-								top: 275,
-								margin: "0 auto",
+								top: 243,
+								margin: "0 5px",
 							}}
 							size="small"
 							variant="contained"

@@ -12,7 +12,7 @@ const StudentProfileModal = ({ studentData }) => {
 				maxWidth: "380px",
 				padding: "1rem",
 				margin: "auto",
-				minWidth: "380px",
+				minWidth: "360px",
 				marginTop: "1rem",
 			}}
 			spacing={2}

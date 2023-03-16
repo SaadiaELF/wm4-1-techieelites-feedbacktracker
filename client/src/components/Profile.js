@@ -43,7 +43,7 @@ const Profile = ({
 					justifyContent: "end",
 					position: "relative",
 					overflow: "visible",
-					marginTop: "7rem",
+					marginTop: "5rem",
 				}}
 			>
 				<Avatar
@@ -54,7 +54,7 @@ const Profile = ({
 						position: "absolute",
 						left: 0,
 						right: 0,
-						top: -110,
+						top: -90,
 						margin: "0 auto",
 					}}
 					src={avatar}
@@ -67,16 +67,9 @@ const Profile = ({
 						justifyContent: "center",
 					}}
 				>
-					<Typography
-						sx={{ paddingBottom: "1rem", marginTop: "1.2rem", fontWeight: 650 }}
-						variant="body1"
-						align="center"
-					>
-						{mentorName ? `My mentor : ${mentorName}` : userName}
-					</Typography>
 					{/* Showing the upload button and making the bio editable only when we click on edit profile  */}
 					{editable ? (
-						<Stack spacing={2}>
+						<Stack spacing={2} sx={{ margin: "3rem 0 0" }}>
 							<RedButton
 								sx={{ margin: "1rem 0 0" }}
 								size="small"
@@ -105,14 +98,26 @@ const Profile = ({
 							/>
 						</Stack>
 					) : (
-						<Typography
-							variant="body2"
-							color="text.secondary"
-							align="center"
-							sx={{ fontWeight: 900, marginBottom: 3 }}
-						>
-							{bio}
-						</Typography>
+						<Stack>
+							<Typography
+								sx={{
+									paddingBottom: "1rem",
+									marginTop: "1.2rem",
+									fontWeight: 650,
+								}}
+								variant="body1"
+								align="center"
+							>
+								{mentorName ? `My mentor : ${mentorName}` : userName}
+							</Typography>
+							<Typography
+								variant="body2"
+								align="center"
+								sx={{ fontWeight: 500, marginBottom: 3, fontSize: "1rem" }}
+							>
+								{bio}
+							</Typography>
+						</Stack>
 					)}
 				</CardContent>
 				<CardActions
