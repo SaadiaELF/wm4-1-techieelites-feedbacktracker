@@ -129,7 +129,6 @@ const Profile = ({
 							direction="row"
 							sx={{
 								justifyContent: "end",
-								marginTop: "1.5rem",
 							}}
 						>
 							<WhiteButton
