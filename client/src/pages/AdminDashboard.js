@@ -13,6 +13,16 @@ const AdminDashboard = ({ theme }) => {
 	const upload = Upload({ apiKey: "free" });
 	const [createUser, setCreateUser] = React.useState(false);
 	const navigate = useNavigate();
+	// to handle the adduser button
+	const [isHidden, setIsHidden] = React.useState(false);
+
+	const handleHide = () => {
+		setIsHidden(true);
+	};
+
+	const handleShow = () => {
+		setIsHidden(false);
+	};
 
 	async function handleAvatarChange(event) {
 		const [file] = event.target.files;
@@ -89,22 +99,25 @@ const AdminDashboard = ({ theme }) => {
 				spacing={2}
 			>
 				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
-				<Profile
-					bio={user.bio}
-					handleBioChange={handleBioChange}
-					avatar={user.img_url}
-					handleAvatarChange={handleAvatarChange}
-					onSave={() => updateUserById(user)}
-				/>
 
-				<Stack spacing={2}>
-					<BlackButton
+				<Stack spacing={2} sx={{ position: "relative" }}>
+					<Profile
+						bio={user.bio}
+						handleBioChange={handleBioChange}
+						avatar={user.img_url}
+						handleAvatarChange={handleAvatarChange}
+						onSave={() => updateUserById(user)}
+						handleHide={handleHide}
+						handleShow={handleShow}
+					/>
+					{!isHidden && (<BlackButton
 						sx={{
-							// width: { xs: "80px", md: "115px" },
-							width: "100%",
-							// margin: "1rem",
-
-							padding: "0.5rem",
+							width: { xs: "80px", md: "115px" },
+							position: "absolute",
+							left: 10,
+							right: 0,
+							top: 275,
+							margin: "0 auto",
 						}}
 						size="small"
 						variant="contained"
@@ -112,7 +125,7 @@ const AdminDashboard = ({ theme }) => {
 						onClick={handleAddUser}
 					>
 						Add User
-					</BlackButton> 
+					</BlackButton>) }
 
 					{createUser ? <AddUser theme={theme} /> : null}
 				</Stack>

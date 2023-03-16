@@ -10,10 +10,7 @@ import Stack from "@mui/material/Stack";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { Avatar } from "@mui/material";
 import ResetPasswordForm from "./ResetPasswordForm";
-import BlackButton from "./BlackButton";
-import AddUser from "./AddUser";
-import { ThemeProvider } from "@mui/material/styles";
-import { auto } from "@popperjs/core";
+
 
 const Profile = ({
 	mentorName,
@@ -23,16 +20,12 @@ const Profile = ({
 	handleBioChange,
 	handleAvatarChange,
 	onSave,
-	theme,
+	handleHide,
+	handleShow,
+	
 }) => {
 	const [editable, setEditable] = React.useState(false);
-	// const [createUser, setCreateUser] = React.useState(false);
-	// const handleAddUser = async () => {
-	// 	createUser ? setCreateUser(false) : setCreateUser(true);
-	// };
-
-	const user = JSON.parse(localStorage.getItem("user"));
-	console.log(user);
+	
 
 	return (
 		<Stack
@@ -76,7 +69,7 @@ const Profile = ({
 					}}
 				>
 					<Typography
-						sx={{ paddingBottom: "1rem", marginTop: "1.2rem", fontWeight: 700 }}
+						sx={{ paddingBottom: "1rem", marginTop: "1.2rem", fontWeight: 650 }}
 						variant="body1"
 						align="center"
 					>
@@ -117,7 +110,7 @@ const Profile = ({
 							variant="body2"
 							color="text.secondary"
 							align="center"
-							sx={{ fontWeight: 900, marginBottom: 5 }}
+							sx={{ fontWeight: 900, marginBottom: 3 }}
 						>
 							{bio}
 						</Typography>
@@ -138,14 +131,21 @@ const Profile = ({
 							<WhiteButton
 								size="small"
 								variant="contained"
-								onClick={() => setEditable(false)}
+								onClick={() => {
+									handleShow()
+									setEditable(false)
+								}}
 							>
 								Cancel
 							</WhiteButton>
 							<RedButton
 								size="small"
 								variant="contained"
-								onClick={(onSave(), () => setEditable(false))}
+								onClick={() => {
+									onSave();
+									setEditable(false);
+									handleShow()
+								}}
 							>
 								Save
 							</RedButton>
@@ -154,29 +154,22 @@ const Profile = ({
 						<Stack
 							sx={{ flexDirection: "row", justifyContent: "space-between" }}
 						>
-							{/* {user.role === "admin" && (
-								<BlackButton
-									// sx={{ width: "100px", margin: "1rem", marginTop: "0.5rem" }}
-									size="small"
-									variant="contained"
-									component="label"
-									onClick={handleAddUser}
-								>
-									Add User
-								</BlackButton>
-							)} */}
+							
 							<ResetPasswordForm />
 							<RedButton
 								size="small"
 								variant="contained"
-								onClick={() => setEditable(true)}
+								onClick={() => {
+									handleHide();
+									setEditable(true);
+								}}
 							>
 								Edit Profile
 							</RedButton>
 						</Stack>
 					)}
 				</CardActions>
-				{/* {createUser ? <AddUser theme={theme} /> : null} */}
+				
 			</Card>
 		</Stack>
 	);

@@ -53,7 +53,7 @@ const Progress = ({
 			spacing={2}
 			sx={{
 				alignItems: "center",
-				top: 20,
+				top: 10,
 				position: "relative",
 			}}
 		>
