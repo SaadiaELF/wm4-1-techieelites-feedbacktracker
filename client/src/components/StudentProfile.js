@@ -33,7 +33,6 @@ export default function StudentProfile({ studentData }) {
 				open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}
-				
 			>
 				<Toolbar>
 					<IconButton

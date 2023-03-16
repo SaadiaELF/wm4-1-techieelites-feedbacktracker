@@ -3,7 +3,6 @@ import { CardContent, Typography, Card } from "@mui/material";
 import { Stack } from "@mui/system";
 import MentorFeedBackModal from "./MentorFeedbackModal";
 import StudentProfileMentor from "./StudentProfileMentor";
-import { auto } from "@popperjs/core";
 
 const StudentProfileModal = ({ studentData }) => {
 	return (
@@ -44,7 +43,7 @@ const StudentProfileModal = ({ studentData }) => {
 						width: "100%",
 					}}
 				>
-					<CardContent >
+					<CardContent>
 						{studentData.module_type === "pd" ? (
 							<Typography variant="body2" sx={{ fontWeight: 600 }}>
 								SoftSkill:{}

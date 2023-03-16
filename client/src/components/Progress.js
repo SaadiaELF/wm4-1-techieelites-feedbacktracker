@@ -67,7 +67,7 @@ const Progress = ({
 				}}
 			>
 				<CardContent>
-					<Typography variant="body1" align="center" sx={{fontWeight:600}}>
+					<Typography variant="body1" align="center" sx={{ fontWeight: 600 }}>
 						My progress
 					</Typography>
 					<Typography variant="body2" color="text.secondary" align="center">

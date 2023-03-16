@@ -42,7 +42,7 @@ const StudentProfileMentor = ({ studentName, bio, avatar }) => {
 						justifyContent: "center",
 					}}
 				>
-					<Typography variant="body1" align="center" sx={{ padding: "1rem",  }}>
+					<Typography variant="body1" align="center" sx={{ padding: "1rem" }}>
 						{studentName}
 					</Typography>
 					<Typography variant="body2" align="center">

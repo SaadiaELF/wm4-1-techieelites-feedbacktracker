@@ -105,7 +105,6 @@ const MentorDashboard = ({ theme }) => {
 						alignItems: "end",
 						top: 0,
 						position: "relative",
-						
 					}}
 				>
 					{students.map((student, index) => (

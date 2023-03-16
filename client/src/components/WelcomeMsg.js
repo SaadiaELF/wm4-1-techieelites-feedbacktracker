@@ -2,7 +2,6 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 
 const WelcomeMsg = ({ message }) => (
-	
 	<Typography
 		variant="h4"
 		sx={{
@@ -10,7 +9,7 @@ const WelcomeMsg = ({ message }) => (
 			fontWeight: 700,
 			textAlign: "center",
 			margin: 0,
-			padding: '0.8rem'
+			padding: "0.8rem",
 		}}
 	>
 		{message}
