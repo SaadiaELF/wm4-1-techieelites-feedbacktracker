@@ -12,10 +12,10 @@ body {
 .App {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-
+    min-height: 100%;
 }
 
 .main {
     flex: 1;
+    padding-bottom: 1rem;
 }
