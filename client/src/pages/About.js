@@ -1,3 +1,4 @@
+
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -18,7 +19,7 @@ export default function Album({ theme }) {
 						sx={{ fontSize: { xs: 25, md: 32 }, fontWeight: 600 }}
 						gutterBottom
 					>
-						About
+					About
 					</Typography>
 					<Typography
 						variant="body1"
