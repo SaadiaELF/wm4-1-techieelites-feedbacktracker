@@ -5,7 +5,6 @@ const BlackChip = styled(Chip)(({ theme }) => ({
 	color: theme.palette.getContrastText("#231F20"),
 	textTransform: "none",
 	backgroundColor: "#231F20",
-
 }));
 
 export default BlackChip;

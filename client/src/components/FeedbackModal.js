@@ -61,7 +61,7 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 		<Box
 			sx={{
 				position: "relative",
-				top: 75,
+				top: 10,
 			}}
 		>
 			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
@@ -72,7 +72,7 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 					Feedback Form
 				</DialogTitle>
 				<DialogContent dividers>
-					<DialogContentText sx={{ paddingBottom: "1rem" }}>
+					<DialogContentText sx={{ paddingBottom: "1rem", fontWeight: 600 }}>
 						{`Module : ${techModule.module} / ${techModule.lesson}`}
 					</DialogContentText>
 					<TextField

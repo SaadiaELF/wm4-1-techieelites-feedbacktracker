@@ -89,7 +89,7 @@ const MentorDashboard = ({ theme }) => {
 					padding: "1rem",
 					margin: "auto",
 				}}
-				spacing={2}
+				spacing={1}
 			>
 				<WelcomeMsg message={`Welcome ${user.full_name}!👋`} />
 				<Profile
@@ -103,7 +103,7 @@ const MentorDashboard = ({ theme }) => {
 					spacing={1}
 					sx={{
 						alignItems: "end",
-						top: 70,
+						top: 0,
 						position: "relative",
 					}}
 				>
