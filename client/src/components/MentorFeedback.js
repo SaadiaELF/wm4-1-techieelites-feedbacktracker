@@ -24,6 +24,10 @@ const MentorFeedBack = ({mentorId}) => {
 			React.useEffect(() => {
 				getMentorFeedbackById();
 			}, [mentorId]);
+	
+	function convertDate(date) {
+		return new Date(date).toLocaleString()
+	}
     return (
 			<Stack>
 				<Card
@@ -43,7 +47,7 @@ const MentorFeedBack = ({mentorId}) => {
 						>
 							Mentor Feedback
 						</Typography>
-						{!mentorData.mentorId ? (
+						{!mentorData.text ? (
 							<Typography
 								variant="body2"
 								align="center"
@@ -53,6 +57,12 @@ const MentorFeedBack = ({mentorId}) => {
 							</Typography>
 						) : (
 							<>
+								<Typography variant="body2" sx={{ fontWeight: 600 }}>
+									Sent on:
+								</Typography>
+								<Typography variant="body2" sx={{ fontWeight: 300 }}>
+									{convertDate(mentorData.date)}
+								</Typography>
 								{mentorData.module_type === "pd" ? (
 									<Typography variant="body2" sx={{ fontWeight: 600 }}>
 										SoftSkill:{}
