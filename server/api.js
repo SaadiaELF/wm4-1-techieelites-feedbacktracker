@@ -109,7 +109,7 @@ router.get("/users/:id", auth, async (req, res) => {
 		]);
 		if (user.rows[0].role === "student") {
 			user = await db.query(
-				"SELECT u.*, sm.mentor_id, sm.mentor_type, us.full_name  AS mentor_name FROM users u FULL OUTER JOIN student_mentor sm  ON (u.user_id = sm.student_id) FULL OUTER JOIN users us ON (us.user_id = sm.mentor_id) WHERE u.user_id = $1",
+				"SELECT u.*, sm.mentor_id , sm.mentor_type, us.full_name  AS mentor_name FROM users u FULL OUTER JOIN student_mentor sm  ON (u.user_id = sm.student_id) FULL OUTER JOIN users us ON (us.user_id = sm.mentor_id) WHERE u.user_id = $1",
 				[userId]
 			);
 		}
@@ -197,6 +197,7 @@ router.get("/feedback/student/:id", async (req, res) => {
 router.get("/feedback/mentor/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
+		console.log(userId);
 		let feedbacks= await db.query(
 			"SELECT * FROM users u INNER JOIN mentor_feedback mf ON u.user_id = mf.mentor_id INNER JOIN modules m ON mf.module_id = m.module_id WHERE u.user_id = $1 ORDER BY mf.date DESC",
 			[userId]

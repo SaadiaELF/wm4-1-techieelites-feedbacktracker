@@ -12,7 +12,7 @@ const MentorFeedBack = ({mentorId}) => {
 					const res = await fetch(`/api/feedback/mentor/${mentorId}`, {
 						headers: { authorization: `Bearer ${user.token}` },
 					});
-					const data = await res.json();
+                    const data = await res.json();
 					setMentorData(data);
 				} catch {
 					(error) => {
@@ -23,22 +23,22 @@ const MentorFeedBack = ({mentorId}) => {
 
 			React.useEffect(() => {
 				getMentorFeedbackById();
-			}, []);
+			}, [mentorId]);
     return (
 			<Stack>
-				<Typography variant="body1" sx={{ fontWeight: "bold" }}>
-					Latest Feedback
-				</Typography>
 				<Card
 					sx={{
 						display: "flex",
 						flexDirection: "column",
 						backgroundColor: "#F2EFF0",
-						minHeight: 230,
+						minHeight: 200,
 						width: "100%",
 					}}
 				>
 					<CardContent>
+						<Typography variant="body1" align="center" sx={{ fontWeight: 600, marginBottom:'1rem' }}>
+							Mentor Feedback
+						</Typography>
 						{mentorData.module_type === "pd" ? (
 							<Typography variant="body2" sx={{ fontWeight: 600 }}>
 								SoftSkill:{}

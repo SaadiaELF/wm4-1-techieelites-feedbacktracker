@@ -11,6 +11,7 @@ import MentorFeedBack from "../components/MentorFeedback";
 
 const StudentDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
+		const [mentorId, setMentorId] = React.useState({});
 	const [techModule, setTechModule] = React.useState({
 		module_id: 0,
 		module: "",
@@ -62,6 +63,7 @@ const StudentDashboard = ({ theme }) => {
 			}
 			const data = await res.json();
 			setUser(data[0]);
+			setMentorId(data[0].mentor_id);
 		} catch {
 			(error) => {
 				console.error(error);
@@ -87,7 +89,6 @@ const StudentDashboard = ({ theme }) => {
 				},
 			});
 			const data = await res.json();
-			console.log(data);
 		} catch {
 			(error) => {
 				console.error(error);
@@ -114,7 +115,7 @@ const StudentDashboard = ({ theme }) => {
 					handleAvatarChange={handleAvatarChange}
 					onSave={() => updateUserById(user)}
 				/>
-				<MentorFeedBack mentorId={user.mentor_id}/>
+				<MentorFeedBack mentorId={mentorId}/>
 				<Progress
 					techModule={techModule}
 					sofSkill={sofSkill}
