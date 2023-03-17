@@ -7,6 +7,7 @@ import Profile from "../components/Profile";
 import FeedbackModal from "../components/FeedbackModal";
 import Progress from "../components/Progress";
 import { Upload } from "upload-js";
+import MentorFeedBack from "../components/MentorFeedback";
 
 const StudentDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
@@ -113,6 +114,7 @@ const StudentDashboard = ({ theme }) => {
 					handleAvatarChange={handleAvatarChange}
 					onSave={() => updateUserById(user)}
 				/>
+				<MentorFeedBack mentorId={user.mentor_id}/>
 				<Progress
 					techModule={techModule}
 					sofSkill={sofSkill}

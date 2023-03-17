@@ -1,0 +1,74 @@
+import React, { useState } from "react";
+import {Stack, CardContent, Typography, Card } from "@mui/material";
+
+
+const MentorFeedBack = ({mentorId}) => {
+    	const [mentorData, setMentorData] = useState({});
+
+			const getMentorFeedbackById = async () => {
+				try {
+					const user = JSON.parse(localStorage.getItem("user"));
+
+					const res = await fetch(`/api/feedback/mentor/${mentorId}`, {
+						headers: { authorization: `Bearer ${user.token}` },
+					});
+					const data = await res.json();
+					setMentorData(data);
+				} catch {
+					(error) => {
+						console.error(error);
+					};
+				}
+			};
+
+			React.useEffect(() => {
+				getMentorFeedbackById();
+			}, []);
+    return (
+			<Stack>
+				<Typography variant="body1" sx={{ fontWeight: "bold" }}>
+					Latest Feedback
+				</Typography>
+				<Card
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						backgroundColor: "#F2EFF0",
+						minHeight: 230,
+						width: "100%",
+					}}
+				>
+					<CardContent>
+						{mentorData.module_type === "pd" ? (
+							<Typography variant="body2" sx={{ fontWeight: 600 }}>
+								SoftSkill:{}
+							</Typography>
+						) : (
+							<>
+								<Typography variant="body2" sx={{ fontWeight: 600 }}>
+									Module/Lesson:
+								</Typography>
+								<Typography variant="body2" sx={{ fontWeight: 300 }}>
+									{mentorData.title}
+								</Typography>
+							</>
+						)}
+						<Typography variant="body2" sx={{ fontWeight: 600 }}>
+							Mentor :
+						</Typography>
+						<Typography variant="body2" sx={{ fontWeight: 300 }}>
+							{mentorData.full_name}
+						</Typography>
+						<Typography variant="body2" sx={{ fontWeight: 600 }}>
+							Feedback about the course :
+						</Typography>
+						<Typography variant="body2" sx={{ fontWeight: 300 }}>
+							{mentorData.text}
+						</Typography>
+					</CardContent>
+				</Card>
+			</Stack>
+		);
+}
+
+export default MentorFeedBack
