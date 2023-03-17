@@ -8,8 +8,9 @@ import FormLabel from "@mui/material/FormLabel";
 import BlackButton from "./BlackButton";
 import Alert from "@mui/material/Alert";
 import { ThemeProvider } from "@mui/material/styles";
+import RedButton from "./RedButton";
 
-const AddUser = ({ theme }) => {
+const AddUser = ({ theme, hideCreateUser }) => {
 	const [newUser, setNewUser] = React.useState({
 		full_name: "",
 		email: "",
@@ -39,11 +40,11 @@ const AddUser = ({ theme }) => {
 	const addUser = (event) => {
 		event.preventDefault();
 		const user = JSON.parse(localStorage.getItem("user"));
-//check if user role is admin
-		  if (user.role !== "admin") {
-				setErrorMessage("Only admin can create a new user.");
-				return;
-			}
+		//check if user role is admin
+		if (user.role !== "admin") {
+			setErrorMessage("Only admin can create a new user.");
+			return;
+		}
 		fetch("/api/users", {
 			method: "POST",
 			body: JSON.stringify(newUser),
@@ -138,6 +139,9 @@ const AddUser = ({ theme }) => {
 						<BlackButton type="submit" value="Create_User">
 							Create User
 						</BlackButton>
+						<RedButton size="medium" onClick={hideCreateUser}>
+							Cancel
+						</RedButton>
 					</div>
 				</Stack>
 			</form>

@@ -10,6 +10,9 @@ const StudentProfileModal = ({ studentData }) => {
 			sx={{
 				maxWidth: "380px",
 				padding: "1rem",
+				margin: "auto",
+				minWidth: "360px",
+				marginTop: "1rem",
 			}}
 			spacing={2}
 		>
@@ -25,7 +28,7 @@ const StudentProfileModal = ({ studentData }) => {
 					maxWidth: "380px",
 					marginTop: "3rem",
 					position: "relative",
-					top: 75,
+					top: 65,
 				}}
 			>
 				<Typography variant="body1" sx={{ fontWeight: "bold" }}>
@@ -56,7 +59,10 @@ const StudentProfileModal = ({ studentData }) => {
 							</>
 						)}
 
-						<Typography variant="body2" sx={{ fontWeight: 600 }}>
+						<Typography
+							variant="body2"
+							sx={{ fontWeight: 600, marginTop: "1rem" }}
+						>
 							Feedback about the course :
 						</Typography>
 						<Typography variant="body2" sx={{ fontWeight: 300 }}>

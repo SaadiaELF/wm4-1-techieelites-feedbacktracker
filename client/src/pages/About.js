@@ -1,6 +1,4 @@
-import RedButton from "../components/RedButton";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
@@ -20,33 +18,28 @@ export default function Album({ theme }) {
 						sx={{ fontSize: { xs: 25, md: 32 }, fontWeight: 600 }}
 						gutterBottom
 					>
-						About Us
+						About
 					</Typography>
 					<Typography
 						variant="body1"
-						align="center"
+						align="justify"
 						sx={{ fontSize: { xs: 16, md: 20 } }}
+						paragraph
 					>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. At
-						varius vel pharetra vel turpis nunc. Enim blandit volutpat maecenas
-						volutpat blandit aliquam etiam erat.
+						When a mentor sits down with a student to help them out, they may
+						not know exactly what the student is trying to work on in terms of
+						soft and technical skills. This makes it hard for the mentor to know
+						how to support the corresponding student.
 					</Typography>
-					<Stack
-						sx={{ pt: 4 }}
-						direction="row"
-						spacing={2}
-						justifyContent="center"
+					<Typography
+						variant="body1"
+						align="justify"
+						sx={{ fontSize: { xs: 16, md: 20 } }}
+						paragraph
 					>
-						<RedButton
-							size="large"
-							variant="contained"
-							component="a"
-							href="/login"
-						>
-							LOGIN
-						</RedButton>
-					</Stack>
+						To solve this issue we worked on a feedback tracker that can help
+						students and mentors give feedback on certain subjects.
+					</Typography>
 				</Container>
 				{/* End hero unit */}
 

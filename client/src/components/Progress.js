@@ -53,7 +53,7 @@ const Progress = ({
 			spacing={2}
 			sx={{
 				alignItems: "center",
-				top: 75,
+				top: 10,
 				position: "relative",
 			}}
 		>
@@ -67,7 +67,7 @@ const Progress = ({
 				}}
 			>
 				<CardContent>
-					<Typography variant="body1" align="center">
+					<Typography variant="body1" align="center" sx={{ fontWeight: 600 }}>
 						My progress
 					</Typography>
 					<Typography variant="body2" color="text.secondary" align="center">
