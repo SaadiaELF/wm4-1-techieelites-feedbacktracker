@@ -9,12 +9,11 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function TeamGridItem({ img, devName, role, linkedIn, github }) {
-	console.log(img);
 	return (
 		<Grid item xs={6} sm={5} md={4} margin="auto">
 			<Card
 				sx={{
-					minHeight: "400px",
+					minHeight: { xs: "320px", md: "410px" },
 					display: "flex",
 					flexDirection: "column",
 					backgroundColor: "#f2eff0",
