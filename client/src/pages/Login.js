@@ -143,10 +143,10 @@ const Login = () => {
 					spacing={5}
 				>
 					<Stack spacing={1}>
-						<Typography variant="h4" sx={{ fontSize: { xs: 24, md: 32 } }}>
+						<Typography variant="h1" sx={{ fontSize: { xs: 24, md: 32 } }}>
 							Hi, Welcome back! 👋
 						</Typography>
-						<Typography variant="h6" sx={{ fontSize: { xs: 16, md: 22 } }}>
+						<Typography variant="h2" sx={{ fontSize: { xs: 16, md: 22 } }}>
 							Hello again, you have been missed
 						</Typography>
 					</Stack>

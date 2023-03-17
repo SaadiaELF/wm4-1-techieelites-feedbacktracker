@@ -77,6 +77,7 @@ function Footer() {
 						href="https://www.facebook.com/codeyourfuture.io"
 						target="_blank"
 						size="large"
+						aria-label="Facebook"
 					>
 						<FacebookIcon fontSize="large"></FacebookIcon>
 					</IconButton>
@@ -86,6 +87,7 @@ function Footer() {
 						href="https://twitter.com/CodeYourFuture"
 						target="_blank"
 						size="large"
+						aria-label="Twitter"
 					>
 						<TwitterIcon fontSize="large"></TwitterIcon>
 					</IconButton>
@@ -95,6 +97,7 @@ function Footer() {
 						href="https://www.linkedin.com/company/15224414/admin/"
 						target="_blank"
 						size="large"
+						aria-label="LinkedIn"
 					>
 						<LinkedInIcon fontSize="large"></LinkedInIcon>
 					</IconButton>
@@ -104,6 +107,7 @@ function Footer() {
 						href="https://www.instagram.com/codeyourfuture_"
 						target="_blank"
 						size="large"
+						aria-label="Instagram"
 					>
 						<InstagramIcon fontSize="large"></InstagramIcon>
 					</IconButton>
@@ -113,6 +117,7 @@ function Footer() {
 						href="https://github.com/CodeYourFuture"
 						target="_blank"
 						size="large"
+						aria-label="GitHub"
 					>
 						<GitHubIcon fontSize="large" />
 					</IconButton>
