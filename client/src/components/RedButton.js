@@ -10,6 +10,9 @@ const RedButton = styled(Button)(({ theme }) => ({
 		color: theme.palette.getContrastText("#cf3a3a"),
 		backgroundColor: "#cf3a3a",
 	},
+	"&:disabled": {
+		backgroundColor: "#f2eff0",
+	},
 }));
 
 export default RedButton;
