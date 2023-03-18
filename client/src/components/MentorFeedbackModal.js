@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
 import RedButton from "./RedButton";
 import WhiteButton from "./WhiteButton";
 
@@ -18,6 +19,8 @@ const MentorFeedBackModal = ({ studentData }) => {
 		module_id: 0,
 		mentor_id: user.userId,
 	});
+	const [successMessage, setSuccessMessage] = React.useState("");
+	const [errorMessage, setErrorMessage] = React.useState("");
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -50,12 +53,16 @@ const MentorFeedBackModal = ({ studentData }) => {
 			const result = await res.json();
 			console.log(result);
 			if (!res.ok) {
-				throw Error(res.statusText);
+				setErrorMessage("Something went wrong, please try again");
+			} else {
+				setSuccessMessage("Feedback sent successfully");
+				setTimeout(() => {
+					setOpen(false);
+				}, 1000);
 			}
 		} catch (error) {
 			console.log({ error });
 		}
-		setOpen(false);
 	}
 
 	return (
@@ -79,13 +86,15 @@ const MentorFeedBackModal = ({ studentData }) => {
 						{`Module : ${studentData.title} `}
 					</DialogContentText>
 					<TextField
-						sx={{ backgroundColor: "#FFFFFF" }}
+						sx={{ backgroundColor: "#FFFFFF", marginBottom: "1rem" }}
 						multiline
 						label="Message"
 						rows={2}
 						fullWidth
 						onChange={handleTextChange}
 					/>
+					{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+					{successMessage && <Alert severity="success">{successMessage}</Alert>}
 				</DialogContent>
 				<DialogActions>
 					<WhiteButton onClick={handleClose}>Cancel</WhiteButton>

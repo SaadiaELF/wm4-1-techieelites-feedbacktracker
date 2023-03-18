@@ -6,6 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import Tooltip from "@mui/material/Tooltip";
 import RedButton from "./RedButton";
 import WhiteButton from "./WhiteButton";
 
@@ -18,6 +20,8 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 		module_id: 0,
 		module_type: "tech",
 	});
+	const [successMessage, setSuccessMessage] = React.useState("");
+	const [errorMessage, setErrorMessage] = React.useState("");
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -49,12 +53,16 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 			const result = await res.json();
 			console.log(result);
 			if (!res.ok) {
-				throw Error(res.statusText);
+				setErrorMessage("Something went wrong, please try again");
+			} else {
+				setSuccessMessage("Feedback sent successfully");
+				setTimeout(() => {
+					setOpen(false);
+				}, 1000);
 			}
 		} catch (error) {
 			console.log({ error });
 		}
-		setOpen(false);
 	}
 
 	return (
@@ -64,9 +72,23 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 				top: 0,
 			}}
 		>
-			<RedButton sx={{ margin: 0 }} onClick={handleClickOpen} fullWidth>
-				Add Feedback
-			</RedButton>
+			<Tooltip
+				title={
+					!techModule.module_id &&
+					"Please update your progress before adding a feedback"
+				}
+			>
+				<span>
+					<RedButton
+						sx={{ margin: 0 }}
+						onClick={handleClickOpen}
+						fullWidth
+						disabled={!techModule.module_id}
+					>
+						Add Feedback
+					</RedButton>
+				</span>
+			</Tooltip>
 			<Dialog open={open} onClose={handleClose} fullWidth>
 				<DialogTitle sx={{ backgroundColor: "#EE4344", color: "#FFFFFF" }}>
 					Feedback Form
@@ -76,13 +98,15 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 						{`Module : ${techModule.module} / ${techModule.lesson}`}
 					</DialogContentText>
 					<TextField
-						sx={{ backgroundColor: "#FFFFFF" }}
+						sx={{ backgroundColor: "#FFFFFF", marginBottom: "1rem" }}
 						multiline
 						label="Message"
 						rows={2}
 						fullWidth
 						onChange={handleTextChange}
 					/>
+					{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+					{successMessage && <Alert severity="success">{successMessage}</Alert>}
 				</DialogContent>
 				<DialogActions>
 					<WhiteButton onClick={handleClose}>Cancel</WhiteButton>
