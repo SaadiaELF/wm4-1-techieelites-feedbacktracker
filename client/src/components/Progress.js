@@ -90,7 +90,11 @@ const Progress = ({
 							sx={{ backgroundColor: "#FFFFFF" }}
 							size="small"
 							id="lesson"
-							options={selectedTechModule?.lessons || []}
+							options={
+								selectedTechModule?.lessons.map((l,i) => {
+									return { label: l, id: i };
+								}) || []
+							}
 							disabled={techModule.module ? false : true}
 							renderInput={(params) => <TextField {...params} label="Lesson" />}
 							onChange={handleLessonChange}

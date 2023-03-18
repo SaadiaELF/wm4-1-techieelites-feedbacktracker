@@ -36,6 +36,7 @@ const FeedbackModal = ({ techModule, softSkill }) => {
 			...newFeedback,
 			text: e.target.value,
 			module_id: techModule.module_id,
+			lesson_id: techModule.lesson_id
 		});
 	};
 

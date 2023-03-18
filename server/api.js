@@ -215,10 +215,10 @@ router.post("/feedback/student", auth, async (req, res) => {
 		});
 		const curDate = new Date();
 
-		const { student_id, text, module_id, module_type } = req.body;
+		const { student_id, text, module_id, module_type,lesson_id } = req.body;
 		await db.query(
-			" INSERT INTO student_feedback (sfeedback_id, text, date, student_id, module_id, module_type) VALUES ($1, $2, $3, $4, $5, $6) ",
-			[id, text, curDate, student_id, module_id, module_type]
+			" INSERT INTO student_feedback (sfeedback_id, text, date, student_id, module_id, module_type,lesson_id) VALUES ($1, $2, $3, $4, $5, $6, $7) ",
+			[id, text, curDate, student_id, module_id, module_type,lesson_id],
 		);
 
 		res.json({ message: "success" });

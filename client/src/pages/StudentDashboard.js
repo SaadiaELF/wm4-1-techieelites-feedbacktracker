@@ -13,8 +13,9 @@ const StudentDashboard = ({ theme }) => {
 	const [user, setUser] = React.useState({});
 		const [mentorId, setMentorId] = React.useState({});
 	const [techModule, setTechModule] = React.useState({
-		module_id: 0,
+		module_id: null,
 		module: "",
+		lesson_id: null,
 		lesson: "",
 	});
 	const [sofSkill, setSoftSkill] = React.useState("");
@@ -44,7 +45,11 @@ const StudentDashboard = ({ theme }) => {
 	};
 
 	const handleLessonChange = (e, newValue) => {
-		setTechModule({ ...techModule, lesson: newValue });
+		setTechModule({
+			...techModule,
+			lesson: newValue.label,
+			lesson_id: newValue.id
+		});
 	};
 
 	const handleSoftSkillChange = (e, newValue) => {

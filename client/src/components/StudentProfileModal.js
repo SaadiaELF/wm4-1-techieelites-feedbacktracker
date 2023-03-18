@@ -67,7 +67,7 @@ const StudentProfileModal = ({ studentData }) => {
 									Module/Lesson:
 								</Typography>
 								<Typography variant="body2" sx={{ fontWeight: 300 }}>
-									{studentData.title}
+									{studentData.title}/{studentData.lessons[studentData.lesson_id]}
 								</Typography>
 							</>
 						)}
