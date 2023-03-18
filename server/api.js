@@ -198,8 +198,8 @@ router.get("/feedback/mentor/:id", async (req, res) => {
 	try {
 		const userId = parseInt(req.params.id);
 		console.log(userId);
-		let feedbacks= await db.query(
-			"SELECT * FROM users u INNER JOIN mentor_feedback mf ON u.user_id = mf.mentor_id INNER JOIN modules m ON mf.module_id = m.module_id WHERE u.user_id = $1 ORDER BY mf.date DESC",
+		let feedbacks = await db.query(
+			"SELECT * FROM users u INNER JOIN mentor_feedback mf ON u.user_id = mf.mentor_id INNER JOIN modules m ON mf.module_id = m.module_id WHERE mf.student_id = $1 ORDER BY mf.date DESC",
 			[userId]
 		);
 		return res.json(feedbacks.rows[0]);

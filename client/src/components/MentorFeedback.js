@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import {Stack, CardContent, Typography, Card } from "@mui/material";
 
 
-const MentorFeedBack = ({mentorId}) => {
+const MentorFeedBack = ({studentId}) => {
     	const [mentorData, setMentorData] = useState({});
 
 			const getMentorFeedbackById = async () => {
 				try {
 					const user = JSON.parse(localStorage.getItem("user"));
 
-					const res = await fetch(`/api/feedback/mentor/${mentorId}`, {
+					const res = await fetch(`/api/feedback/mentor/${studentId}`, {
 						headers: { authorization: `Bearer ${user.token}` },
 					});
                     const data = await res.json();
@@ -23,7 +23,7 @@ const MentorFeedBack = ({mentorId}) => {
 
 			React.useEffect(() => {
 				getMentorFeedbackById();
-			}, [mentorId]);
+			}, [studentId]);
 	
 	function convertDate(date) {
 		return new Date(date).toLocaleString()

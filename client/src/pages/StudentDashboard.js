@@ -115,7 +115,7 @@ const StudentDashboard = ({ theme }) => {
 					handleAvatarChange={handleAvatarChange}
 					onSave={() => updateUserById(user)}
 				/>
-				<MentorFeedBack mentorId={mentorId}/>
+				<MentorFeedBack studentId={user.user_id} />
 				<Progress
 					techModule={techModule}
 					sofSkill={sofSkill}
